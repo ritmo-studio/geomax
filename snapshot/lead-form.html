@@ -1,0 +1,24 @@
+<!-- lead-form v1.2 · Figma 2156:612 · форма заявки на тёмной карточке · атомы field, checkbox.
+     Поля на сайте даёт плагин формы (Contact Form 7 или WPForms): эта разметка — шаблон,
+     куда плагин подставляет свои теги вместо input/textarea/кнопки-отправки, сохраняя классы.
+     Кнопка отправки — свой button type="submit" с классами атома button, а не сам атом:
+     атом — это ссылка (a href), внутри формы она не отправляет её ни мышью, ни Enter.
+     Текст согласия остаётся подписью чекбокса целиком (label), ссылка на политику лежит
+     внутри — клик по ней не должен переключать галочку, это гасит lead-form.js.
+     Блок не знает своей позиции: id нет, уровень заголовка — параметр.
+     Чертёж справа декоративный и виден только на десктопе — на мобильном съел бы экран целиком. -->
+<section id="lead-form" class="sds sds-lead-form">
+  <div class="sds-lead-form__card">
+    <div class="sds-lead-form__col">
+      <h2 class="sds-lead-form__title sds-anim">Подберем распорную систему для вашего объекта</h2>
+      <p class="sds-lead-form__lead sds-anim">Оставьте заявку, и мы подготовим коммерческое предложение с учетом параметров вашего объекта</p>
+      <form class="sds-lead-form__form sds-anim" action="#" method="post">
+        <div class="sds-lead-form__grid"><div class="sds-field"><label class="sds-field__control"><input class="sds-field__input" type="text" name="your-name" autocomplete="name" required placeholder=" "><span class="sds-field__label">Имя</span></label></div><div class="sds-field"><label class="sds-field__control"><input class="sds-field__input" type="text" name="your-company" autocomplete="organization" placeholder=" "><span class="sds-field__label">Название компании</span></label></div><div class="sds-field"><label class="sds-field__control"><input class="sds-field__input" type="email" name="your-email" autocomplete="email" required placeholder=" "><span class="sds-field__label">E-mail</span></label></div><div class="sds-field"><label class="sds-field__control"><input class="sds-field__input" type="tel" name="your-phone" autocomplete="tel" placeholder=" "><span class="sds-field__label">Телефон</span></label></div></div>
+        <div class="sds-lead-form__message"><div class="sds-field sds-field--area"><label class="sds-field__control"><textarea class="sds-field__input" name="your-message" placeholder=" "></textarea><span class="sds-field__label">Сообщение</span></label></div></div>
+        <label class="sds-lead-form__consent"><input type="checkbox" class="sds-checkbox" name="your-consent" required><span class="sds-lead-form__consent-text">Я подтверждаю ознакомление с <a class="sds-lead-form__consent-link" href="#privacy">Политикой обработки персональных данных</a> и даю согласие на обработку моих персональных данных.</span></label>
+        <div class="sds-lead-form__actions"><button type="submit" class="sds-btn sds-btn--icon"><span class="sds-btn__icon" aria-hidden="true"></span><span class="sds-btn__label">Получить расчет аренды</span></button></div>
+      </form>
+    </div>
+    <div class="sds-lead-form__art" aria-hidden="true"></div>
+  </div>
+</section>

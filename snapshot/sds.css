@@ -1,0 +1,1702 @@
+/* SEO Design System · токены из Figma (коллекция Tokens): color/page → --sds-color-page.
+   Объявлены на .sds (корень каждого блока), а не на :root, чтобы не пересекаться с переменными принимающего сайта.
+   Мобильные переменные Figma (…-mobile) переключаются media-запросом, имена в коде единые.
+   Text styles Figma → --sds-text-* (сокращённая запись font). */
+.sds{
+  --sds-color-page:#F4F4EE;--sds-color-card:#DEE1D3;--sds-color-placeholder:#B5B8A6;
+  /* surface-muted — приглушённая полоса, которая уходит назад (подвал).
+     Не путать с placeholder: тот означает «здесь будет картинка». */
+  --sds-color-surface-muted:#EAEAE4;
+  --sds-color-text:#292C21;--sds-color-text-muted:#4A5A54;
+  --sds-color-chip-bg:#292C21;--sds-color-chip-text:#F4F4EE;
+  --sds-color-accent:#413FA3;--sds-color-accent-hover:#35337F;--sds-color-on-accent:#F4F4EE;
+  --sds-color-star:#292C21;--sds-color-star-empty:#B5B8A6;
+  /* Текст поверх кадра: собственная пара цветов и затемнение под ней.
+     Цвет текста блока здесь не годится — под ним фотография, а не фон страницы. */
+  --sds-color-on-overlay:#F4F4EE;--sds-color-on-overlay-muted:#DEE1D3;
+  --sds-color-overlay-scrim:rgba(17,17,17,.82);
+  /* Ошибка поля формы: обычный текст (на светлом фоне страницы) и явный, светлее,
+     вариант для тёмной карточки — на тёмном приглушённый неразличим. */
+  --sds-color-error:#D92B2B;--sds-color-error-on-dark:#FF8A8A;
+  --sds-space-gap-s:8px;--sds-space-gap-m:16px;--sds-space-gap-l:24px;--sds-space-gap-xl:32px;
+  --sds-space-page-padding:40px;--sds-space-card-padding:40px;
+  /* Радиус по масштабу формы: секция во всю ширину → карточка → плитка внутри неё →
+     иконочная коробка. На мобильном каждая форма берёт шаг ниже — переопределения
+     в медиазапросе внизу файла, блокам для этого ничего делать не нужно. */
+  --sds-radius-section:40px;--sds-radius-card:24px;--sds-radius-tile:16px;
+  --sds-radius-icon:12px;--sds-radius-button:12px;--sds-radius-control:4px;--sds-radius-pill:999px;
+  --sds-layout-max:1440px;--sds-layout-measure:720px;
+  /* Боковой отступ секции вместо max-width: сама секция во всю ширину экрана,
+     а содержимое остаётся в пределах layout-max и центрируется. Так фон блока
+     можно покрасить на всю ширину, не трогая разметку.
+     Шире layout-max: (100% − max) / 2 + отступ. Уже: обычный отступ страницы. */
+  --sds-page-inline:max(var(--sds-space-page-padding), calc((100% - var(--sds-layout-max)) / 2 + var(--sds-space-page-padding)));
+  --sds-badge-size:64px;
+  --sds-motion-duration:600ms;--sds-motion-duration-fast:300ms;--sds-motion-easing:cubic-bezier(0.22,0.61,0.36,1);
+  /* Тень для всплывающих поверхностей: мягкая, двухслойная — близкий контур плюс дальний ореол. */
+  --sds-shadow-bar:0 0 2px rgba(17,17,17,.08), 0 4px 16px rgba(17,17,17,.08);
+  --sds-font-sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --sds-h1-size:clamp(36px,3.89vw,56px);
+  --sds-h2-size:clamp(28px,2.78vw,40px);
+  --sds-text-h1:600 var(--sds-h1-size)/1.1 var(--sds-font-sans);
+  --sds-text-h2:600 var(--sds-h2-size)/1.1 var(--sds-font-sans);
+  --sds-text-body:400 18px/1.5 var(--sds-font-sans);
+  --sds-text-body-strong:500 18px/1.5 var(--sds-font-sans);
+  /* Мелкий пояснительный текст: пояснение под названием услуги, сноска.
+     Не путать с rating-caption — тот однострочный (1.2), этот переносится. */
+  --sds-text-caption:400 14px/1.5 var(--sds-font-sans);
+  --sds-h3-size:24px;
+  --sds-text-h3:600 var(--sds-h3-size)/1.3 var(--sds-font-sans);
+  --sds-text-card-title:600 20px/1.3 var(--sds-font-sans);
+  --sds-text-badge:500 24px/1 var(--sds-font-sans);
+  --sds-text-chip:500 14px/1.2 var(--sds-font-sans);
+  --sds-text-button:600 16px/1.2 var(--sds-font-sans);
+  --sds-text-rating-value:600 40px/1 var(--sds-font-sans);
+  --sds-text-rating-caption:400 14px/1.2 var(--sds-font-sans);
+  --sds-text-rating-label:400 16px/1.2 var(--sds-font-sans);
+  /* Надзаголовок, меню и телефон идут ПРОПИСНЫМИ. Регистр и трекинг в сокращённую
+     запись font не входят, поэтому блок дописывает их сам:
+     text-transform:uppercase, а у надзаголовка ещё letter-spacing из токена ниже.
+     Интерлиньяж у этих стилей задан в пикселях, а не множителем — так в Figma. */
+  --sds-text-eyebrow:500 12px/16px var(--sds-font-sans);
+  --sds-text-eyebrow-tracking:.12px;
+  --sds-text-menu:500 14px/24px var(--sds-font-sans);
+  --sds-text-menu-item:500 14px/24px var(--sds-font-sans);
+  --sds-text-phone:500 16px/24px var(--sds-font-sans);
+}
+@media (max-width:767.98px){.sds{--sds-radius-section:24px;--sds-radius-card:16px;--sds-radius-tile:12px;--sds-radius-icon:8px;--sds-space-page-padding:16px;--sds-space-card-padding:24px;--sds-h1-size:32px;--sds-h2-size:28px;--sds-text-body:400 16px/1.5 var(--sds-font-sans);--sds-text-body-strong:500 16px/1.5 var(--sds-font-sans);--sds-text-menu:500 16px/24px var(--sds-font-sans);--sds-text-menu-item:500 16px/24px var(--sds-font-sans);--sds-h3-size:20px;--sds-text-card-title:600 18px/1.3 var(--sds-font-sans);--sds-badge-size:32px;--sds-text-badge:500 14px/1 var(--sds-font-sans)}}
+
+/* База: действует только внутри .sds, остальную страницу не трогает */
+.sds,.sds *,.sds *::before,.sds *::after{box-sizing:border-box}
+.sds{font-family:var(--sds-font-sans);color:var(--sds-color-text);-webkit-text-size-adjust:100%}
+.sds :where(h1,h2,h3,h4,p,ul,ol,li,figure){margin:0;padding:0;letter-spacing:normal;text-transform:none}
+.sds :where(ul,ol){list-style:none}
+.sds :where(img,svg,picture){display:block;max-width:100%}
+.sds .sds-sr-only,.sds .sds-sr-only-m{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* ...-m прячет элемент только на мобильном (шапка таблицы в compare-table). Объявления
+   те же, что у sds-sr-only, поэтому приём живёт здесь один раз, а не копией в блоке. */
+@media (min-width:768px){.sds .sds-sr-only-m{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal}}
+/* Кадр во всю карточку. Три блока (photo-cards, photo-slider, kit-and-image) держали этот
+   приём у себя: picture — строчный элемент без своей высоты, поэтому растягивается абсолютом
+   по контейнеру, а img берёт 100%. --contain — когда кадр нельзя обрезать. Размер контейнера
+   задаёт блок своим классом. */
+.sds .sds-media{position:relative;overflow:hidden}
+.sds .sds-media > picture{display:block;position:absolute;inset:0}
+.sds .sds-media__img{width:100%;height:100%;object-fit:cover}
+.sds .sds-media--contain .sds-media__img{object-fit:contain}
+.sds .sds-nowrap{white-space:nowrap}
+.sds :where(a,button):focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:3px}
+/* Появление блоков. Скрываем только когда base.js подтвердил, что он жив:
+   без него класса sds-js нет и контент виден сразу — это важно и для индексации. */
+.sds-js .sds .sds-anim{opacity:0;transform:translateY(16px);transition:opacity var(--sds-motion-duration) var(--sds-motion-easing),transform var(--sds-motion-duration) var(--sds-motion-easing)}
+.sds-js .sds .sds-anim.sds-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.sds,.sds *{animation:none!important;transition:none!important}}
+
+/* atom button v1.3 · Figma: Button (4:41) · свойства Variant=Primary|Secondary, State=Default|Hover,
+   галочка Icon=иконка-бейдж перед подписью. Модификатор --disabled в Figma не описан:
+   добавлен в коде для lead-form (кнопка неактивна, пока не отмечено согласие) — см. его note. */
+.sds .sds-btn{display:inline-flex;align-items:center;justify-content:center;padding:18px 32px;border:0;border-radius:var(--sds-radius-button);background:var(--sds-color-accent);color:var(--sds-color-on-accent);font:var(--sds-text-button);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .2s}
+.sds .sds-btn:hover{background:var(--sds-color-accent-hover);color:var(--sds-color-on-accent)}
+/* pointer-events остаётся: иначе не сработает ни hover-тултип (title), ни клик,
+   который блокирует сам обработчик — через CSS одной ссылку не «выключить». */
+.sds .sds-btn.sds-btn--disabled{opacity:.5;cursor:not-allowed}
+.sds .sds-btn.sds-btn--disabled:hover{background:var(--sds-color-accent)}
+
+/* Бейдж съедает левый отступ (8 вместо 32) и держит подпись газом gap, а не margin:
+   при расширении бейджа на hover (40 → 52) подпись просто уезжает, без лишней математики.
+   Из-за несимметричных отступов подпись в остальном центрируется не по кнопке,
+   а по оставшемуся после бейджа месту — так и задумано в макете. */
+.sds .sds-btn.sds-btn--icon{gap:12px;padding-left:8px}
+.sds .sds-btn__label{flex:1 1 auto;text-align:center}
+.sds .sds-btn__icon{--sds-btn-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12 L20 12 M13.5 5.5 L20 12 L13.5 18.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  display:flex;flex:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--sds-radius-pill);background:var(--sds-color-text)}
+.sds .sds-btn__icon::before{content:"";width:24px;height:24px;background:var(--sds-color-chip-text);-webkit-mask:var(--sds-btn-arrow) center / 24px 24px no-repeat;mask:var(--sds-btn-arrow) center / 24px 24px no-repeat}
+@media (prefers-reduced-motion:no-preference){.sds .sds-btn__icon{transition:width var(--sds-motion-duration-fast) var(--sds-motion-easing)}}
+.sds .sds-btn--icon:hover .sds-btn__icon{width:52px}
+/* Вторичное действие: «все врачи», «подробнее», «скачать прайс». Тише главного намеренно —
+   два одинаково ярких призыва на экране не дают понять, что важнее.
+   Селектор с двумя классами, чтобы наверняка перебить :hover основной кнопки. */
+.sds .sds-btn.sds-btn--secondary{background:var(--sds-color-card);color:var(--sds-color-text)}
+.sds .sds-btn.sds-btn--secondary:hover{background:var(--sds-color-placeholder);color:var(--sds-color-text)}
+
+/* atom chip v1.1 · Figma: Chip (4:35) · список <ul class="sds-chips"><li class="sds-chip"> */
+.sds .sds-chips{display:flex;flex-wrap:wrap;gap:var(--sds-space-gap-s);margin:0;padding:0;list-style:none}
+.sds .sds-chip{margin:0;padding:var(--sds-space-gap-s) var(--sds-space-gap-m);border-radius:var(--sds-radius-pill);background:var(--sds-color-chip-bg);color:var(--sds-color-chip-text);font:var(--sds-text-chip);list-style:none}
+.sds .sds-chip::marker{content:none}
+
+/* atom rating v1.0 · Figma: Rating (4:57) + Stars (4:42) · заполнение звёзд из --sds-rating (0–5), без id и JS */
+.sds .sds-rating{display:inline-flex;align-items:center;gap:var(--sds-space-gap-m);color:inherit;text-decoration:none}
+.sds .sds-rating:hover{color:inherit}
+.sds .sds-rating__value{display:flex;flex-direction:column;gap:4px}
+.sds .sds-rating__caption{font:var(--sds-text-rating-caption);color:var(--sds-color-text-muted)}
+.sds .sds-rating__num{font:var(--sds-text-rating-value);color:var(--sds-color-text)}
+.sds .sds-rating__side{display:flex;flex-direction:column;gap:6px}
+.sds .sds-rating__count{font:var(--sds-text-rating-label);color:var(--sds-color-text-muted)}
+.sds .sds-stars{display:flex;gap:4px}
+.sds .sds-star{position:relative;width:24px;height:24px;color:var(--sds-color-star-empty)}
+.sds .sds-star svg{width:24px;height:24px;max-width:none}
+.sds .sds-star__fill{position:absolute;top:0;left:0;bottom:0;overflow:hidden;color:var(--sds-color-star);width:calc(clamp(0, var(--sds-rating) - var(--sds-i), 1) * 100%)}
+.sds .sds-star:nth-child(1){--sds-i:0}.sds .sds-star:nth-child(2){--sds-i:1}.sds .sds-star:nth-child(3){--sds-i:2}.sds .sds-star:nth-child(4){--sds-i:3}.sds .sds-star:nth-child(5){--sds-i:4}
+
+/* atom badge v1.1 · Figma: Badge (2022:78) · декоративный номер карточки.
+   Номера в разметке нет: он считается CSS-счётчиком, поэтому скринридер читает
+   только заголовок и текст карточки. Список получает класс sds-badges, элемент — sds-badge. */
+.sds .sds-badges{counter-reset:sds-badge}
+.sds .sds-badge{counter-increment:sds-badge}
+.sds .sds-badge::before{display:flex;align-items:center;justify-content:center;flex:none;width:var(--sds-badge-size);height:var(--sds-badge-size);border-radius:var(--sds-radius-pill);background:var(--sds-color-chip-bg);color:var(--sds-color-chip-text);font:var(--sds-text-badge);content:counter(sds-badge)}
+/* Пустой alt у сгенерированного контента: номер не озвучивается. Где синтаксис не
+   поддерживается, остаётся объявление выше и номер просто читается — не ошибка. */
+@supports (content:"a" / "b"){.sds .sds-badge::before{content:counter(sds-badge) / ""}}
+
+/* atom arrow v1.0 · Figma: Arrow (2031:80) · стрелки перелистывания слайдера.
+   По умолчанию скрыты: без JS они ничего не делают, а дорожка листается свайпом.
+   Показывает их блок, когда скрипт подтвердил готовность. */
+.sds .sds-arrows{display:none;flex:none;gap:var(--sds-space-gap-s)}
+.sds .sds-arrow{display:inline-flex;align-items:center;justify-content:center;flex:none;width:48px;height:48px;padding:0;border:0;border-radius:var(--sds-radius-pill);background:var(--sds-color-card);color:var(--sds-color-text);cursor:pointer;transition:background-color .2s}
+.sds .sds-arrow:hover{background:var(--sds-color-placeholder)}
+.sds .sds-arrow[disabled]{background:var(--sds-color-placeholder);color:var(--sds-color-text-muted);cursor:default}
+.sds .sds-arrow svg{display:block;width:24px;height:24px}
+
+/* atom list v1.0 · Figma: List item (2052:85) · список с маркером.
+   Маркер задаётся на весь список модификатором: sds-list--check, --minus, --dash.
+   Рисуется через CSS, поэтому скринридер читает только текст пункта: галочка и минус
+   не должны озвучиваться словами. Кружок — ::before, знак внутри — ::after маской,
+   чтобы цвет знака остался токеном, а не был зашит в картинку. */
+.sds .sds-list{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);margin:0;padding:0;list-style:none}
+.sds .sds-list__item{position:relative;display:flex;align-items:flex-start;gap:var(--sds-space-gap-s);margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted);list-style:none}
+.sds .sds-list__item::marker{content:none}
+.sds .sds-list__item::before{content:"";flex:none;width:24px;height:24px;border-radius:var(--sds-radius-pill);background:var(--sds-color-chip-bg)}
+.sds .sds-list__item::after{content:"";position:absolute;top:0;left:0;width:24px;height:24px;background:var(--sds-color-chip-text);-webkit-mask:var(--sds-list-glyph) center / 16px 16px no-repeat;mask:var(--sds-list-glyph) center / 16px 16px no-repeat}
+.sds .sds-list--check{--sds-list-glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5 L10 17.5 L19 7' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.sds .sds-list--minus{--sds-list-glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12 L19 12' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E")}
+/* Нейтральный вариант: без кружка, обычное тире. */
+.sds .sds-list--dash .sds-list__item::before{content:"—";width:auto;height:auto;border-radius:0;background:none;color:var(--sds-color-text-muted)}
+.sds .sds-list--dash .sds-list__item::after{content:none}
+
+/* atom accordion v1.1 · Figma: Accordion item (2217:600) · строка вопроса с раскрывающимся ответом.
+   Раскрытие — родной <details>/<summary>: открывается без JS, работает с клавиатуры
+   и объявляется скринридером как «раскрыто / свёрнуто». Своего скрипта здесь нет намеренно.
+   Шеврон рисуется маской, чтобы его цвет остался токеном, а не был зашит в картинку. */
+.sds .sds-acc{--sds-acc-chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9.5 L12 15.5 L18 9.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  padding:var(--sds-space-gap-l);border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+
+/* Кликабельна вся строка вопроса, а не один шеврон: в кружок 24 px пальцем не попасть.
+   Родной треугольник убираем двумя способами — у webkit он отдельным псевдоэлементом. */
+.sds .sds-acc__q{display:flex;align-items:center;gap:var(--sds-space-gap-m);cursor:pointer;list-style:none}
+.sds .sds-acc__q::-webkit-details-marker{display:none}
+.sds .sds-acc__q-text{flex:1 1 auto;margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+
+/* Кружок всегда 40 px, даже когда он прозрачный и не виден. Если менять размер
+   при раскрытии, строка вопроса становится выше и заголовок дёргается вверх. */
+.sds .sds-acc__marker{position:relative;flex:0 0 auto;width:40px;height:40px;border-radius:var(--sds-radius-pill);color:var(--sds-color-text)}
+.sds .sds-acc__marker::before{content:"";position:absolute;top:50%;left:50%;width:24px;height:24px;transform:translate(-50%,-50%);background:currentColor;-webkit-mask:var(--sds-acc-chevron) center / 24px 24px no-repeat;mask:var(--sds-acc-chevron) center / 24px 24px no-repeat}
+
+/* Раскрыто: шеврон разворачивается вверх, кружок проявляется тёмным. */
+.sds .sds-acc[open] .sds-acc__marker{background:var(--sds-color-chip-bg);color:var(--sds-color-chip-text);transform:rotate(180deg)}
+
+.sds .sds-acc__a{margin:var(--sds-space-gap-m) 0 0;padding:var(--sds-space-gap-l);border-radius:var(--sds-radius-tile);background:var(--sds-color-page)}
+.sds .sds-acc__p{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-acc__p + .sds-acc__p{margin-top:var(--sds-space-gap-m)}
+.sds .sds-acc__p a{color:inherit}
+
+/* Ответ проявляется при раскрытии. Сбрасывается сам: правило действует, только
+   пока у details стоит open — закрыли, правило перестало совпадать, анимация снялась,
+   открыли снова — проигрывается заново. Своего состояния хранить не нужно.
+   Поворот шеврона анимируем, высоту панели — нет: плавное раскрытие details
+   поддерживают пока не все браузеры, а полумера дала бы рывок в части из них. */
+@keyframes sds-acc-reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .sds .sds-acc__marker{transition:transform var(--sds-motion-duration-fast) var(--sds-motion-easing)}
+  .sds .sds-acc[open] .sds-acc__a{animation:sds-acc-reveal var(--sds-motion-duration-fast) var(--sds-motion-easing) both}
+}
+
+/* atom callout v1.0 · Figma: Callout (2089:230) · врезка с акцентной полосой слева.
+   Полоса — именно граница, а не отдельный элемент: тянется по высоте сама и не разъедется
+   при длинном тексте. Фона нет намеренно: на странице уже есть карточки, и вторая заливка
+   рядом с ними спорила бы за внимание. */
+.sds .sds-callout{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);padding-left:var(--sds-space-gap-l);border-left:4px solid var(--sds-color-accent)}
+.sds .sds-callout__title{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-callout__text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+
+/* atom pager v1.2 · Figma: Pager (2031:81) · пагинация слайдера короткими полосками.
+   Полоска 4 px, но кнопка 24 px по высоте: полоска рисуется через ::before,
+   иначе цель для пальца получилась бы меньше минимума по доступности.
+   По умолчанию скрыт: без JS листается свайпом, кнопки ничего не делают. */
+.sds .sds-pager{--sds-pager-dot-h:24px;--sds-pager-bar-h:4px;display:none;align-items:center;gap:var(--sds-space-gap-s)}
+/* Кнопка выше полоски ради цели для пальца, сверху остаётся прозрачная зона.
+   Атом отдаёт её величину переменной, а блок вычитает из своего отступа — иначе
+   визуальный зазор получится больше заданного в макете. */
+.sds .sds-pager{--sds-pager-offset:calc((var(--sds-pager-bar-h) - var(--sds-pager-dot-h)) / 2)}
+.sds .sds-pager__dot{position:relative;width:20px;height:var(--sds-pager-dot-h);padding:0;border:0;background:none;cursor:pointer;transition:width .2s}
+.sds .sds-pager__dot::before{content:"";position:absolute;right:0;left:0;top:50%;height:var(--sds-pager-bar-h);margin-top:calc(var(--sds-pager-bar-h) / -2);border-radius:var(--sds-radius-pill);background:var(--sds-color-placeholder);transition:background-color .2s}
+.sds .sds-pager__dot[aria-current="true"]{width:40px}
+.sds .sds-pager__dot[aria-current="true"]::before{background:var(--sds-color-text)}
+
+/* atom icon v1.2 · Figma: Icon (2115:344) · пиктограмма-заглушка слотов блоков.
+   Сетка 24×24, линия 2, скруглённые концы — рисунок один на всю систему, меняется здесь.
+   Placeholder стоит в слоте, пока проект не подставит свою пиктограмму (в клиентской копии).
+   Цвет — currentColor, размер box задаёт блок своим классом (идёт после атома в сборке). */
+.sds .sds-icon{--sds-icon-glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='3' width='18' height='18' rx='4' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M5 19 L19 5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");display:block;flex:none;width:24px;height:24px;color:var(--sds-color-text)}
+.sds .sds-icon::before{content:"";display:block;width:100%;height:100%;background:currentColor;-webkit-mask:var(--sds-icon-glyph) center / contain no-repeat;mask:var(--sds-icon-glyph) center / contain no-repeat}
+
+/* atom icon-row v1.0 · ряд «пиктограмма + текст»: условие, преимущество, строка состава.
+   Выделен из icon-cards и kit-and-image, где эта раскладка была скопирована слово в слово
+   (вместе с flex 1 1 260px на десктопе). Список-обёртка — sds-icon-rows: на мобильном
+   колонка, с 768 переносящийся ряд. Пиктограмма декоративная, в разметке aria-hidden. */
+.sds .sds-icon-rows{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);margin:0;padding:0}
+.sds .sds-icon-row{display:flex;align-items:center;gap:var(--sds-space-gap-m);margin:0}
+.sds .sds-icon-row__icon{width:32px;height:32px}
+.sds .sds-icon-row__text{margin:0;flex:1 1 auto;font:var(--sds-text-body);color:var(--sds-color-text)}
+@media (min-width:768px){
+  .sds .sds-icon-rows{flex-direction:row;flex-wrap:wrap}
+  .sds .sds-icon-row{flex:1 1 260px;min-width:260px}
+}
+
+/* atom slider v1.0 · общий механизм дорожки: прокрутка, перетаскивание, маска правого
+   края, показ стрелок/пагинации после скрипта. Код — slider.js (тоже общий). Разметку
+   трека и карточек даёт блок, атом только управляет поведением классов sds-slider__*.
+   Перенесено из views-slider при появлении photo-slider — тот же механизм, не копия. */
+.sds .sds-slider__track{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+.sds .sds-slider__track::-webkit-scrollbar{display:none}
+.sds .sds-slider__track:focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:3px}
+.sds .sds-slider__card{scroll-snap-align:start}
+
+.sds .sds-slider__track.is-free{scroll-snap-type:none}
+.sds .sds-slider__track{--sds-slider-fade:0px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - var(--sds-slider-fade)),transparent);mask-image:linear-gradient(to right,#000 calc(100% - var(--sds-slider-fade)),transparent)}
+
+.sds.sds-slider .sds-pager{margin-top:calc(var(--sds-space-gap-m) + var(--sds-pager-offset));padding-left:var(--sds-radius-card)}
+.sds.sds-slider--js .sds-pager{display:flex}
+/* Нечего листать на этой ширине (мало карточек, дорожка не упирается в край) —
+   стрелки и точки прячутся, а не стоят неработающими. См. slider.js updateOverflow. */
+.sds.sds-slider--no-overflow .sds-pager{display:none}
+
+@media (min-width:768px){
+  .sds.sds-slider--js .sds-arrows{display:flex}
+  .sds.sds-slider--no-overflow .sds-arrows{display:none}
+  .sds.sds-slider--js .sds-slider__track{cursor:grab}
+  .sds.sds-slider--js .sds-slider__track.is-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+  .sds .sds-slider__track img{-webkit-user-drag:none}
+}
+
+/* atom review-card v1.1 · Figma 2149:452 · карточка отзыва или скана благодарности.
+   Два типа лежат в одной ленте, поэтому это отдельный компонент, а не свойство блока:
+   is_text/is_scan — взаимоисключающие ключи данных (движок без «иначе»).
+   Type=Text всегда столбцом (и на мобильном, и на десктопе); Type=Scan столбцом на
+   мобильном (скан сверху) и строкой на десктопе (скан слева) — так в Figma.
+   Ширина карточки (291/672) и радиус (--sds-radius-card, уже адаптивный) — часть
+   самого компонента: он всегда одного размера, где бы ни стоял. Звёзды — те же классы
+   sds-stars/sds-star, что в atoms/rating, но без ссылки и счётчика.
+   Скан — ссылка на файл (data-lightbox), не кнопка: без JS это обычный переход
+   на изображение, с ним клик перехватывает atoms/lightbox и открывает оверлей. */
+.sds .sds-review-card{display:flex;flex:0 0 291px;flex-direction:column;gap:var(--sds-space-gap-xl);align-items:flex-start;padding:var(--sds-space-gap-m);border-radius:var(--sds-radius-card);background:var(--sds-color-page);list-style:none}
+.sds .sds-review-card::marker{content:none}
+
+.sds .sds-review-card__who{display:flex;flex-direction:column;gap:4px;min-width:0}
+.sds .sds-review-card__name{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text)}
+.sds .sds-review-card__date{margin:0;font:var(--sds-text-rating-caption);color:var(--sds-color-text-muted)}
+
+.sds .sds-review-card__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);width:100%}
+.sds .sds-review-card__stars{flex:none}
+.sds .sds-review-card__body{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);width:100%}
+.sds .sds-review-card__paragraph{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+
+.sds .sds-review-card__scan{position:relative;display:flex;flex:none;align-items:flex-end;justify-content:flex-end;width:100%;height:240px;padding:var(--sds-space-gap-s);border-radius:var(--sds-radius-button);background:var(--sds-color-placeholder);text-decoration:none;cursor:pointer}
+.sds .sds-review-card__scan-img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.sds .sds-review-card__expand{position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--sds-radius-pill);background:var(--sds-color-page);color:var(--sds-color-text)}
+.sds .sds-review-card__expand svg{display:block;width:20px;height:20px}
+.sds .sds-review-card__column{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);width:100%;min-width:0}
+.sds .sds-review-card__excerpt{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+
+@media (min-width:768px){
+  .sds .sds-review-card{flex-basis:672px}
+  .sds .sds-review-card__head{flex-direction:row;align-items:flex-start;justify-content:space-between;gap:var(--sds-space-gap-m)}
+  .sds .sds-review-card--scan{flex-direction:row}
+  .sds .sds-review-card__scan{width:240px;height:296px}
+  .sds .sds-review-card__column{flex:1 1 0;min-width:0}
+}
+
+/* atom lightbox v1.0 · Figma: Lightbox (2151:538) · изображение поверх страницы (сканы,
+   сертификаты). Один <dialog> на блок, который его использует — триггеры (ссылки с
+   data-lightbox) находит скрипт и переиспользуют один и тот же диалог.
+   <dialog> даёт бесплатно то, что требует Description: Esc закрывает, фокус заперт
+   внутри, после закрытия фокус возвращается на открывший элемент — всё нативное,
+   lightbox.js добавляет только клик по крестику/затемнению и блокировку скролла.
+   Сам диалог — он же подложка: фон overlay-scrim на весь экран, без отдельного ::backdrop. */
+.sds.sds-lightbox{display:none;position:fixed;inset:0;margin:0;width:100vw;max-width:100vw;height:100vh;max-height:100vh;padding:var(--sds-space-page-padding);border:0;background:var(--sds-color-overlay-scrim);color:var(--sds-color-on-overlay)}
+.sds.sds-lightbox[open]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sds-space-gap-l)}
+.sds.sds-lightbox::backdrop{background:transparent}
+
+.sds.sds-lightbox .sds-lightbox__image{max-width:min(560px,100%);max-height:70vh;width:auto;height:auto;object-fit:contain;border-radius:var(--sds-radius-button)}
+
+.sds.sds-lightbox .sds-lightbox__caption{display:flex;flex-direction:column;gap:4px;max-width:560px;text-align:center}
+.sds.sds-lightbox .sds-lightbox__name{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-on-overlay)}
+.sds.sds-lightbox .sds-lightbox__date{margin:0;font:var(--sds-text-rating-caption);color:var(--sds-color-on-overlay-muted)}
+
+.sds.sds-lightbox .sds-lightbox__close{position:absolute;top:var(--sds-space-page-padding);right:var(--sds-space-page-padding);display:flex;align-items:center;justify-content:center;width:48px;height:48px;border:0;border-radius:var(--sds-radius-pill);background:var(--sds-color-page);color:var(--sds-color-text);cursor:pointer}
+.sds.sds-lightbox .sds-lightbox__close-icon{--sds-lightbox-close:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 L18 18 M18 6 L6 18' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");display:block;width:24px;height:24px;background:currentColor;-webkit-mask:var(--sds-lightbox-close) center / contain no-repeat;mask:var(--sds-lightbox-close) center / contain no-repeat}
+
+/* Блокировка скролла страницы, пока диалог открыт: showModal() сам по себе
+   это в части браузеров не гарантирует (особенно тач-скролл на мобильном).
+   Класс навешивает lightbox.js на <html> — единственное место в библиотеке,
+   где CSS осознанно выходит за пределы .sds: скролл страницы — не часть блока. */
+html.sds-lightbox-open{overflow:hidden}
+
+/* atom field v1.0 · Figma: Field (2155:558) · поле формы с плавающей подписью, без id.
+   Подпись — не placeholder, а обычный <span> внутри <label>, который оборачивает input:
+   так работает и без JS, и без пары id/for (у блоков и атомов id нет, см. правила кода).
+   Подпись лежит в покое на месте значения (как бы плейсхолдер), а при фокусе или вводе
+   уезжает наверх мелким текстом — об этом судит :placeholder-shown у input/textarea
+   с placeholder=" " (пробел, не пустая строка — иначе состояние не отличить от пустого). */
+.sds .sds-field{display:flex;flex-direction:column;gap:4px;width:100%}
+.sds .sds-field__control{position:relative;display:flex;width:100%;border-radius:var(--sds-radius-pill);background:var(--sds-color-page);cursor:text}
+.sds .sds-field__input{width:100%;height:56px;margin:0;padding:28px 24px 8px;border:2px solid transparent;border-radius:inherit;background:none;font:400 16px/1.5 var(--sds-font-sans);color:var(--sds-color-text);outline:none}
+.sds .sds-field__input:placeholder-shown{padding-top:0;padding-bottom:0}
+.sds .sds-field__input:focus{border-color:var(--sds-color-text)}
+.sds .sds-field__label{position:absolute;left:24px;top:8px;font:400 14px/1.2 var(--sds-font-sans);color:var(--sds-color-text-muted);pointer-events:none;transition:top .15s,font-size .15s}
+.sds .sds-field__input:placeholder-shown:not(:focus) ~ .sds-field__label{top:50%;transform:translateY(-50%);font:400 16px/1.5 var(--sds-font-sans)}
+.sds .sds-field__error{margin:0;padding:0 24px;font:400 14px/1.2 var(--sds-font-sans);color:var(--sds-color-error-on-dark)}
+.sds .sds-field__input:invalid:not(:placeholder-shown){border-color:var(--sds-color-error)}
+
+/* Многострочное поле: та же механика плавающей подписи, только высота фиксированная. */
+.sds .sds-field--area .sds-field__control{border-radius:var(--sds-radius-card)}
+.sds .sds-field--area .sds-field__input{height:96px;resize:none}
+.sds .sds-field--area .sds-field__input:placeholder-shown{padding:12px 24px}
+.sds .sds-field--area .sds-field__input:not(:placeholder-shown),
+.sds .sds-field--area .sds-field__input:focus{padding:28px 24px 8px}
+
+/* atom checkbox v1.0 · Figma: Checkbox (2155:563) · флажок согласия, без id.
+   Рисунок — сам input (appearance:none), не span рядом: тогда подпись можно
+   обернуть в <label> вместе с ним и не городить id/for — кликабельна вся строка.
+   Фон у поля всегда прозрачный (карточка тёмная), поэтому состояния различает рамка. */
+.sds .sds-checkbox{appearance:none;flex:none;width:20px;height:20px;margin:0;border:1px solid var(--sds-color-on-overlay-muted);border-radius:var(--sds-radius-control);background:none;cursor:pointer}
+.sds .sds-checkbox:checked{--sds-checkbox-glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5 L8 14.5 L16 5.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  border-color:var(--sds-color-accent);background:var(--sds-color-accent) var(--sds-checkbox-glyph) center / 14px no-repeat}
+.sds .sds-checkbox:focus-visible{outline:2px solid var(--sds-color-on-overlay-muted);outline-offset:2px}
+/* Форма попыталась отправиться, флажок не отмечен: класс навешивает скрипт плагина
+   при неудачной валидации — CSS сам момент отправки не знает. */
+.sds .sds-checkbox.sds-checkbox--error{border-color:var(--sds-color-error-on-dark)}
+
+/* site-header v1.1 · Figma 2111:337 · атом button (иконка).
+   Брейкпоинт 1280, а не привычные 768: в Figma нет промежуточного планшетного варианта —
+   только Desktop 1440 и Mobile 375, а меню приходит из контента сайта, длина пунктов
+   заранее не известна. При образце из пяти пунктов и телефоне в пилюле горизонтальное
+   меню с запасом помещается только с 1280 (при 1152 «Дополнительные услуги» уже переносится
+   на вторую строку и ломает высоту пилюли). Мобильная раскладка на 768–1279 работает
+   без переделок, поэтому планшет получает её, а не тесный десктоп. min-width:0 на меню
+   и nowrap на пункте — страховка на случай, если реальный пункт всё равно
+   окажется длиннее образца: тогда он подожмётся или на пиксель вылезет за пилюлю,
+   но не перенесётся на вторую строку и не выгонит телефон за край экрана.
+   Секция прозрачная: своего фона нет, фон несёт только пилюля .sds-header__bar. */
+/* Фиксируется наверху на любой ширине и остаётся на экране при скролле —
+   якоря меню должны попадать под открытую шапку, а не под её прежнее место. */
+.sds.sds-header{position:fixed;top:0;left:0;right:0;z-index:30;padding-top:var(--sds-space-gap-l);padding-inline:var(--sds-page-inline)}
+@media (max-width:1279.98px){.sds.sds-header{padding-top:var(--sds-space-page-padding)}}
+
+.sds .sds-header__bar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:var(--sds-space-gap-m);height:64px;padding-inline:var(--sds-space-gap-xl);border-radius:var(--sds-radius-pill);background:var(--sds-color-page);box-shadow:var(--sds-shadow-bar)}
+@media (max-width:1279.98px){.sds .sds-header__bar{height:56px;padding-inline:var(--sds-space-gap-m)}}
+
+.sds .sds-header__logo{display:block;flex:none;border-radius:var(--sds-radius-button);overflow:hidden}
+.sds .sds-header__logo-img{display:block;height:40px;width:auto}
+@media (max-width:1279.98px){.sds .sds-header__logo-img{height:28px}}
+
+/* Телефон идёт дважды в разметке (в пилюле на десктопе, в подвале мобильной панели):
+   это два разных места в двух непохожих раскладках Figma, а не одна и та же строка,
+   переносимая CSS. Видимый экземпляр на каждой ширине — один. */
+.sds .sds-header__phone{margin:0;font:var(--sds-text-phone);color:var(--sds-color-text);text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.sds .sds-header__phone--panel{display:block}
+
+/* Навигация и подменю: только десктоп, от 1280. На мобильном (и планшете) меню живёт в полноэкранной панели. */
+.sds .sds-header__nav{display:none}
+.sds .sds-header__phone--bar{display:none}
+.sds .sds-header__toggle{display:block}
+
+/* Шеврон — тот же развёрнутый вниз треугольник, что в атоме accordion: разворачивается
+   на 180° у открытого <details>, язык жестов один на всю библиотеку. Общий для десктопного
+   подменю и мобильного аккордеона, поэтому вне брейкпоинта — оба используют этот класс. */
+.sds .sds-header__chevron{--sds-header-chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9.5 L12 15.5 L18 9.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");flex:none;width:16px;height:16px;background:currentColor;-webkit-mask:var(--sds-header-chevron) center / 16px 16px no-repeat;mask:var(--sds-header-chevron) center / 16px 16px no-repeat}
+@media (prefers-reduced-motion:no-preference){.sds .sds-header__chevron{transition:transform var(--sds-motion-duration-fast) var(--sds-motion-easing)}}
+
+@media (min-width:1280px){
+  .sds .sds-header__nav{display:block;min-width:0}
+  .sds .sds-header__phone--bar{display:block;flex:none}
+  .sds .sds-header__toggle{display:none}
+
+  .sds .sds-header__menu{display:flex;align-items:center;gap:var(--sds-space-gap-l);margin:0;padding:0;list-style:none;min-width:0}
+  .sds .sds-header__link{display:inline-flex;align-items:center;gap:var(--sds-space-gap-s);border:0;background:none;margin:0;padding:0;font:var(--sds-text-menu-item);color:var(--sds-color-text);text-transform:uppercase;text-decoration:none;white-space:nowrap;cursor:pointer}
+  .sds .sds-header__link[aria-current="page"]{color:var(--sds-color-accent);text-decoration:underline}
+  .sds summary.sds-header__link::-webkit-details-marker{display:none}
+  .sds summary.sds-header__link{list-style:none}
+  @media (hover:hover){.sds .sds-header__link:hover{color:var(--sds-color-accent)}}
+  .sds .sds-header__link:focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:4px;border-radius:var(--sds-radius-control)}
+
+  .sds .sds-header__drop[open] > summary .sds-header__chevron{transform:rotate(180deg)}
+
+  .sds .sds-header__drop{position:relative}
+  .sds .sds-header__dropdown{position:absolute;top:calc(100% + var(--sds-space-gap-s));left:0;z-index:1;margin:0;padding:var(--sds-space-gap-s);width:296px;display:flex;flex-direction:column;border-radius:var(--sds-radius-button);background:var(--sds-color-page);box-shadow:var(--sds-shadow-bar);list-style:none}
+  /* Второй уровень — та же панель, выезжает вправо от пункта с шевроном, а не вниз. */
+  .sds .sds-header__dropdown--sub{top:0;left:calc(100% + var(--sds-space-gap-s))}
+
+  .sds .sds-header__drow{display:flex;align-items:center;justify-content:space-between;gap:var(--sds-space-gap-s);width:100%;border:0;background:none;margin:0;padding:var(--sds-space-gap-s) var(--sds-space-gap-m);border-radius:var(--sds-radius-button);font:var(--sds-text-menu-item);color:var(--sds-color-text);text-decoration:none;cursor:pointer;text-align:left}
+  .sds summary.sds-header__drow::-webkit-details-marker{display:none}
+  .sds summary.sds-header__drow{list-style:none}
+  @media (hover:hover){.sds .sds-header__drow:hover{background:var(--sds-color-card)}}
+  .sds .sds-header__drop[open] > summary.sds-header__drow{background:var(--sds-color-card)}
+  .sds .sds-header__drow:focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:-2px}
+}
+
+/* Мобильная панель: открывается нативным <details>, состояния в JS нет.
+   Пока открыта — страница позади не скроллится (:has, без JS), а её содержимое
+   выключено из фокуса атрибутом inert (site-header.js: CSS этого не умеет). */
+/* Блокировка скролла страницы под открытой панелью. Пока идёт анимация закрытия
+   (site-header.js: closePanel), атрибут open специально ещё стоит — ради плавного
+   исчезновения, а не ради блокировки: скролл к выбранному пункту должен пройти
+   именно в эти 300мс, иначе и Lenis, и сама страница (overflow:hidden) не пускают
+   его, и переход визуально не происходит. Поэтому замок держит не open, а is-shown
+   (его снимает тот же closePanel сразу, до конца анимации). Без JS is-shown
+   не появляется вовсе — тогда замком остаётся open, как раньше. */
+html:not(.sds-js) body:has(.sds .sds-header__toggle[open]){overflow:hidden}
+body:has(.sds .sds-header__panel.is-shown){overflow:hidden}
+
+.sds .sds-header__burger{--sds-header-burger:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 7 H20 M4 12 H20 M4 17 H20' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  --sds-header-close:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 L18 18 M18 6 L6 18' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  display:flex;flex:none;width:24px;height:24px;background:currentColor;color:var(--sds-color-text);-webkit-mask:var(--sds-header-burger) center / 24px 24px no-repeat;mask:var(--sds-header-burger) center / 24px 24px no-repeat;list-style:none;cursor:pointer}
+.sds .sds-header__burger::-webkit-details-marker{display:none}
+.sds .sds-header__burger:focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:4px;border-radius:var(--sds-radius-control)}
+.sds .sds-header__toggle[open] .sds-header__burger{-webkit-mask-image:var(--sds-header-close);mask-image:var(--sds-header-close);position:fixed;top:calc(var(--sds-space-page-padding) + 16px);right:var(--sds-space-page-padding);z-index:50}
+
+.sds .sds-header__panel{position:fixed;inset:0;display:flex;flex-direction:column;gap:var(--sds-space-gap-l);overflow-y:auto;padding:var(--sds-space-page-padding);background:var(--sds-color-page)}
+/* Открытие/закрытие панели плавное только когда есть JS (sds-js на <html>): он же
+   придерживает open/закрытие на время перехода (site-header.js, closePanel).
+   Без JS <details> переключается мгновенно — поведение не хуже прежнего. */
+@media (prefers-reduced-motion:no-preference){
+  .sds-js .sds .sds-header__panel{opacity:0;transform:translateY(-12px);transition:opacity var(--sds-motion-duration-fast) var(--sds-motion-easing),transform var(--sds-motion-duration-fast) var(--sds-motion-easing)}
+  .sds-js .sds .sds-header__panel.is-shown{opacity:1;transform:none}
+}
+
+.sds .sds-header__mobile-menu{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);margin:0;padding:0;list-style:none}
+.sds .sds-header__mrow{display:flex;align-items:center;justify-content:space-between;gap:var(--sds-space-gap-s);width:100%;min-height:56px;border:0;background:none;margin:0;padding:var(--sds-space-gap-m);border-radius:var(--sds-radius-button);font:var(--sds-text-menu-item);color:var(--sds-color-text);text-decoration:none;cursor:pointer;text-align:left}
+.sds .sds-header__mrow[aria-current="page"]{color:var(--sds-color-accent)}
+.sds summary.sds-header__mrow::-webkit-details-marker{display:none}
+.sds summary.sds-header__mrow{list-style:none}
+.sds .sds-header__macc[open] > summary.sds-header__mrow{background:var(--sds-color-card)}
+.sds .sds-header__mrow:focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:-2px}
+.sds .sds-header__chevron--m{transform:rotate(0)}
+@media (prefers-reduced-motion:no-preference){.sds .sds-header__chevron--m{transition:transform var(--sds-motion-duration-fast) var(--sds-motion-easing)}}
+.sds .sds-header__macc[open] > summary .sds-header__chevron--m{transform:rotate(180deg)}
+.sds .sds-header__msub{margin:var(--sds-space-gap-s) 0 0;padding-left:var(--sds-space-gap-m);display:flex;flex-direction:column;gap:var(--sds-space-gap-s);list-style:none}
+
+.sds .sds-header__foot{margin-top:auto;display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+
+/* block site-footer v1.5 · Figma: site-footer (2158:604), Description читать перед правкой.
+   Фон surface-muted (не card: подвал — приглушённая поверхность страницы, не карточка).
+   Скруглены только верхние углы: снизу подвал режет край экрана.
+   Раскладка в Figma ручная (пиксельная сетка 0/688/1032), здесь — гибкая (flex),
+   чтобы подвал не ломался на ширинах между 768 и 1440: сетка остаётся по смыслу,
+   точные px не копируются, см. library-sets-values-not-the-mockup.
+   Вертикальные отступы — токенами (card-padding/gap-l), а не 44/24 из макета:
+   подвал стоит в общем ритме страницы и должен ехать вместе с ним. */
+.sds.sds-footer{background:var(--sds-color-surface-muted);border-radius:var(--sds-radius-section) var(--sds-radius-section) 0 0;padding:var(--sds-space-card-padding) var(--sds-page-inline)}
+
+.sds .sds-footer__main{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);width:100%}
+
+.sds .sds-footer__brand{display:flex;flex-direction:column;gap:var(--sds-space-gap-l)}
+.sds .sds-footer__logo{width:200px;height:46px;border-radius:var(--sds-radius-control);background:var(--sds-color-placeholder)}
+.sds .sds-footer__brand-link{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+.sds .sds-footer__brand-link a{color:inherit;text-decoration:none}
+.sds .sds-footer__brand-link a:hover{text-decoration:underline}
+
+.sds .sds-footer__columns{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);width:100%}
+.sds .sds-footer__column{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);flex:1 1 0}
+.sds .sds-footer__group{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+.sds .sds-footer__group-label{margin:0;font:var(--sds-text-rating-label);color:var(--sds-color-text-muted)}
+.sds .sds-footer__group-content{font:var(--sds-text-body-strong);color:var(--sds-color-text);font-style:normal}
+.sds .sds-footer__line{margin:0}
+.sds .sds-footer__line a{color:inherit;text-decoration:none}
+.sds .sds-footer__line a:hover{text-decoration:underline}
+
+.sds .sds-footer__top{font:var(--sds-text-body);color:var(--sds-color-text);text-decoration:none}
+.sds .sds-footer__top:hover{text-decoration:underline}
+
+.sds .sds-footer__legal{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);width:100%;margin-top:var(--sds-space-gap-xl)}
+.sds .sds-footer__legal p{margin:0;font:var(--sds-text-rating-caption);color:var(--sds-color-text-muted)}
+.sds .sds-footer__legal a{color:inherit;text-decoration:none}
+.sds .sds-footer__legal a:hover{text-decoration:underline}
+.sds .sds-footer__mark{width:46px;height:22px;background:var(--sds-color-placeholder)}
+
+@media (min-width:768px){
+  .sds.sds-footer{padding:var(--sds-space-card-padding) var(--sds-page-inline) var(--sds-space-gap-l)}
+  .sds .sds-footer__main{position:relative;flex-direction:row;align-items:flex-start;gap:0}
+  .sds .sds-footer__brand{flex:0 0 338px}
+  .sds .sds-footer__columns{flex-direction:row;gap:var(--sds-space-gap-m);flex:1 1 auto;margin-left:72px}
+  .sds .sds-footer__top{position:absolute;top:0;right:0;font:var(--sds-text-rating-label)}
+  .sds .sds-footer__legal{flex-direction:row;align-items:center;justify-content:space-between}
+}
+
+/* «Наверх» на ПК (site-footer.js): тот же текстовый линк, без фона и área —
+   просто временно position:fixed у правого края, пока страница пролистывается
+   вниз со второго блока и до футера. top/right считает скрипт на каждый скролл
+   (docY футера минус scrollY, зажато снизу высотой экрана) — поэтому у футера
+   кнопка не пропадает по opacity, а непрерывно «въезжает» и останавливается
+   ровно там, где потом встаёт в обычном потоке (top:0;right:0 выше).
+   Скрытие — opacity плюс visibility: при одной прозрачности невидимая ссылка
+   остаётся в порядке табуляции, и фокус с клавиатуры уходит в пустоту.
+   Opacity здесь только для скрытия при скролле вверх в середине страницы —
+   у самого футера это правило скрипт отключает (is-shown держится true).
+   Блок идёт после @media(min-width:768px) выше: та же специфичность у
+   .sds .sds-footer__top, тай-брейк решает порядок в файле. */
+@media (min-width:1280px){
+  .sds .sds-footer__top--pinned{position:fixed;z-index:20;opacity:0;visibility:hidden;pointer-events:none}
+  .sds .sds-footer__top--pinned.is-shown{opacity:1;visibility:visible;pointer-events:auto}
+  @media (prefers-reduced-motion:no-preference){
+    .sds .sds-footer__top--pinned{transition:opacity var(--sds-motion-duration-fast) var(--sds-motion-easing),visibility var(--sds-motion-duration-fast)}
+  }
+}
+
+/* hero-video v1.1 · Figma 2113:313 · атом button · только токены.
+   Высота секции — фиксированные значения из Figma (768/640): первый экран задуман
+   как почти-во-весь-кадр блок, а не как гибкая по контенту карточка.
+   Скрим — одна подложка на всю секцию: backdrop-blur + сам цвет overlay-scrim,
+   маска-градиент гасит оба эффекта к верху (формула из описания компонента),
+   поэтому верх кадра чистый, а подпись внизу всегда читается. */
+.sds.sds-hero-video{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:768px;padding:112px var(--sds-page-inline) var(--sds-space-page-padding)}
+.sds .sds-hero-video__media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--sds-color-placeholder)}
+.sds .sds-hero-video__scrim{position:absolute;inset:0;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:var(--sds-color-overlay-scrim);
+  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 68%);mask-image:linear-gradient(to bottom, transparent, #000 68%)}
+
+.sds .sds-hero-video__content{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sds-space-gap-m)}
+.sds .sds-hero-video__heading{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);width:640px;color:var(--sds-color-on-overlay)}
+.sds .sds-hero-video__eyebrow{margin:0;font:var(--sds-text-eyebrow);letter-spacing:var(--sds-text-eyebrow-tracking);text-transform:uppercase}
+.sds .sds-hero-video__title{margin:0;font:var(--sds-text-h1);color:inherit}
+/* 526, а не круглые 480: на 480 лид из двух строк переносился на третью и отрывался от кнопки. */
+.sds .sds-hero-video__aside{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);width:526px}
+.sds .sds-hero-video__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-on-overlay-muted)}
+
+@media (max-width:767.98px){
+  .sds.sds-hero-video{min-height:640px;padding:88px var(--sds-page-inline) var(--sds-space-card-padding)}
+  .sds .sds-hero-video__content{flex-direction:column;align-items:stretch;gap:var(--sds-space-gap-l)}
+  .sds .sds-hero-video__heading,.sds .sds-hero-video__aside{width:auto}
+  .sds .sds-hero-video__aside .sds-btn{width:100%}
+}
+
+.sds-js .sds .sds-hero-video__eyebrow{transition-delay:100ms}
+.sds-js .sds .sds-hero-video__title{transition-delay:150ms}
+.sds-js .sds .sds-hero-video__lead{transition-delay:200ms}
+.sds-js .sds .sds-hero-video__aside-cta{transition-delay:250ms}
+
+/* hero-block v1.8 · Figma 4:158 · атомы: chip, button, rating · только токены */
+.sds.sds-hero{display:flex;gap:var(--sds-space-gap-m);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-hero__content{flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:var(--sds-space-gap-xl);padding:var(--sds-space-card-padding);background:var(--sds-color-card);border-radius:var(--sds-radius-card)}
+.sds .sds-hero__top{display:flex;flex-direction:column;gap:var(--sds-space-gap-l)}
+.sds .sds-hero__title{margin:0;font:var(--sds-text-h1);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-hero__texts{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-hero__text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sds-space-gap-xl)}
+.sds .sds-hero__media{flex:0 0 clamp(280px,38.89%,560px);display:flex;overflow:hidden;background:var(--sds-color-card);border-radius:var(--sds-radius-card)}
+.sds .sds-hero__media picture{display:contents}
+.sds .sds-hero__img{width:100%;height:100%;min-height:0;max-width:none;object-fit:cover}
+@media (max-width:767.98px){
+  .sds.sds-hero{flex-direction:column}
+  .sds .sds-hero__content{justify-content:flex-start;gap:var(--sds-space-gap-l)}
+  .sds .sds-hero__actions{flex-direction:column;align-items:flex-start;gap:var(--sds-space-gap-l)}
+  .sds .sds-hero__actions .sds-btn{width:100%}
+  .sds .sds-hero__media{flex:none;height:320px}
+}
+/* Каскад появления. Сами правила показа — в base.css, здесь только задержки.
+   Срабатывает по входу блока в экран, поэтому работает и первым блоком, и любым другим. */
+.sds-js .sds .sds-hero__media{transition-delay:100ms}
+.sds-js .sds .sds-hero__title{transition-delay:150ms}
+/* Абзацев может быть сколько угодно, поэтому задержка не по номеру: первый 200 ms,
+   все остальные 250 ms. Иначе пятый абзац остался бы без задержки вовсе. */
+.sds-js .sds .sds-hero__text{transition-delay:250ms}
+.sds-js .sds .sds-hero__text:first-child{transition-delay:200ms}
+.sds-js .sds .sds-hero__list{transition-delay:275ms}
+.sds-js .sds .sds-hero__actions{transition-delay:300ms}
+
+/* icon-cards v1.3 · Figma 2124:407 · атомы icon, icon-row · только токены · брейкпоинт 768.
+   Card=Off: плитки лежат прямо на секции (bg card). Card=On: всё на карточке (bg card),
+   плитки на ней — bg page, пиктограмма в тёмном боксе, под разделителем ряд преимуществ.
+   Высота плитки — минимум, а не жёсткое число (длинная подпись растит весь ряд).
+   Плитка скруглена по radius/tile, а не radius/card: крупная поверхность и плитка
+   внутри — разные величины, одинаковый радиус делает плитку рыхлой.
+   Подпись плитки — text/body-strong, а не card-title: в узкой колонке переносится по слогам. */
+.sds.sds-icon-cards{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-icon-cards__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+.sds .sds-icon-cards__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text)}
+.sds .sds-icon-cards__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+
+.sds .sds-icon-cards__list{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);margin:0;padding:0}
+.sds .sds-icon-cards__tile{display:flex;align-items:center;gap:var(--sds-space-gap-m);margin:0;padding:var(--sds-space-gap-m);border-radius:var(--sds-radius-tile);background:var(--sds-color-card)}
+.sds .sds-icon-cards__icon{width:32px;height:32px}
+.sds .sds-icon-cards__text{margin:0;flex:1 1 auto;font:var(--sds-text-body-strong);color:var(--sds-color-text)}
+
+/* Card=On: карточка несёт свой фон и отступ, плитки на ней светлее секции. */
+.sds .sds-icon-cards__card{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+.sds .sds-icon-cards__tile--card{background:var(--sds-color-page)}
+.sds .sds-icon-cards__icon-box{display:flex;flex:none;align-items:center;justify-content:center;width:48px;height:48px;border-radius:var(--sds-radius-icon);background:var(--sds-color-chip-bg)}
+.sds .sds-icon-cards__icon-box .sds-icon-cards__icon{color:var(--sds-color-chip-text)}
+.sds .sds-icon-cards__divider{height:1px;background:var(--sds-color-placeholder)}
+
+/* Плитка на карточке: по тексту Description — сеткой 2×2, а не строкой
+   (пример на холсте оказался не обновлён и показывает один столбец). */
+.sds .sds-icon-cards__list--card{display:grid;grid-template-columns:repeat(2,1fr)}
+.sds .sds-icon-cards__tile--card{flex-direction:column;align-items:flex-start;justify-content:flex-start}
+
+@media (min-width:768px){
+  .sds.sds-icon-cards{gap:var(--sds-space-gap-xl)}
+  .sds .sds-icon-cards__card{gap:var(--sds-space-gap-xl)}
+  .sds .sds-icon-cards__head{max-width:var(--sds-layout-measure)}
+
+  .sds .sds-icon-cards__list{flex-direction:row;flex-wrap:wrap}
+  .sds .sds-icon-cards__tile{flex:1 1 220px;flex-direction:column;align-items:flex-start;justify-content:space-between;min-height:208px;gap:var(--sds-space-gap-xl)}
+
+  .sds .sds-icon-cards__list--card{display:flex;flex-direction:row;flex-wrap:wrap}
+  .sds .sds-icon-cards__tile--card{flex:1 1 180px;min-width:180px;padding:var(--sds-space-gap-l)}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-icon-cards__head{transition-delay:100ms}
+.sds-js .sds .sds-icon-cards__card{transition-delay:100ms}
+.sds-js .sds .sds-icon-cards__tile:nth-child(1){transition-delay:150ms}
+.sds-js .sds .sds-icon-cards__tile:nth-child(2){transition-delay:200ms}
+.sds-js .sds .sds-icon-cards__tile:nth-child(3){transition-delay:250ms}
+.sds-js .sds .sds-icon-cards__tile:nth-child(n+4){transition-delay:300ms}
+
+/* compare-table v1.1 · Figma 2127:426 · только токены · брейкпоинт 768, mobile-first.
+   Таблица одна на оба экрана. База — мобильная: table/tbody/tr/td переведены в display:block
+   и строка читается карточкой, подпись колонки подставляется из data-label через CSS content.
+   С 768 раскладка возвращается к настоящей таблице (display:table-*).
+   Табличные роли проставлены в разметке явно: display:block снимает роли, которые даёт
+   сам тег, и без ролей связь «ячейка — заголовок колонки» для скринридера теряется.
+   Шапка на мобильном спрятана классом sds-sr-only-m (в base.css), а не display:none. */
+.sds.sds-compare-table{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-compare-table__head{display:flex}
+.sds .sds-compare-table__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text)}
+
+.sds .sds-compare-table__table{display:block;width:100%}
+.sds .sds-compare-table__table tbody{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-compare-table__table tr{display:block;border:1px solid var(--sds-color-placeholder);border-radius:var(--sds-radius-card);padding:var(--sds-space-gap-m);background:var(--sds-color-page)}
+.sds .sds-compare-table__table th[scope="row"],
+.sds .sds-compare-table__table td{display:block;padding:0;border:0;text-align:left}
+.sds .sds-compare-table__table th[scope="row"]{margin-bottom:var(--sds-space-gap-m);font:var(--sds-text-body-strong);color:var(--sds-color-text)}
+.sds .sds-compare-table__table td{margin-top:var(--sds-space-gap-m);padding-top:var(--sds-space-gap-m);border-top:1px solid var(--sds-color-placeholder);font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-compare-table__table td:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.sds .sds-compare-table__table td::before{content:attr(data-label);display:block;margin-bottom:var(--sds-space-gap-s);font:var(--sds-text-eyebrow);letter-spacing:var(--sds-text-eyebrow-tracking);text-transform:uppercase;color:var(--sds-color-text-muted)}
+
+@media (min-width:768px){
+  .sds .sds-compare-table__wrap{border:1px solid var(--sds-color-placeholder);border-radius:var(--sds-radius-card);background:var(--sds-color-page);overflow:hidden}
+  .sds .sds-compare-table__table{display:table;border-collapse:collapse;table-layout:fixed}
+  .sds .sds-compare-table__table thead{display:table-header-group;background:var(--sds-color-chip-bg)}
+  .sds .sds-compare-table__table tbody{display:table-row-group;gap:0}
+  .sds .sds-compare-table__table tr{display:table-row;padding:0;border:0;border-radius:0;background:none}
+  .sds .sds-compare-table__table tbody tr{border-top:1px solid var(--sds-color-placeholder)}
+  .sds .sds-compare-table__table th[scope="col"]{padding:var(--sds-space-gap-m);font:var(--sds-text-card-title);color:var(--sds-color-chip-text);text-align:left}
+  .sds .sds-compare-table__table th[scope="row"]{display:table-cell;margin:0;padding:var(--sds-space-gap-m)}
+  .sds .sds-compare-table__table td{display:table-cell;margin:0;padding:var(--sds-space-gap-m);border-top:0;border-left:1px solid var(--sds-color-placeholder)}
+  .sds .sds-compare-table__table td::before{content:none}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-compare-table__head{transition-delay:50ms}
+.sds-js .sds .sds-compare-table__wrap{transition-delay:100ms}
+
+/* photo-cards v1.1 · Figma 2129:410 · атом icon · только токены · брейкпоинт 768, mobile-first.
+   Карточка — высота по макету (257 на мобильном, 364 с 768), а не по контенту: кадр и есть
+   содержание, плавающая по тексту высота ломала бы ряд. Кадр — утилита sds-media в base.css.
+   Скрим — position:absolute без z-index, иконка и подпись — position:relative без смещения:
+   так они остаются в том же слое «positioned, z-index:auto» и красятся поверх картинки
+   по порядку в DOM, без явного z-index (тот же приём, что в hero-video__content).
+   Скрим обязателен всегда: backdrop-blur держит читаемость не во всех браузерах,
+   градиент — страховка. */
+.sds.sds-photo-cards{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-photo-cards__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+.sds .sds-photo-cards__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text)}
+.sds .sds-photo-cards__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+
+.sds .sds-photo-cards__list{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);margin:0;padding:0}
+.sds .sds-photo-cards__card{display:flex;flex-direction:column;flex:none;width:100%;height:257px;margin:0;padding:var(--sds-space-gap-s);border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+.sds .sds-photo-cards__scrim{position:absolute;inset:0;background:linear-gradient(to bottom, transparent 45%, var(--sds-color-overlay-scrim) 100%)}
+
+.sds .sds-photo-cards__icon-box{position:relative;display:flex;flex:none;align-items:center;justify-content:center;width:48px;height:48px;border-radius:var(--sds-radius-icon);background:var(--sds-color-page)}
+.sds .sds-photo-cards__icon{width:32px;height:32px}
+
+.sds .sds-photo-cards__caption{position:relative;margin:auto 0 0;padding:var(--sds-space-gap-s);border-radius:var(--sds-radius-button);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);font:var(--sds-text-body);color:var(--sds-color-on-overlay)}
+.sds .sds-photo-cards__caption strong{font:var(--sds-text-body-strong)}
+
+@media (min-width:768px){
+  .sds .sds-photo-cards__head{max-width:var(--sds-layout-measure)}
+  .sds .sds-photo-cards__list{flex-direction:row;flex-wrap:wrap}
+  .sds .sds-photo-cards__card{flex:1 1 280px;width:auto;height:364px}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-photo-cards__head{transition-delay:50ms}
+.sds-js .sds .sds-photo-cards__card:nth-child(1){transition-delay:100ms}
+.sds-js .sds .sds-photo-cards__card:nth-child(2){transition-delay:150ms}
+.sds-js .sds .sds-photo-cards__card:nth-child(3){transition-delay:200ms}
+.sds-js .sds .sds-photo-cards__card:nth-child(n+4){transition-delay:250ms}
+
+/* benefits v1.5 · Figma 2013:122 · атом badge · только токены · брейкпоинт 768 */
+.sds.sds-benefits{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-benefits__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-benefits__col{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);min-width:0}
+.sds .sds-benefits__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+/* Длинная строка плохо читается: абзац уже колонки. */
+.sds .sds-benefits__lead{margin:0;max-width:var(--sds-layout-measure);font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-benefits__media{display:flex;height:320px;overflow:hidden;border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+.sds .sds-benefits__media picture{display:contents}
+.sds .sds-benefits__img{width:100%;height:100%;min-height:0;max-width:none;object-fit:cover}
+/* Сетка даёт карточкам в строке одинаковую высоту без лишних правил. */
+.sds .sds-benefits__list{display:grid;grid-template-columns:1fr;gap:var(--sds-space-gap-m);margin:0;padding:0;list-style:none}
+.sds .sds-benefits__card{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);margin:0;padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-card);list-style:none}
+.sds .sds-benefits__card::marker{content:none}
+.sds .sds-benefits__card-body{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+.sds .sds-benefits__card-title{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-benefits__card-text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+@media (min-width:768px){
+  .sds.sds-benefits{gap:var(--sds-space-gap-xl)}
+  .sds .sds-benefits__head{flex-direction:row;gap:var(--sds-space-gap-xl)}
+  .sds .sds-benefits__col{flex:1 1 0;gap:var(--sds-space-gap-l)}
+  .sds .sds-benefits__media{flex:0 0 clamp(280px,41.18%,560px);height:auto}
+  /* Без иллюстрации шапка остаётся одной колонкой: заголовок и сетка тянутся на всю
+     ширину, а интро держит меру строки (max-width выше), поэтому ничего не разъезжается. */
+  .sds .sds-benefits__list{grid-template-columns:1fr 1fr;gap:var(--sds-space-gap-l)}
+  .sds .sds-benefits__card{gap:var(--sds-space-gap-l)}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки.
+   На десктопе текстовая колонка, иллюстрация и обе строки карточек входят в экран
+   почти одновременно, поэтому порядок задаём явно: 0 → 100 → 150 → 200 → 250 → 300 ms,
+   как в hero. Больше 300 ms не давать.
+   На мобильном каждый элемент входит в экран сам по себе, задержки там только добавили бы
+   ожидания, поэтому карточкам их не даём. */
+.sds-js .sds .sds-benefits__media{transition-delay:100ms}
+@media (min-width:768px){
+  .sds-js .sds .sds-benefits__card:nth-child(1){transition-delay:150ms}
+  .sds-js .sds .sds-benefits__card:nth-child(2){transition-delay:200ms}
+  .sds-js .sds .sds-benefits__card:nth-child(3){transition-delay:250ms}
+  /* Карточек может быть больше четырёх: всем остальным общий потолок. */
+  .sds-js .sds .sds-benefits__card:nth-child(n+4){transition-delay:300ms}
+}
+
+/* list-and-image v1.4 · Figma 2055:222 · атомы list, button · только токены · брейкпоинт 768 */
+/* На мобильном это просто столбец: заголовок, картинка, текст. */
+.sds.sds-listimg{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-listimg__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-listimg__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-listimg__lead{margin:0;max-width:var(--sds-layout-measure);font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-listimg__media{height:240px;overflow:hidden;border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+.sds .sds-listimg__media picture{display:contents}
+.sds .sds-listimg__img{width:100%;height:100%;object-fit:cover}
+.sds .sds-listimg__content{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);min-width:0}
+.sds .sds-listimg__group{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-listimg__group-title{margin:0;font:var(--sds-text-h3);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-listimg__group-text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-listimg__text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-listimg__note{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+.sds .sds-listimg__actions{display:flex}
+.sds .sds-listimg__actions .sds-btn{width:100%}
+
+@media (min-width:768px){
+  /* Сетка, а не вложенные колонки: только так картинка может занять две строки
+     и встать во всю высоту блока рядом с заголовком. */
+  .sds.sds-listimg{display:grid;grid-template-columns:1fr clamp(280px,41.18%,560px);align-items:start;column-gap:var(--sds-space-gap-xl);row-gap:var(--sds-space-gap-xl)}
+  .sds .sds-listimg__head{grid-column:1 / -1;grid-row:1;gap:var(--sds-space-gap-l)}
+  .sds .sds-listimg__media{grid-column:2;grid-row:2;height:auto;align-self:stretch}
+  .sds .sds-listimg__content{grid-column:1;grid-row:2;gap:var(--sds-space-gap-xl)}
+  /* Сторона картинки: меняются местами колонки, порядок в разметке прежний. */
+  .sds.sds-listimg--img-left{grid-template-columns:clamp(280px,41.18%,560px) 1fr}
+  .sds.sds-listimg--img-left .sds-listimg__media{grid-column:1}
+  .sds.sds-listimg--img-left .sds-listimg__content{grid-column:2}
+  /* Head=Beside: заголовок уходит в колонку с текстом, картинка занимает обе строки. */
+  .sds.sds-listimg--head-beside .sds-listimg__head{grid-column:1;grid-row:1}
+  .sds.sds-listimg--head-beside .sds-listimg__media{grid-row:1 / span 2}
+  .sds.sds-listimg--head-beside .sds-listimg__content{grid-row:2}
+  .sds.sds-listimg--img-left.sds-listimg--head-beside .sds-listimg__head{grid-column:2}
+  .sds .sds-listimg__actions .sds-btn{width:auto}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-listimg__media{transition-delay:100ms}
+/* Счёт по nth-of-type, а не nth-child: над группами в колонке могут стоять абзацы,
+   и по общему счёту детей первая группа перестала бы быть первой. Абзац — p, группа — div,
+   поэтому of-type считает именно группы. */
+.sds-js .sds .sds-listimg__text{transition-delay:150ms}
+.sds-js .sds .sds-listimg__group:nth-of-type(1){transition-delay:150ms}
+.sds-js .sds .sds-listimg__group:nth-of-type(2){transition-delay:200ms}
+.sds-js .sds .sds-listimg__group:nth-of-type(n+3){transition-delay:250ms}
+.sds-js .sds .sds-listimg__note,
+.sds-js .sds .sds-listimg__actions{transition-delay:300ms}
+
+/* cards-row v1.7 · Figma 2070:207 · атом list · только токены · брейкпоинт 768 */
+.sds.sds-cards{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-cards__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-cards__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-cards__lead{margin:0;max-width:var(--sds-layout-measure);font:var(--sds-text-body);color:var(--sds-color-text)}
+
+/* Сетка, а не флекс: колонки равной ширины и одинаковая высота карточек в строке
+   получаются сами. До трёх карточек число колонок задаётся минимальной шириной,
+   от четырёх — ровно три колонки (правило ниже). */
+.sds .sds-cards__list{display:grid;grid-template-columns:1fr;gap:var(--sds-space-gap-m);margin:0;padding:0;list-style:none}
+/* Отступ 24, а не card-padding: при четырёх колонках карточка узкая и 40 съедают текст. */
+.sds .sds-cards__card{--sds-cards-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12 L20 12 M13.5 5.5 L20 12 L13.5 18.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");display:flex;flex-direction:column;gap:var(--sds-space-gap-m);margin:0;padding:var(--sds-space-gap-l);border-radius:var(--sds-radius-card);background:var(--sds-color-card);list-style:none}
+.sds .sds-cards__card::marker{content:none}
+.sds .sds-cards__media{height:120px}
+/* Иллюстрация, а не фото: вписывается целиком и не кадрируется. */
+.sds .sds-cards__img{width:auto;max-width:100%;height:100%;object-fit:contain;object-position:left center}
+.sds .sds-cards__body{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+.sds .sds-cards__card-title{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-cards__text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+/* Ссылки внутри текста карточки не должны синеть: цвет наследуется, подчёркивание остаётся. */
+.sds .sds-cards__text a{color:inherit}
+/* Необязательный список в карточке. Отступ от текста больше, чем между заголовком
+   и абзацем (24 против 8): иначе список читается продолжением абзаца,
+   а не отдельной частью карточки. Как в макете, к низу карточки не прижимается —
+   идёт сразу за текстом. */
+.sds .sds-cards__list-in-card{margin:var(--sds-space-gap-l) 0 0}
+
+/* Необязательная ссылка «Подробнее». Это текстовая ссылка, а не кнопка: в карточке
+   смежной услуги нет призыва к действию, есть переход. Акцентная кнопка в каждой
+   из четырёх карточек перебила бы главное действие страницы.
+   Стрелка рисуется маской, чтобы её цвет остался токеном, а не был зашит в картинку.
+   Идёт сразу за содержимым, как в макете, а не прижимается к низу карточки:
+   автораскладка Figma не умеет прижать только последний элемент, и макет
+   с вёрсткой разошлись бы. Если ссылки в ряду должны вставать на одной линии —
+   это margin-top:auto здесь плюс ручная правка в обоих вариантах макета. */
+.sds .sds-cards__more{display:inline-flex;align-self:flex-start;align-items:center;gap:var(--sds-space-gap-s);margin:var(--sds-space-gap-l) 0 0;font:var(--sds-text-body-strong);color:var(--sds-color-text);text-decoration:none}
+.sds .sds-cards__more::after{content:"";flex:none;width:24px;height:24px;background:currentColor;-webkit-mask:var(--sds-cards-arrow) center / 24px 24px no-repeat;mask:var(--sds-cards-arrow) center / 24px 24px no-repeat}
+.sds .sds-cards__more:hover{text-decoration:underline}
+.sds .sds-cards__more:focus-visible{outline:2px solid var(--sds-color-text);outline-offset:4px;border-radius:var(--sds-radius-control)}
+@media (prefers-reduced-motion:no-preference){
+  .sds .sds-cards__more::after{transition:transform var(--sds-motion-duration-fast) var(--sds-motion-easing)}
+  .sds .sds-cards__more:hover::after{transform:translateX(4px)}
+}
+
+@media (min-width:768px){
+  .sds.sds-cards{gap:var(--sds-space-gap-xl)}
+  .sds .sds-cards__head{gap:var(--sds-space-gap-l)}
+  .sds .sds-cards__list{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--sds-space-gap-l)}
+  .sds .sds-cards__card{gap:var(--sds-space-gap-l)}
+}
+
+/* От четырёх карточек — ровно три колонки, а не четыре. На 1440 auto-fit поставил бы
+   четыре колонки по 316 px, и текст рассыпается на одно-два слова в строку; пятая
+   и шестая уходят во второй ряд — сетка 3 × 2, как в макете.
+   Порог 1280, а не 768: до него auto-fit и так даёт не больше трёх колонок (четвёртая
+   влезает только от 1272 px содержимого), поэтому правило ничего не меняет и нигде
+   не делает карточку уже минимальных 300 px. */
+@media (min-width:1280px){
+  .sds .sds-cards__list:has(> :nth-child(4)){grid-template-columns:repeat(3,1fr)}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-cards__card:nth-child(1){transition-delay:150ms}
+.sds-js .sds .sds-cards__card:nth-child(2){transition-delay:200ms}
+.sds-js .sds .sds-cards__card:nth-child(3){transition-delay:250ms}
+.sds-js .sds .sds-cards__card:nth-child(n+4){transition-delay:300ms}
+
+/* list-and-note v1.3 · Figma 2090:272 · атомы list, callout · только токены · брейкпоинт 768 */
+.sds.sds-listnote{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-listnote__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-listnote__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-listnote__lead{margin:0;max-width:var(--sds-layout-measure);font:var(--sds-text-body);color:var(--sds-color-text)}
+/* Колонка со списком: заголовок необязательный, поэтому зазор задаётся на колонке,
+   а не отступом у заголовка — без заголовка лишнего пустого места не остаётся. */
+.sds .sds-listnote__content,
+.sds .sds-listnote__second{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);min-width:0}
+/* Заголовок колонки того же уровня, что и заголовок врезки, и того же начертания. */
+.sds .sds-listnote__col-title{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+
+@media (min-width:768px){
+  /* Сетка: заголовок на всю ширину, под ним две равные колонки.
+     align-items:start — правая колонка прижата к верху, а не растянута по высоте левой:
+     врезка короче списка, да и два списка редко совпадают по длине. */
+  .sds.sds-listnote{display:grid;grid-template-columns:1fr 1fr;align-items:start;column-gap:var(--sds-space-gap-xl);row-gap:var(--sds-space-gap-xl)}
+  .sds .sds-listnote__head{grid-column:1 / -1;grid-row:1;gap:var(--sds-space-gap-l)}
+  .sds .sds-listnote__content{grid-column:1;grid-row:2}
+  .sds .sds-listnote__note,
+  .sds .sds-listnote__second{grid-column:2;grid-row:2}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-listnote__content{transition-delay:150ms}
+.sds-js .sds .sds-listnote__note,
+.sds-js .sds .sds-listnote__second{transition-delay:250ms}
+
+/* special-offer v1.1 · Figma 2085:270 · атом button · только токены · брейкпоинт 768 */
+/* Весь блок — одна карточка-поверхность, а не текст на фоне страницы. */
+.sds.sds-offer{padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-offer__card{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+.sds .sds-offer__media{height:240px;overflow:hidden;border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+.sds .sds-offer__media picture{display:contents}
+.sds .sds-offer__img{width:100%;height:100%;object-fit:cover}
+.sds .sds-offer__content{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);min-width:0}
+.sds .sds-offer__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-offer__texts{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-offer__text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+.sds .sds-offer__actions{display:flex}
+.sds .sds-offer__actions .sds-btn{width:100%}
+
+@media (min-width:768px){
+  /* Сетка: колонка под картинку появляется только вместе с самой картинкой,
+     иначе пустой трек оставил бы зазор в пустоте. */
+  .sds .sds-offer__card{display:grid;grid-template-columns:1fr;align-items:start;column-gap:var(--sds-space-gap-xl);row-gap:var(--sds-space-gap-l)}
+  .sds .sds-offer__content{grid-column:1;grid-row:1;gap:var(--sds-space-gap-l)}
+  .sds .sds-offer__actions{grid-column:1;grid-row:2}
+  .sds .sds-offer__actions .sds-btn{width:auto}
+  .sds.sds-offer--with-media .sds-offer__card{grid-template-columns:340px 1fr}
+  /* Картинка квадратная и не растягивается по высоте карточки. */
+  .sds.sds-offer--with-media .sds-offer__media{grid-column:1;grid-row:1 / span 2;align-self:start;height:340px}
+  .sds.sds-offer--with-media .sds-offer__content{grid-column:2}
+  .sds.sds-offer--with-media .sds-offer__actions{grid-column:2}
+  /* Кнопка сбоку: карточка читается как одна строка «текст — действие». */
+  .sds.sds-offer--action-side .sds-offer__card{grid-template-columns:1fr auto;align-items:center}
+  .sds.sds-offer--action-side .sds-offer__actions{grid-column:2;grid-row:1}
+  .sds.sds-offer--action-side.sds-offer--with-media .sds-offer__card{grid-template-columns:340px 1fr auto}
+  .sds.sds-offer--action-side.sds-offer--with-media .sds-offer__media{grid-row:1}
+  .sds.sds-offer--action-side.sds-offer--with-media .sds-offer__actions{grid-column:3}
+}
+
+/* doctors v1.1 · Figma 2279:3962 · атом button · только токены · брейкпоинт 768 */
+.sds.sds-doctors{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-doctors__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-doctors__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-doctors__lead{margin:0;max-width:var(--sds-layout-measure);font:var(--sds-text-body);color:var(--sds-color-text)}
+
+/* Сетка, а не флекс: колонки равной ширины и карточки одной высоты получаются сами.
+   Количество колонок нигде не зашито — его задаёт минимальная ширина колонки,
+   поэтому ряд одинаково ровно живёт на двух, трёх и четырёх врачах. */
+.sds .sds-doctors__list{display:grid;grid-template-columns:1fr;gap:var(--sds-space-gap-m);margin:0;padding:0;list-style:none}
+.sds .sds-doctors__card{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);margin:0;padding:var(--sds-space-gap-l);border-radius:var(--sds-radius-card);background:var(--sds-color-card);list-style:none}
+.sds .sds-doctors__card::marker{content:none}
+/* Портрет, а не иллюстрация: кадрируется, а не вписывается. Пропорция одна на все карточки,
+   иначе ряд разъезжается по высоте. Скругление на ступень слабее карточки. */
+.sds .sds-doctors__media{overflow:hidden;border-radius:var(--sds-radius-tile);background:var(--sds-color-placeholder)}
+.sds .sds-doctors__img{display:block;width:100%;height:auto;aspect-ratio:4 / 5;object-fit:cover;object-position:center}
+.sds .sds-doctors__body{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+.sds .sds-doctors__name{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-doctors__meta{margin:0;font:var(--sds-text-caption);color:var(--sds-color-text-muted)}
+.sds .sds-doctors__text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+/* Кнопки встают на одну линию: карточки в сетке и так одной высоты, auto съедает разницу
+   в длине описаний. Здесь это уместно — в ряду из трёх призывов разнобой по высоте
+   читается как сбой, в отличие от текстовой ссылки в cards-row. */
+.sds .sds-doctors__action{margin-top:auto}
+.sds .sds-doctors__action .sds-btn{width:100%}
+
+@media (min-width:768px){
+  .sds.sds-doctors{gap:var(--sds-space-gap-xl)}
+  .sds .sds-doctors__head{gap:var(--sds-space-gap-l)}
+  .sds .sds-doctors__list{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--sds-space-gap-l)}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-doctors__card:nth-child(1){transition-delay:150ms}
+.sds-js .sds .sds-doctors__card:nth-child(2){transition-delay:200ms}
+.sds-js .sds .sds-doctors__card:nth-child(3){transition-delay:250ms}
+.sds-js .sds .sds-doctors__card:nth-child(n+4){transition-delay:300ms}
+
+/* cta-sticky v1.1 · атом button · только токены · показывается до 768 px */
+/* По умолчанию полосы нет: без скрипта она бы просто закрыла низ экрана навсегда. */
+.sds.sds-ctabar{display:none}
+.sds .sds-ctabar__inner{display:flex}
+
+@media (max-width:767.98px){
+  .sds-js .sds.sds-ctabar{
+    position:fixed;right:0;bottom:0;left:0;z-index:20;display:block;
+    /* Сверху теснее, чем по бокам: полоса не должна занимать лишнюю высоту экрана. */
+    padding:var(--sds-space-gap-s) var(--sds-space-gap-m);
+    /* Вырез и полоса жестов на iPhone: иначе кнопка упрётся в край. */
+    padding-bottom:calc(var(--sds-space-gap-m) + env(safe-area-inset-bottom, 0px));
+    background:var(--sds-color-page);
+    /* Скруглённый верх и мягкая тень: полоса читается как всплывшая поверх страницы,
+       а не как приклеенный к низу кусок вёрстки. Нижних скруглений нет — она у края. */
+    border-radius:var(--sds-radius-card) var(--sds-radius-card) 0 0;
+    box-shadow:var(--sds-shadow-bar);
+    /* Скрытая полоса выпадает из обхода клавиатурой, а не просто уезжает за край. */
+    visibility:hidden;transform:translateY(100%);
+    will-change:transform;
+    transition:transform var(--sds-motion-duration-fast) var(--sds-motion-easing), visibility var(--sds-motion-duration-fast)
+  }
+  .sds-js .sds.sds-ctabar.is-shown{visibility:visible;transform:none}
+  .sds-js .sds.sds-ctabar .sds-btn{width:100%}
+}
+
+/* text-section v1.0 · Figma 2200:587 · атомов нет · только токены · брейкпоинт 768 */
+.sds.sds-text{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-text__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-text__content{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);min-width:0}
+.sds .sds-text__text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+/* Ссылки внутри абзаца не должны синеть: цвет наследуется, подчёркивание остаётся. */
+.sds .sds-text__text a{color:inherit}
+
+@media (min-width:768px){
+  .sds.sds-text{gap:var(--sds-space-gap-xl)}
+}
+
+/* Заголовок сбоку включается с 1024, а не с 768. На планшете колонка текста
+   выходит 353 px — это 31 знак в строке при норме 45–75, читать невозможно.
+   Между 768 и 1024 блок остаётся столбиком. Это не второй брейкпоинт системы,
+   а порог одной раскладки: так же ведёт себя cards-row, где число колонок
+   меняется по ширине, а не по брейкпоинту.
+   Колонки 45 / 55 — пропорция, а не пиксели: при другой ширине макета
+   (--sds-layout-max) они пересчитаются сами. minmax(0,…) не даёт длинному слову
+   распереть колонку шире её доли. Зазор берётся из gap выше.
+   Мерой строки абзацы здесь не ограничены намеренно — решение заказчика
+   от 23.10.2026, в остальных блоках лид держится --sds-layout-measure. */
+@media (min-width:1024px){
+  .sds.sds-text--head-beside{display:grid;grid-template-columns:minmax(0,45fr) minmax(0,55fr);align-items:start}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержка. */
+.sds-js .sds .sds-text__content{transition-delay:150ms}
+
+/* price-list v1.1 · Figma 2213:707 · атом button · только токены · брейкпоинт 768 */
+.sds.sds-price{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+/* Левая часть: заголовок с интро и, если есть, рассрочка. Поверхности у неё нет —
+   она лежит прямо на фоне блока, в отличие от прайса. */
+.sds .sds-price__side{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);min-width:0}
+.sds .sds-price__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-price__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-price__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+/* Без рассрочки заголовок идёт во всю ширину, поэтому интро держим мерой строки. */
+.sds.sds-price:not(.sds-price--aside) .sds-price__lead{max-width:var(--sds-layout-measure)}
+
+.sds .sds-price__aside{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sds-space-gap-l)}
+.sds .sds-price__aside-title{margin:0;font:var(--sds-text-h3);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-price__aside-text{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-price__features{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);margin:0;padding:0;list-style:none}
+.sds .sds-price__feature{display:flex;align-items:flex-start;gap:var(--sds-space-gap-s);margin:0;font:var(--sds-text-body);color:var(--sds-color-text);list-style:none}
+.sds .sds-price__feature::marker{content:none}
+/* Слот под пиктограмму проекта: в библиотеке иконок нет, их подставляет клиент.
+   Размер задаётся здесь, иначе чужой SVG распирает строку. */
+.sds .sds-price__icon{flex:0 0 auto;width:24px;height:24px;color:var(--sds-color-text)}
+.sds .sds-price__icon svg{display:block;width:100%;height:100%}
+
+/* Прайс — отдельная поверхность. */
+.sds .sds-price__card{min-width:0;padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+.sds .sds-price__rows{display:flex;flex-direction:column;margin:0;padding:0;list-style:none}
+.sds .sds-price__row{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sds-space-gap-s);margin:0;padding:var(--sds-space-gap-l) 0;list-style:none}
+.sds .sds-price__row::marker{content:none}
+.sds .sds-price__row:first-child{padding-top:0}
+.sds .sds-price__row:last-child{padding-bottom:0}
+/* Разделитель цветом фона страницы: он светлее карточки и читается как бороздка.
+   Отдельного токена под линию в системе нет и заводить его ради одного блока не стали. */
+.sds .sds-price__row + .sds-price__row{border-top:1px solid var(--sds-color-page)}
+.sds .sds-price__row-name{font:var(--sds-text-card-title);color:var(--sds-color-text)}
+.sds .sds-price__row-note{font:var(--sds-text-caption);color:var(--sds-color-text-muted)}
+/* Цена под названием, а не справа от него: длинное название и диапазон
+   «от 21 000 до 27 000 ₽» иначе сталкиваются, и на узком экране тем более. */
+.sds .sds-price__tag{padding:var(--sds-space-gap-s) var(--sds-space-gap-m);border-radius:var(--sds-radius-pill);background:var(--sds-color-page);font:var(--sds-text-body-strong);color:var(--sds-color-text)}
+.sds .sds-price__note{margin:var(--sds-space-gap-l) 0 0;font:var(--sds-text-caption);color:var(--sds-color-text-muted)}
+
+/* Две колонки включаются с 1024, а не с 768: на планшете левая колонка выходит
+   около 210 px — заголовок и кнопка в неё не помещаются. Между 768 и 1024 столбик.
+   Доли 1 : 2 — прайс получает две трети как главное содержимое блока. */
+@media (min-width:1024px){
+  .sds.sds-price--aside{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);align-items:start}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержка. */
+.sds-js .sds .sds-price__card{transition-delay:150ms}
+
+/* faq v1.2 · Figma 2220:721 · атом accordion · только токены · брейкпоинт 768 */
+.sds.sds-faq{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-faq__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+/* Зазор между строками: между ними видна полоса фона, поэтому каждая строка
+   читается отдельной плиткой со своим скруглением — включая последнюю. */
+.sds .sds-faq__list{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);min-width:0}
+.sds .sds-faq__media{min-width:0}
+.sds .sds-faq__img{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--sds-radius-card)}
+
+/* Картинка на мобильном идёт ПОД вопросами, а не над ними: сверху она отодвинула бы
+   весь список за первый экран. Порядок в разметке уже такой, перестановок не нужно. */
+.sds.sds-faq--with-media .sds-faq__media{height:240px}
+
+/* Две колонки с 1024, а не с 768: на планшете колонка вопросов выходит около 420 px,
+   и длинный вопрос с шевроном начинает ломаться на четыре строки.
+   Доли 2 : 1 — вопросы получают две трети, картинка треть. */
+@media (min-width:1024px){
+  .sds.sds-faq--with-media{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);align-items:start}
+  .sds.sds-faq--with-media .sds-faq__title{grid-column:1 / -1}
+  /* Картинка тянется по высоте списка вопросов, поэтому кадр подрезается по центру. */
+  .sds.sds-faq--with-media .sds-faq__media{align-self:stretch;height:auto}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-faq__list{transition-delay:150ms}
+.sds-js .sds .sds-faq__media{transition-delay:250ms}
+
+/* views-slider v1.6 · Figma 2032:165 · атомы arrow, pager, slider (общий механизм
+   дорожки — см. atoms/slider) · только токены · брейкпоинт 768.
+   Исторически этот блок и был атомом sds-slider — отсюда его трек и карточка жили
+   под голыми общими классами. После появления photo-slider/reviews-slider это стало
+   коллизией: общий .sds-slider__card достаётся каскадом любому блоку, у кого он есть
+   в разметке. Трек и карточка теперь дважды классованы (sds-views-slider__* + общий
+   sds-slider__* для механизма), а свой вид — под собственным именем. */
+.sds.sds-views-slider{display:flex;flex-direction:column;padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+/* Отступы не общим gap, а по месту: до дорожки крупный, от дорожки до пагинации 16. */
+.sds .sds-slider__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-slider__col{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);min-width:0}
+.sds .sds-slider__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-slider__lead{margin:0;max-width:var(--sds-layout-measure);font:var(--sds-text-body);color:var(--sds-color-text)}
+
+/* Дорожка — нативная прокрутка: свайп пальцем и трекпадом работает без JS.
+   Полосу прокрутки прячем, листание показывают стрелки, пагинация и подглядывающая карточка.
+   Механика (overflow, scroll-snap, маска, перетаскивание) — в atoms/slider/slider.css. */
+.sds .sds-views-slider__track{display:flex;align-items:stretch;gap:var(--sds-space-gap-m);margin:var(--sds-space-gap-l) 0 0;padding:0;list-style:none}
+
+/* Высота карточек одинаковая: align-items:stretch тянет их по самой высокой.
+   В макете она зафиксирована числом, здесь считается сама — при смене контента ничего не правим. */
+.sds .sds-views-slider__card{display:flex;flex-direction:column;justify-content:space-between;flex:0 0 min(300px,85%);gap:var(--sds-space-gap-m);margin:0;padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-card);list-style:none}
+.sds .sds-views-slider__card::marker{content:none}
+.sds .sds-slider__top{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-slider__card-title{margin:0;font:var(--sds-text-h3);color:var(--sds-color-text);letter-spacing:normal;text-transform:none}
+.sds .sds-slider__list{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);margin:0;padding:0;list-style:none}
+/* Тире рисуется через CSS: в тексте его нет, скринридер читает чистый пункт. */
+.sds .sds-slider__item{position:relative;margin:0;padding-left:1.2em;font:var(--sds-text-body);color:var(--sds-color-text-muted);list-style:none}
+.sds .sds-slider__item::marker{content:none}
+.sds .sds-slider__item::before{content:"—";position:absolute;left:0}
+/* Картинка прижата к низу: margin-top:auto съедает разницу в длине текста. */
+.sds .sds-slider__media{margin-top:auto;height:180px;overflow:hidden;border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+.sds .sds-slider__img{width:100%;height:100%;object-fit:cover}
+
+/* Правый край дорожки растворяется в фоне вместо резкого обреза. Особенно заметно
+   на экранах шире 1440, где край блока приходится на середину экрана.
+   Класс ставит скрипт и снимает его, когда долистали до конца: иначе последняя
+   карточка оставалась бы блёклой без причины. Без JS маска нулевая, обрез обычный. */
+
+@media (min-width:768px){
+  .sds .sds-slider__head{flex-direction:row;align-items:flex-start;gap:var(--sds-space-gap-xl)}
+  .sds .sds-slider__col{flex:1 1 0;gap:var(--sds-space-gap-l)}
+  .sds .sds-views-slider__track{margin-top:var(--sds-space-gap-xl);gap:var(--sds-space-gap-l)}
+  /* Две с половиной карточки в экране: c = (ширина − два зазора) / 2.5 */
+  .sds .sds-views-slider__card{flex:0 0 calc((100% - var(--sds-space-gap-l) * 2) / 2.5);gap:var(--sds-space-gap-l)}
+  .sds .sds-slider__top{gap:var(--sds-space-gap-l)}
+  .sds .sds-slider__media{height:240px}
+  .sds.sds-views-slider.sds-slider--more .sds-views-slider__track{--sds-slider-fade:64px}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки.
+   Стрелки и пагинацию не анимируем: до запуска скрипта они display:none, наблюдатель
+   таких элементов не видит, и они остались бы навсегда прозрачными. Появляются сразу. */
+.sds-js .sds .sds-views-slider__card:nth-child(1){transition-delay:150ms}
+.sds-js .sds .sds-views-slider__card:nth-child(2){transition-delay:200ms}
+.sds-js .sds .sds-views-slider__card:nth-child(3){transition-delay:250ms}
+.sds-js .sds .sds-views-slider__card:nth-child(n+4){transition-delay:300ms}
+
+/* photo-slider v1.1 · Figma 2132:378 · атомы arrow, pager, slider · только токены · брейкпоинт 768.
+   Дорожка и карточки делят класс sds-slider__* с views-slider: общий механизм листания —
+   в atoms/slider (slider.css + slider.js), здесь только то, что у этого блока своё.
+   Третий кадр обрезан краем секции намеренно: track выходит в правое поле отрицательным
+   отступом, а клипует его overflow:hidden на корне — так видно, что это лента, а не ряд.
+   Стрелки лежат поверх дорожки (position:relative-якорь — viewport), а не рядом с заголовком:
+   центр по высоте не завязан на заголовок и не уедет, если шапка станет выше/ниже. */
+.sds.sds-photo-slider{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);overflow:hidden;padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-photo-slider__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);max-width:var(--sds-layout-measure)}
+.sds .sds-photo-slider__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text)}
+.sds .sds-photo-slider__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+
+.sds .sds-photo-slider__viewport{position:relative}
+.sds .sds-photo-slider__track{display:flex;align-items:stretch;gap:var(--sds-space-gap-m);margin:0;padding:0;margin-right:calc(-1 * var(--sds-page-inline))}
+/* Раскладка кадра внутри карточки — утилита sds-media в base.css. */
+.sds .sds-photo-slider__card{flex:0 0 291px;height:208px;margin:0;border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+
+/* Стрелки — поверх viewport (содержимое дорожки шире него, якорь не ползёт).
+   Сама пара .sds-arrows в атоме — flex-ряд рядом с заголовком; здесь она разводится
+   по краям кадра space-between'ом, а не стоит рядом с текстом. align-items:center
+   обязателен: без него flex по умолчанию растягивает кнопки от верха контейнера. */
+.sds.sds-photo-slider .sds-arrows{position:absolute;inset:0;align-items:center;justify-content:space-between;padding:0 var(--sds-space-gap-xl);gap:0;pointer-events:none}
+.sds.sds-photo-slider .sds-arrow{pointer-events:auto}
+
+@media (min-width:768px){
+  .sds.sds-photo-slider{gap:var(--sds-space-gap-xl)}
+  .sds .sds-photo-slider__card{flex-basis:672px;height:480px}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-photo-slider__head{transition-delay:50ms}
+.sds-js .sds .sds-photo-slider__card:nth-child(1){transition-delay:100ms}
+.sds-js .sds .sds-photo-slider__card:nth-child(2){transition-delay:150ms}
+.sds-js .sds .sds-photo-slider__card:nth-child(n+3){transition-delay:200ms}
+
+/* kit-and-image v1.1 · Figma 2138:446 · атомы icon-row, button · только токены · брейкпоинт 768.
+   Слева карточка (заголовок, плитки состава, условия, кнопка), справа фото во всю высоту
+   карточки — не кадрируется, вписывается целиком (object-fit:contain), поэтому плейсхолдер-фон
+   остаётся виден по краям, если пропорции не совпали. Разделители отделяют три разные по
+   природе части карточки друг от друга. Плитка скруглена по radius/button (12, по Figma),
+   а не radius/tile (16) — тот крупнее и здесь не подходит. */
+.sds.sds-kit-and-image{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-kit-and-image__card{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);width:100%;padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+.sds .sds-kit-and-image__title{margin:0;width:100%;font:var(--sds-text-h2);color:var(--sds-color-text)}
+
+.sds .sds-kit-and-image__tiles{display:flex;flex-wrap:wrap;gap:var(--sds-space-gap-s);margin:0;padding:0}
+.sds .sds-kit-and-image__tile{display:flex;flex:1 1 140px;flex-direction:column;align-items:center;justify-content:space-between;gap:var(--sds-space-gap-s);height:168px;margin:0;padding:var(--sds-space-gap-m);border-radius:var(--sds-radius-button);background:var(--sds-color-page)}
+.sds .sds-kit-and-image__tile-art{flex:none;width:72px;height:80px;border-radius:var(--sds-radius-button);background:var(--sds-color-placeholder)}
+.sds .sds-kit-and-image__tile-label{margin:0;width:100%;font:var(--sds-text-body-strong);color:var(--sds-color-text);text-align:center}
+
+.sds .sds-kit-and-image__divider{height:1px;background:var(--sds-color-placeholder)}
+
+
+.sds .sds-kit-and-image__actions{display:flex;width:100%}
+.sds .sds-kit-and-image__actions .sds-btn{width:100%}
+
+/* Фото без кадрирования: раскладка кадра — утилита sds-media в base.css,
+   модификатор --contain (здесь важно показать кадр целиком, а не заполнить рамку). */
+.sds .sds-kit-and-image__media{width:100%;height:240px;border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+
+@media (min-width:768px){
+  .sds.sds-kit-and-image{flex-direction:row;align-items:flex-start}
+  .sds .sds-kit-and-image__card{flex:1 1 0;min-width:0}
+  .sds .sds-kit-and-image__tiles{flex-wrap:nowrap}
+  .sds .sds-kit-and-image__tile{flex-basis:120px}
+  .sds .sds-kit-and-image__actions{width:auto}
+  .sds .sds-kit-and-image__actions .sds-btn{width:auto}
+  .sds .sds-kit-and-image__media{flex:none;align-self:stretch;width:672px;height:auto}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-kit-and-image__card{transition-delay:100ms}
+.sds-js .sds .sds-kit-and-image__media{transition-delay:150ms}
+
+/* reviews-slider v1.2 · Figma 2150:547 · атомы arrow, pager, slider, review-card ·
+   только токены · брейкпоинт 768. Дорожка и карточки делят класс sds-slider__*
+   с views-slider/photo-slider: общий механизм листания — в atoms/slider.
+   Стрелки в шапке, а не поверх карточек: на длинной выдержке скана стрелка-оверлей
+   накрыла бы текст (см. Description). align-items:stretch на треке выравнивает
+   карточки по самой высокой — иначе лента прыгает при листании. */
+.sds.sds-reviews-slider{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);overflow:hidden;padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-reviews-slider__head{display:flex;align-items:center;justify-content:space-between;gap:var(--sds-space-gap-xl)}
+.sds .sds-reviews-slider__title{margin:0;flex:1 1 auto;font:var(--sds-text-h2);color:var(--sds-color-text)}
+
+.sds .sds-reviews-slider__track{display:flex;align-items:stretch;gap:var(--sds-space-gap-m);margin:0;padding:0}
+
+@media (min-width:768px){
+  .sds.sds-reviews-slider{gap:var(--sds-space-gap-xl)}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-reviews-slider__title{transition-delay:50ms}
+.sds-js .sds .sds-review-card:nth-child(1){transition-delay:100ms}
+.sds-js .sds .sds-review-card:nth-child(2){transition-delay:150ms}
+.sds-js .sds .sds-review-card:nth-child(n+3){transition-delay:200ms}
+
+/* lead-form v1.2 · Figma 2156:612 · атомы field, checkbox · только токены · брейкпоинт 768.
+   Кнопка отправки — свой button с классами sds-btn (атом — ссылка, форму не отправляет),
+   стили берутся из atoms/button. Текст согласия — text/rating-caption (14/1.2 в Figma). */
+.sds.sds-lead-form{display:flex;padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+.sds .sds-lead-form__card{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);width:100%;padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-chip-bg);overflow:hidden}
+.sds .sds-lead-form__col{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);min-width:0}
+.sds .sds-lead-form__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-chip-text)}
+.sds .sds-lead-form__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-on-overlay-muted)}
+.sds .sds-lead-form__form{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-lead-form__grid{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-lead-form__message .sds-field{width:100%}
+.sds .sds-lead-form__consent{display:flex;align-items:flex-start;gap:var(--sds-space-gap-m);cursor:pointer}
+.sds .sds-lead-form__consent-text{flex:1 1 0;min-width:0;font:var(--sds-text-rating-caption);color:var(--sds-color-on-overlay-muted)}
+.sds .sds-lead-form__consent-link{color:inherit}
+.sds .sds-lead-form__actions .sds-btn{width:100%}
+/* Чертёж справа: декоративный, в разметке aria-hidden, на мобильном скрыт целиком. */
+.sds .sds-lead-form__art{display:none;border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+
+@media (min-width:768px){
+  .sds .sds-lead-form__card{flex-direction:row;gap:var(--sds-space-gap-xl)}
+  .sds .sds-lead-form__col{flex:none;width:600px}
+  .sds .sds-lead-form__grid{flex-direction:row;flex-wrap:wrap}
+  .sds .sds-lead-form__grid .sds-field{flex:1 1 0;min-width:260px}
+  .sds .sds-lead-form__actions .sds-btn{width:auto}
+  .sds .sds-lead-form__art{display:block;flex:1 1 0;min-width:0;align-self:stretch}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.sds-js .sds .sds-lead-form__title{transition-delay:100ms}
+.sds-js .sds .sds-lead-form__lead{transition-delay:150ms}
+.sds-js .sds .sds-lead-form__form{transition-delay:200ms}
+
+
+/* ==== custom.css: правки этого проекта ==== */
+/* ===================================================================
+   ГЕОМАКС · главная · правки этого проекта (этап 5 — стилизация).
+   Этот файл переживает пересборку страницы: tools/page.py дописывает его
+   в конец снимка sds.css. Библиотека о нём не знает.
+
+   Палитра, токены и радиусы — по README («Палитра копии» / «Новые токены
+   в копии» / разделы радиусов), сверено с утверждённым клиентом макетом
+   Figma NY7nGOBlQt9Zbos7riZKWf.
+   =================================================================== */
+.sds{
+  --sds-color-page:#F9F9F9;--sds-color-card:#FFFFFF;--sds-color-placeholder:#EBEBEB;
+  --sds-color-surface-muted:#EEEEEE;
+  --sds-color-text:#172B36;--sds-color-text-muted:#636E76;
+  --sds-color-chip-bg:#25282A;--sds-color-chip-text:#F9F9F9;
+  --sds-color-accent:#F5A700;--sds-color-accent-hover:#D98F0C;--sds-color-on-accent:#25282A;
+  --sds-color-star:#F3A414;--sds-color-star-empty:#D9D9D9;
+  --sds-color-on-overlay:#FFFFFF;--sds-color-on-overlay-muted:#E6E6E6;
+  --sds-color-overlay-scrim:rgba(33,35,36,.82);
+
+  /* Новый токен клиента: светлый конец градиента кнопки Primary (ниже). */
+  --sds-color-accent-light:#FFC801;
+
+  /* Радиусы — большинство совпадает со значением библиотеки (не переопределяем,
+     чтобы не плодить мёртвый CSS); отличается только секция на мобильном. */
+  --sds-radius-section:40px;
+
+  --sds-font-sans:Manrope,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+
+  /* h2 у клиента не по библиотечной формуле clamp (та даёт 40px уже на 1440) —
+     фиксированный шаг 32/40 на ПК, см. get_variable_defs по узлу 4005:554. */
+  --sds-text-h2:600 32px/40px var(--sds-font-sans);
+  /* card-title у клиента легче и мельче библиотечного (20/600) — Medium 18, не SemiBold. */
+  --sds-text-card-title:500 18px/1.3 var(--sds-font-sans);
+}
+@media (max-width:767.98px){
+  .sds{--sds-radius-section:16px;--sds-text-h2:600 20px/28px var(--sds-font-sans);
+    --sds-text-card-title:500 16px/1.3 var(--sds-font-sans)}
+}
+
+/* heading/h1-* прописными (решение клиента, см. «Правки компонентов в копии»). */
+.sds .sds-hero-video__title{text-transform:uppercase}
+
+/* site-footer: библиотека намеренно держит отступы токенами, а не числами макета
+   (см. library-sets-values-not-the-mockup), но здесь нужно 1:1 — переопределяем
+   два места, где токен и число макета разошлись (остальное уже совпадает:
+   нижний паддинг и так card-padding→gap-l=24, как в макете). */
+@media (min-width:768px){
+  .sds.sds-footer{padding-top:44px}
+  .sds .sds-footer__legal{margin-top:168px}
+}
+
+/* icon-cards, подпись плитки на мобильном — стиль badge, не body-strong (на ПК остаётся
+   body-strong, библиотека уже на нём, см. долг библиотеки №6 в README). */
+@media (max-width:767.98px){
+  .sds .sds-icon-cards__text{font:var(--sds-text-badge)}
+}
+
+/* compare-table: заголовок и таблица разведены на gap-xl (32), библиотека по умолчанию
+   держит их на gap-l (24) — был 918 в макете, 841 без этой правки.
+   Долг библиотеки, найденный здесь: .sds-compare-table__head без max-width — в отличие
+   от остальных блоков с заголовком+лидом (см. photo-slider__head), title растягивается
+   на всю ширину секции и не переносится так, как в макете (там бокс 720 = layout-measure).
+   Чинить тут, локально, раз это единственный клиент на этом блоке. */
+@media (min-width:768px){.sds.sds-compare-table{gap:var(--sds-space-gap-xl)}}
+/* на мобильной шаг остаётся 24 — так в макете (узел 4038:761). */
+.sds .sds-compare-table__head{max-width:var(--sds-layout-measure)}
+
+/* photo-slider: подзаголовка нет в контенте (lead:""), но библиотечный шаблон всё равно
+   рисует пустой <p>, и flex-gap над ним крадёт 8px у заголовка. Схлопываем пустой узел —
+   gap у flex не считается для display:none элементов. */
+.sds .sds-photo-slider__lead:empty{display:none}
+
+/* Button: радиус pill (капсула), а не библиотечный radius-button (12) — решение клиента,
+   см. «Правки компонентов в копии». */
+.sds .sds-btn{border-radius:var(--sds-radius-pill)}
+
+/* Button, Variant=Primary: градиент accent-light → accent (светлый слева) (решение только у клиента,
+   в библиотеке кнопка остаётся плоской заливкой). Hover — плоский accent-hover,
+   без градиента. Secondary и --disabled не трогаем, у них свой background. */
+.sds .sds-btn:not(.sds-btn--secondary){background-image:linear-gradient(90deg,var(--sds-color-accent-light),var(--sds-color-accent))}
+.sds .sds-btn:not(.sds-btn--secondary):hover{background-image:none;background-color:var(--sds-color-accent-hover)}
+.sds .sds-btn.sds-btn--disabled{background-image:linear-gradient(90deg,var(--sds-color-accent-light),var(--sds-color-accent))}
+
+/* Button, Icon=Leading: кружок тёмный (уже chip-bg через color-text), стрелка жёлтая —
+   у референса стрелка акцентная, не chip-text (белая), как в библиотеке по умолчанию. */
+.sds .sds-btn__icon::before{background:var(--sds-color-accent)}
+
+/* Button, Icon=Leading: в макете кнопка 284x56 — бейдж 40 плюс по 8 сверху и снизу;
+   библиотечные 18px вертикального паддинга дают 76. Шаг между бейджем и подписью 8,
+   не 12. Правим только вариант с иконкой: обычная кнопка (18/32) совпадает с макетом. */
+.sds .sds-btn.sds-btn--icon{gap:var(--sds-space-gap-s);padding-block:var(--sds-space-gap-s)}
+
+/* Выделенные слова в заголовках — жёлтым. Приём сквозной: «ГЕОМАКС» в h1 первого экрана
+   (узел I4005:555;2113:298), «запатентована» и «не имеющая аналогов» в заголовке
+   icon-cards (узел I4021:611;2124:369). Отсюда один класс на страницу, а не по классу на блок. */
+.sds .sds-accent{color:var(--sds-color-accent)}
+
+/* hero-video, лид: в макете белый on-overlay и полужирные смысловые куски
+   (Manrope SemiBold 600), библиотека по умолчанию даёт приглушённый цвет и обычный вес. */
+.sds .sds-hero-video__lead{color:var(--sds-color-on-overlay)}
+.sds .sds-hero-video__lead strong{font-weight:600}
+
+/* hero-video, скрим: в макете затемнение начинается на 307 из 768 (40%) и набирает
+   полную силу к низу кадра; библиотечная маска стартует от самого верха и добирает
+   к 68%, из-за чего верх кадра уже серый. */
+.sds .sds-hero-video__scrim{-webkit-mask-image:linear-gradient(to bottom,transparent 40%,#000 100%);
+  mask-image:linear-gradient(to bottom,transparent 40%,#000 100%)}
+
+/* hero-video, мобильный: между лидом и кнопкой 24, как и остальные промежутки
+   первого экрана (узел I4112:1645;2113:307) — библиотека держит здесь gap-xl (32). */
+@media (max-width:767.98px){
+  .sds .sds-hero-video__aside{gap:var(--sds-space-gap-l)}
+}
+
+/* icon-cards (Card=Off), ПК: в макете секция 48 сверху / 56 снизу, заголовок и ряд плиток
+   разведены на 40, пиктограмма 40 (узел 4021:611). Библиотека держит page-padding (40/40),
+   gap-xl (32) и иконку 32 — здесь это расходится с числами макета.
+   Мобильная (узел 4021:650) совпадает как есть: 16/16, шаг 24, иконка 32.
+   Только Card=Off: у Card=On секция держит ровные 40/40 из page-padding (узел 4063:1266),
+   поэтому отступы и шаг заданы через :not(:has(...)) — варианты отличаются не классом
+   корня, а наличием внутренней карточки. */
+@media (min-width:768px){
+  .sds.sds-icon-cards:not(:has(.sds-icon-cards__card)){padding-top:48px;padding-bottom:56px;gap:40px}
+  /* в Card=On иконка остаётся 32 внутри тёмного бокса 48 (узел 4063:1266). */
+  .sds .sds-icon-cards__tile:not(.sds-icon-cards__tile--card) .sds-icon-cards__icon{width:40px;height:40px}
+}
+
+/* compare-table, ПК. Два долга библиотеки, видимых на этом макете (узел I4033:692;2127:339):
+   1) мобильное правило td:first-of-type{padding-top:0} не сброшено в настольной раскладке —
+      у первой ячейки строки верхний отступ пропадал, многострочные строки выходили на 16 ниже
+      макетных 114; 2) ячейки центрировались по вертикали (поведение <td> по умолчанию),
+      в макете содержимое прижато к верху. Плюс строки таблицы в макете белые (color/card),
+      а не цвета секции. */
+@media (min-width:768px){
+  .sds .sds-compare-table__table td:first-of-type{padding-top:var(--sds-space-gap-m)}
+  .sds .sds-compare-table__table th[scope="row"],
+  .sds .sds-compare-table__table td{vertical-align:top}
+  .sds .sds-compare-table__table tbody tr{background:var(--sds-color-card)}
+}
+
+/* photo-cards (узел 4044:852 / мобильный 4044:909). Четыре расхождения с библиотекой:
+   1) карточка скруглена radius/tile (16 на ПК, 12 на мобильной), библиотека берёт
+      radius-card (24/16); 2) подпись в макете набрана 16/1.5 на обоих устройствах —
+      на ПК библиотечный body даёт 18, и строки подписи выходили выше макетных 24;
+   3) выделенные слова внутри подписи — Bold 700, а не body-strong (500 18);
+   4) на мобильной заголовок и список разведены на 24, библиотека держит gap-xl (32).
+   Геометрия карточки (364/257, паддинг 8, бокс иконки 48, иконка 32, плашка во всю
+   ширину у низа) совпала как есть. */
+.sds{--sds-text-body-16:400 16px/1.5 var(--sds-font-sans)}
+.sds .sds-photo-cards__card{border-radius:var(--sds-radius-tile)}
+.sds .sds-photo-cards__caption{font:var(--sds-text-body-16);letter-spacing:-.02em}
+/* -.02em: text/body-mobile в Figma задан с трекингом -2% (-0.32px на 16) — без него
+   третья подпись переносилась на лишнюю строку (112 вместо макетных 88). */
+.sds .sds-photo-cards__caption strong{font:inherit;font-weight:700}
+@media (max-width:767.98px){.sds.sds-photo-cards{gap:var(--sds-space-gap-l)}}
+
+/* photo-slider (узел 4049:956 / мобильный 4049:971). Расхождения с библиотекой:
+   1) пагинация выровнена по 16 от края, библиотека отбивает её на radius-card (24);
+   2) зазор дорожка→пагинация в макете равен шагу секции (32 на ПК, 24 на мобильной),
+      атом slider добавляет к нему ещё gap-m — гасим добавку, оставляя только pager-offset
+      (половина разницы между областью клика 24 и баром 4). Той же величиной гасим нижние
+      10 под баром, иначе нижний отступ секции выходит 50 вместо макетных 40;
+   3) мобильная карточка 304x216 и шаг 8, библиотека даёт 291x208 и gap-m (16).
+   ПК совпал как есть: карточка 672x480, радиус 24, шаг 16, стрелки 48 по центру
+   дорожки с отступом 32 от края. */
+.sds.sds-photo-slider .sds-pager{padding-left:var(--sds-space-gap-m);
+  margin-top:var(--sds-pager-offset);margin-bottom:var(--sds-pager-offset)}
+@media (max-width:767.98px){
+  .sds .sds-photo-slider__card{flex-basis:304px;height:216px}
+  .sds .sds-photo-slider__track{gap:var(--sds-space-gap-s)}
+}
+
+/* kit-and-image (узел 4055:1050 / мобильный 4055:1120). Два расхождения:
+   1) подпись плитки в макете набрана card-title-mobile (Medium 16/1.3) на ПК и badge
+      (Medium 14/1) на мобильной; библиотека держит body-strong (18/1.5 и 16/1.5) —
+      строки подписи выходили выше макетных 21 и 14. То же расхождение, что у подписи
+      плитки icon-cards: в этой копии подписи плиток мельче библиотечных;
+   2) плитка на мобильной 148 высотой, библиотека фиксирует 168 (как на ПК).
+   Остальное совпало: карточка 672/343 с паддингом 40/24, шаг 24 между частями,
+   плитка 142/143.5 с арт-боксом 72x80 и паддингом 16, разделители, условия в два
+   столбца по 288 на ПК и столбиком на мобильной, кнопка 284/295x56, фото 672/343. */
+.sds{--sds-text-tile-label:500 16px/1.3 var(--sds-font-sans)}
+.sds .sds-kit-and-image__tile-label{font:var(--sds-text-tile-label)}
+@media (max-width:767.98px){
+  .sds .sds-kit-and-image__tile{height:148px}
+  .sds .sds-kit-and-image__tile-label{font:var(--sds-text-badge)}
+}
+
+/* icon-cards (Card=On) (узел 4063:1266 / мобильный 4063:1367). Вариант на карточке
+   разошёлся с библиотекой сильнее остальных:
+   ПК — 1) паддинг плитки 16, библиотека даёт gap-l (24) именно варианту --card;
+        2) подпись плитки набрана card-title (18/1.3), библиотека держит body-strong
+           (18/1.5) — строки выходили 27 вместо макетных 23;
+        3) подпись прижата к низу плитки (в макете 123/146 при высоте 208), библиотека
+           ставит варианту --card justify-content:flex-start;
+   мобильная — 4) плитки идут одним столбцом с шагом 8 и внутри раскладываются в строку
+        (бокс иконки слева, подпись справа); библиотека на мобильной держит для --card
+        сетку 2x2 из общего правила и колоночную раскладку внутри плитки.
+   Ряд преимуществ под разделителем набран body-mobile (16/1.5, трекинг -2%) на обоих
+   устройствах — на ПК библиотечный body даёт 18 и ряд выходил 54 вместо макетных 48.
+   Совпало как есть: карточка 1360x562 / 343x1061, паддинг 40/24, шаг 32/24 между
+   частями, бокс иконки 48 с иконкой 32, разделитель, шаг преимуществ 16. */
+.sds .sds-icon-cards__card .sds-icon-row__text{font:var(--sds-text-body-16);letter-spacing:-.02em}
+@media (min-width:768px){
+  .sds .sds-icon-cards__tile--card{padding:var(--sds-space-gap-m);justify-content:space-between}
+  .sds .sds-icon-cards__tile--card .sds-icon-cards__text{font:var(--sds-text-card-title);flex:none}
+}
+@media (max-width:767.98px){
+  .sds .sds-icon-cards__list--card{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+  .sds .sds-icon-cards__tile--card{flex-direction:row;align-items:center}
+}
+
+/* reviews-slider (узел 4067:1444 / мобильный 4067:1489). Расхождения с библиотекой:
+   1) на ПК карточка отзыва в макете белая и со скруглением 16 (radius-tile), секция
+      под ней — page; на мобильной наоборот, карточка цвета page с радиусом 16
+      (там radius-card и есть 16) — как в библиотеке, поэтому правка только для ПК;
+   2) заголовок в макете занимает всю ширину до стрелок, зазора между ними нет
+      (title 1256 + стрелки 104 = 1360), библиотека отбивает gap-xl;
+   3) мобильная карточка 296, библиотека даёт 291 — из-за этого абзац переносился
+      на лишнюю строку (тело 448 вместо макетных 424);
+   4) абзацы на мобильной набраны text/body-mobile с трекингом -2%, как подписи
+      в photo-cards; на ПК это body-desktop 18/1.5 без трекинга — трекинг только там;
+   5) пагинация — то же, что в photo-slider: отбивка 16 от края вместо radius-card
+      и гашение добавки gap-m сверху и площадки клика снизу.
+   Остальное совпало как есть: шапка 48, зазор до дорожки 32/24, карточка 672x340
+   с паддингом 16 и внутренним шагом 32, шапка карточки 44 (имя 18/1.3, дата 14/1.2,
+   звёзды 136x24 справа), тело 232 с шагом 16, скан 240x296 слева. */
+.sds.sds-reviews-slider .sds-pager{padding-left:var(--sds-space-gap-m);
+  margin-top:var(--sds-pager-offset);margin-bottom:var(--sds-pager-offset)}
+@media (min-width:768px){
+  .sds .sds-reviews-slider__head{gap:0}
+  .sds.sds-reviews-slider .sds-review-card{background:var(--sds-color-card);
+    border-radius:var(--sds-radius-tile)}
+}
+@media (max-width:767.98px){
+  .sds.sds-reviews-slider .sds-review-card{flex-basis:296px}
+  .sds.sds-reviews-slider .sds-review-card__paragraph,
+  .sds.sds-reviews-slider .sds-review-card__excerpt{letter-spacing:-.02em}
+}
+
+/* lead-form (узел 4073:1444 / мобильный 4073:1482). Два расхождения:
+   1) заголовок формы в макете целиком жёлтый (color/accent), библиотека красит его
+      в chip-text — на тёмной карточке это был белый;
+   2) кнопка отбита от согласия на gap-l (24), внутри формы шаг gap-m (16) —
+      добавляем недостающие 8 к блоку действий, а не ломаем шаг всей формы.
+   Остальное совпало: карточка 1360x649 (24/40 скругление и паддинг, фон chip-bg),
+   колонка 600 с шагом 24, поля 292x56 сеткой 2x2 с шагом 16, сообщение 600x96,
+   согласие 14/1.2 с подчёркнутой ссылкой, кнопка 284x56, чертёж 648 справа;
+   на мобильной карточка 343x789 с паддингом 24, поля в столбик 295x56, кнопка во всю
+   ширину, чертёж скрыт.
+   ОТКЛОНЕНИЕ: текст согласия в макете длиннее на фразу «в порядке и на условиях,
+   указанных в Политике» — он зашит в шаблон блока библиотеки без параметра контента,
+   поэтому здесь остался библиотечным (секция ниже макета на одну строку: 712 против
+   729 на ПК, 813 против 821 на мобильной). ДОЛГ БИБЛИОТЕКИ: вынести текст согласия
+   в ключ контента — он юридический и у каждого заказчика свой. */
+.sds .sds-lead-form__title{color:var(--sds-color-accent)}
+.sds .sds-lead-form__actions{margin-top:var(--sds-space-gap-s)}
+
+/* site-footer, вторая серия правок (узел 4085:1507 / мобильный 4085:1566).
+   Выше уже стоят верхний паддинг 44 и отбивка правовой строки 168 — остальное,
+   что разошлось с макетом:
+   1) логотип на ПК 276x63 (на мобильной 200x46, как в библиотеке);
+   2) ссылка «перейти на сайт» на ПК набрана rating-label (16/1.2), библиотека
+      держит body (18/1.5); на мобильной это body 16/1.5 — там совпадает;
+   3) колонки занимают 672 справа, библиотека отбивает их от бренда на 72 и
+      растягивает на весь остаток (950). Задаём через max-width + margin-left:auto,
+      чтобы между 768 и 1440 подвал по-прежнему сжимался, а не ломался;
+   4) группы внутри колонки разведены на 40 — токена такой величины нет, пишем числом
+      (на мобильной 32 = gap-xl, как в библиотеке);
+   5) колонки на мобильной идут с шагом 24, библиотека держит gap-xl;
+   6) знак студии на мобильной стоит по центру с отбивкой 24 сверху и снизу, а не
+      в общем шаге 8 правовых строк;
+   7) правовая строка на ПК — ручная сетка макета 0/688/1032/справа. Библиотека
+      сознательно раскладывает её space-between (см. комментарий блока), поэтому
+      числа макета включаем только на 1440 и шире, где они и нарисованы. */
+@media (min-width:768px){
+  .sds .sds-footer__logo{width:276px;height:63px}
+  .sds .sds-footer__brand-link{font:var(--sds-text-rating-label)}
+  .sds .sds-footer__columns{max-width:672px;margin-left:auto}
+  .sds .sds-footer__column{gap:40px}
+}
+@media (min-width:1440px){
+  .sds .sds-footer__legal{display:grid;grid-template-columns:688px 344px auto 1fr;gap:0;align-items:center}
+  .sds .sds-footer__made-by{justify-self:end}
+}
+@media (max-width:767.98px){
+  .sds .sds-footer__columns{gap:var(--sds-space-gap-l)}
+  .sds .sds-footer__mark{align-self:center;margin:var(--sds-space-gap-m) 0}
+}
+
+/* ============================================================
+   Иконки проекта: 17 глифов из клиентской Figma (атом Icon,
+   2115:344 — варианты Name=Time … Name=Geo). В библиотеку они не едут:
+   содержательные пиктограммы у каждого проекта свои, в атоме остаётся
+   заглушка Placeholder. Глиф лежит в --sds-icon-glyph и рисуется маской,
+   поэтому цвет берётся от color элемента — отдельного «белого» набора для
+   тёмных бейджей icon-cards Card=On не нужно, хотя в Figma они залиты белым.
+   Переменная на .sds, а не на блоке: Reuse, Percent, Wrench, Truck и Person
+   работают в двух блоках каждый.
+   ============================================================ */
+.sds{
+  --sds-icon-time:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M12 6V12H18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M11.9995 22.0001C17.5223 22.0001 21.9995 17.5229 21.9995 12.0001C21.9995 6.47721 17.5223 2.00006 11.9995 2.00006C6.47666 2.00006 1.99951 6.47721 1.99951 12.0001C1.99951 17.5229 6.47666 22.0001 11.9995 22.0001Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-fit:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M12.0005 11.9999L4.00049 3.99994M8.00049 3.99994H4.00049V7.99994' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12 11.9999L20 3.99991M16 3.99991H20V7.99991' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12.0005 12L4.00049 20M8.00049 20H4.00049V16' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12 12L20 20M16 20H20V16' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-load:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7.14381 23C2.35157 23 1.36097 12.6556 6.0572 9.68318C6.12905 9.6377 6.16719 9.55216 6.15059 9.46876C5.21137 4.75167 5.2488 1 9.07894 1H14.8785C18.7107 1 18.7448 4.75839 17.8042 9.48143C17.7889 9.55851 17.8208 9.63868 17.8837 9.68573C23.0699 13.5615 21.1328 23 16.8117 23H7.14381Z' stroke='%23000' stroke-width='1.3'/%3E%3C/svg%3E");
+  --sds-icon-reuse:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M21.1664 8.00006C19.6232 4.46825 16.0991 2.00006 11.9984 2.00006C6.81312 2.00006 2.54957 5.94674 2.04785 11.0001' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M16.9995 8H21.3995C21.7309 8 21.9995 7.73137 21.9995 7.4V3' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M2.88281 16.0002C4.42593 19.532 7.95009 22.0002 12.0508 22.0002C17.2361 22.0002 21.4997 18.0535 22.0014 13.0002' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M7.04785 16.0001H2.64785C2.31648 16.0001 2.04785 16.2687 2.04785 16.6001V21.0001' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-schedule:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M13 21H5C3.89543 21 3 20.1046 3 19V9.99997H21V13M15 4V2M15 4V6M15 4H10.5' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M3 9.99998V6C3 4.89543 3.89543 4 5 4H7' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M7.00195 1.99988V5.99988' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M20.998 10.0001V6.00012C20.998 4.89555 20.1026 4.00012 18.998 4.00012H18.498' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M15.9902 19.0001H21.998' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-money:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M1.99805 16.9999V6.99988C1.99805 5.89531 2.89348 4.99988 3.99805 4.99988H9.99803H13.9981H19.9981C21.1027 4.99988 21.998 5.89531 21.998 6.99988V16.9999C21.998 18.1045 21.1027 18.9999 19.9981 18.9999H13.9981H9.99803H3.99805C2.89348 18.9999 1.99805 18.1045 1.99805 16.9999Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18.498 12.0107L18.5086 11.9989' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M5.50195 12.0107L5.51257 11.9989' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-bank:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M3 9.50003L12 4L21 9.50003' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M4.99805 19.9999H18.998' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M10.002 9H14.002' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M6 17V12' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M10.002 17V12' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M13.998 17V12' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18 17V12' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-percent:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M17 19C15.8954 19 15 18.1046 15 17C15 15.8954 15.8954 15 17 15C18.1046 15 19 15.8954 19 17C19 18.1046 18.1046 19 17 19Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M6.99805 9.00023C5.89348 9.00023 4.99805 8.1048 4.99805 7.00025C4.99805 5.89568 5.89348 5.00024 6.99805 5.00024C8.10263 5.00024 8.99805 5.89568 8.99805 7.00025C8.99805 8.1048 8.10263 9.00023 6.99805 9.00023Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18.998 5.00024L4.99805 19.0003' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-wrench:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M10.0474 10.6062L2.97641 17.6773C2.19536 18.4583 2.19536 19.7247 2.97641 20.5057C3.75745 21.2868 5.02378 21.2868 5.80483 20.5057L12.8759 13.4347' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M17.1937 13.7995L21.0721 17.6779C21.8531 18.4588 21.8531 19.7252 21.0721 20.5063C20.291 21.2873 19.0246 21.2873 18.2437 20.5063L12.0352 14.2978' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M6.73288 5.90378L4.61156 6.61089L2.49023 3.07536L3.90445 1.66113L7.43999 3.78246L6.73288 5.90378ZM6.73288 5.90378L9.5631 8.73398' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M10.0505 10.6064C9.20677 8.4534 9.37169 5.62841 11.1112 3.88889C12.8507 2.14937 16.0609 1.76757 17.8288 2.82824L14.788 5.8689L14.5054 8.97998L17.6164 8.6973L20.6572 5.65665C21.7178 7.42442 21.3361 10.6347 19.5965 12.3742C17.857 14.1137 15.032 14.2787 12.8791 13.4348' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-truck:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M8.00003 19C9.10455 19 9.99997 18.1046 9.99997 17C9.99997 15.8954 9.10455 15 8.00003 15C6.89543 15 6 15.8954 6 17C6 18.1046 6.89543 19 8.00003 19Z' stroke='%23000' stroke-width='1.33333' stroke-miterlimit='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18.002 19C19.1066 19 20.002 18.1046 20.002 17C20.002 15.8954 19.1066 15 18.002 15C16.8974 15 16.002 15.8954 16.002 17C16.002 18.1046 16.8974 19 18.002 19Z' stroke='%23000' stroke-width='1.33333' stroke-miterlimit='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M10.0519 17H15.0019V6.6C15.0019 6.26863 14.7334 6 14.4019 6H1.00195' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M5.65 16.9997H3.6C3.26863 16.9997 3 16.7312 3 16.3997V11.4998' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M1.99805 9H5.99805' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M15 9H20.6101C20.8472 9 21.0621 9.13965 21.1584 9.35632L22.9483 13.3836C22.9824 13.4604 23 13.5434 23 13.6273V16.4C23 16.7314 22.7314 17 22.4 17H20.5' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M15 17.0002H16' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-person:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M11.998 11.9998C14.2071 11.9998 15.998 10.2088 15.998 7.99972C15.998 5.79061 14.2071 3.99976 11.998 3.99976C9.7889 3.99976 7.99805 5.79061 7.99805 7.99972C7.99805 10.2088 9.7889 11.9998 11.998 11.9998Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M4.99805 20V19C4.99805 15.134 8.13203 12 11.9981 12C15.8641 12 18.998 15.134 18.998 19V20' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-pile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M9 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18 15.75V6M15 9L18 6L21 9' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18 8.25V18M21 15L18 18L15 15' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-beam:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M9 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M15 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18 6V18' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M18.75 13.5H5.25C4.42157 13.5 3.75 12.8284 3.75 12C3.75 11.1716 4.42157 10.5 5.25 10.5H18.75C19.5784 10.5 20.25 11.1716 20.25 12C20.25 12.8284 19.5784 13.5 18.75 13.5Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-blueprint:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M3 21V3H9V15H21V21H3Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M13.002 18.9998V20.9998' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M9 18.9998V20.9998' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M3 6.99976H5' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M3 11.0002H5' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M3 15H5' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M16.998 18.9998V20.9998' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-research:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M18.998 21.9998H6.99805M6.99805 21.9998H4.99805M6.99805 21.9998V18.9998' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M19.002 15.9998H10.002' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M16 2.00024H12' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12.0019 6.99976C9.00195 6.99976 7.00195 7.99972 7.00195 10.9997V12.9997' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M16 4.59976V11.3998C16 11.7311 15.7314 11.9998 15.4 11.9998H12.6C12.2686 11.9998 12 11.7311 12 11.3998V4.59976C12 4.26838 12.2686 3.99976 12.6 3.99976H15.4C15.7314 3.99976 16 4.26838 16 4.59976Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M7.00195 18.9998C5.3451 18.9998 4.00195 17.6567 4.00195 15.9998C4.00195 14.3429 5.3451 12.9998 7.00195 12.9998C8.65882 12.9998 10.0019 14.3429 10.0019 15.9998C10.0019 17.6567 8.65882 18.9998 7.00195 18.9998Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-geo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.81817 22.0003L6.81821 19.1432C6.51903 16.1659 3 14.572 3 10.0006C2.99999 5.42938 5.72737 1.94398 11.1819 2.00093C15.1094 2.04193 18.8182 4.28656 18.8182 8.85787L21 12.2863C21 14.572 18.8182 14.572 18.8182 14.572C18.8182 14.572 19.3636 20.2861 14.4545 20.2861V22.0003' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M11 12.0002C12.1046 12.0002 13 11.1049 13 10.0003C13 8.89567 12.1046 8.00024 11 8.00024C10.6357 8.00024 10.2942 8.09759 9.99997 8.26777C9.40222 8.61359 9 9.25994 9 10.0003C9 10.7405 9.40222 11.3869 9.99997 11.7326C10.2942 11.9029 10.6357 12.0002 11 12.0002Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M10.8444 12.9959C10.8953 12.9985 10.9465 12.9997 10.998 12.9997C11.0496 12.9997 11.1008 12.9985 11.1516 12.9959M8.98805 12.2269C8.912 12.1582 8.83955 12.0857 8.77085 12.0097M8.00187 10.1533C7.99932 10.1025 7.99805 10.0513 7.99805 9.99975C7.99805 9.94822 7.99932 9.897 8.00187 9.84615M8.77085 7.98982C8.83955 7.91377 8.91207 7.84125 8.98812 7.77255M10.8444 7.00362C10.8953 7.00105 10.9465 6.99976 10.998 6.99976C11.0496 6.99976 11.1008 7.00105 11.1516 7.00362M13.008 7.77255C13.084 7.84125 13.1565 7.91377 13.2252 7.98982M13.9941 9.84615C13.9967 9.897 13.998 9.94822 13.998 9.99975C13.998 10.0513 13.9967 10.1025 13.9941 10.1533M13.2252 12.0097C13.1565 12.0857 13.084 12.1582 13.008 12.2269' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --sds-icon-supervision:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M21.502 14.0003L20.002 9.00023C20.002 9.00023 19.5019 7.00025 17.5019 7.00025C17.5019 7.00025 17.5019 5.00024 15.502 5.00024C13.5019 5.00024 13.5019 7.00025 13.5019 7.00025H10.5019C10.5019 7.00025 10.5019 5.00024 8.50192 5.00024C6.50195 5.00024 6.50195 7.00025 6.50195 7.00025C4.50195 7.00025 4.00195 9.00023 4.00195 9.00023L2.50195 14.0003' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M5.99805 20C8.20718 20 9.99803 18.2091 9.99803 16C9.99803 13.7909 8.20718 12 5.99805 12C3.78891 12 1.99805 13.7909 1.99805 16C1.99805 18.2091 3.78891 20 5.99805 20Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M17.998 20C20.2071 20 21.998 18.2091 21.998 16C21.998 13.7909 20.2071 12 17.998 12C15.7889 12 13.998 13.7909 13.998 16C13.998 18.2091 15.7889 20 17.998 20Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E %3Cpath d='M12.002 16C13.1066 16 14.002 15.1046 14.002 14C14.002 12.8954 13.1066 12 12.002 12C10.8974 12 10.002 12.8954 10.002 14C10.002 15.1046 10.8974 16 12.002 16Z' stroke='%23000' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* icon-cards, Card=Off (#advantages): 2 часа · грунт · 300 тонн · многократно */
+.sds .sds-icon-cards__tile:not(.sds-icon-cards__tile--card):nth-child(1) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-time)}
+.sds .sds-icon-cards__tile:not(.sds-icon-cards__tile--card):nth-child(2) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-fit)}
+.sds .sds-icon-cards__tile:not(.sds-icon-cards__tile--card):nth-child(3) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-load)}
+.sds .sds-icon-cards__tile:not(.sds-icon-cards__tile--card):nth-child(4) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-reuse)}
+
+/* photo-cards: сроки · затраты · кредит · объём и повторное применение */
+.sds .sds-photo-cards__card:nth-child(1) .sds-photo-cards__icon{--sds-icon-glyph:var(--sds-icon-schedule)}
+.sds .sds-photo-cards__card:nth-child(2) .sds-photo-cards__icon{--sds-icon-glyph:var(--sds-icon-money)}
+.sds .sds-photo-cards__card:nth-child(3) .sds-photo-cards__icon{--sds-icon-glyph:var(--sds-icon-bank)}
+.sds .sds-photo-cards__card:nth-child(4) .sds-photo-cards__icon{--sds-icon-glyph:var(--sds-icon-reuse)}
+
+/* kit-and-image, «в аренду входит»: аренда · сопровождение · доставка · выезд */
+.sds.sds-kit-and-image .sds-icon-row:nth-child(1) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-percent)}
+.sds.sds-kit-and-image .sds-icon-row:nth-child(2) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-wrench)}
+.sds.sds-kit-and-image .sds-icon-row:nth-child(3) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-truck)}
+.sds.sds-kit-and-image .sds-icon-row:nth-child(4) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-person)}
+
+/* icon-cards, Card=On (#services), 6 услуг: шпунт · балка · проект ·
+   научно-техническое сопровождение · мониторинг · надзор */
+.sds .sds-icon-cards__tile--card:nth-child(1) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-pile)}
+.sds .sds-icon-cards__tile--card:nth-child(2) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-beam)}
+.sds .sds-icon-cards__tile--card:nth-child(3) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-blueprint)}
+.sds .sds-icon-cards__tile--card:nth-child(4) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-research)}
+.sds .sds-icon-cards__tile--card:nth-child(5) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-geo)}
+.sds .sds-icon-cards__tile--card:nth-child(6) .sds-icon-cards__icon{--sds-icon-glyph:var(--sds-icon-supervision)}
+
+/* icon-cards, Card=On, нижние 4 условия. Привязка иконок к подписям — как
+   у дизайнера в референсе: процент у «разработки», грузовик у «экспертизы». */
+.sds.sds-icon-cards .sds-icon-row:nth-child(1) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-percent)}
+.sds.sds-icon-cards .sds-icon-row:nth-child(2) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-wrench)}
+.sds.sds-icon-cards .sds-icon-row:nth-child(3) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-truck)}
+.sds.sds-icon-cards .sds-icon-row:nth-child(4) .sds-icon-row__icon{--sds-icon-glyph:var(--sds-icon-person)}
+
+/* ============================================================
+   Арт плиток kit-and-image: 4 чертёжных рисунка из клиентской Figma
+   (Kit/Tile art, 4055:982 / 988 / 991 / 994). Это не иконки атома Icon:
+   у каждого своя пропорция, в слот 72×80 они вписаны по меньшей стороне,
+   повторно нигде не используются. Рисунок одноцветный, поэтому он тоже
+   маска, а не картинка: цвет берётся из color/accent, как в копии
+   (у дизайнера в референсе был сырой #F5A700 — своего токена под него нет).
+   ============================================================ */
+.sds .sds-kit-and-image__tile:nth-child(1) .sds-kit-and-image__tile-art{--sds-kit-art:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 80' fill='none'%3E%3Cg clip-path='url(%23clip0_0_1)'%3E %3Cpath d='M34.4677 33.139C32.9318 33.2078 31.4151 33.935 30.126 35.0739C26.6976 38.1028 24.8794 44.0436 28.5943 48.2545M30.126 35.0739C30.126 17.2199 16.9805 21.0308 2.55333 14.9957M2.55333 14.9957L2.34008 15.263C1.31063 16.5539 0.75 18.156 0.75 19.8071V34.6078C0.75 35.8652 1.52288 37.374 5.38729 37.374M2.55333 14.9957C4.14894 12.9177 7.08648 12.3889 9.43512 13.327M35.2335 51.7816C33.499 51.5296 32.3549 51.1812 31.1432 50.4272C30.5916 50.0839 29.8342 50.4319 29.8095 51.0812L29.7328 53.0915L29.3466 56.2339C29.0771 57.7536 28.7483 58.5837 27.8772 59.4649C27.5027 59.8438 27.0474 60.1303 26.5742 60.3751C25.9503 60.6978 25.3476 61.0067 24.7617 61.3032C18.8775 64.2816 14.7007 66.0206 8.0209 68.2033C7.30189 68.4382 6.54293 68.5861 5.79552 68.4697C2.27778 67.9218 0.75 64.8956 0.75 63.5263V52.0312C0.75 50.9893 0.911595 49.8555 1.77597 49.2737C2.91038 48.5102 4.51744 48.3778 5.38729 48.4384M24.7617 61.3032V68.1651C24.7617 71.0643 26.4802 73.6878 29.1381 74.846L32.8438 76.4609C34.6949 77.2675 36.7978 77.27 38.6508 76.4677L41.827 75.0925C44.4932 73.9381 46.219 71.3102 46.219 68.4047V60.5102M37.277 51.7816C38.7094 51.5891 39.6715 51.3508 40.7433 50.7282C41.3841 50.3559 42.2449 50.7073 42.3344 51.443L42.8964 56.0623C43.1632 57.5823 43.4884 58.4137 44.3489 59.2949C44.7226 59.6776 45.1785 59.9672 45.6525 60.2149C45.8432 60.3147 46.0321 60.4131 46.219 60.5102C52.7155 63.8852 56.957 65.714 64.0222 68.0474C64.7475 68.2869 65.5142 68.4384 66.2684 68.3174C69.7417 67.7599 71.2506 64.7373 71.2506 63.3681V51.8342C71.2506 50.8018 71.0941 49.6785 70.2421 49.0954C69.1169 48.3251 67.5173 48.1916 66.6526 48.2525M38.0433 33.139C39.7428 33.1967 41.2406 33.7584 42.4874 34.6505C46.6753 37.6471 48.0312 44.3719 44.6849 48.2545M42.4874 34.6505C42.4874 16.7637 55.1576 20.7945 69.4626 14.7483M69.4626 14.7483L69.6834 15.028C70.6985 16.3141 71.2506 17.9047 71.2506 19.5432V34.3965C71.2506 35.6562 70.4843 37.1677 66.6526 37.1677M69.4626 14.7483C67.8642 12.6451 64.9078 12.126 62.5674 13.106M60.0111 15.2521C60.6339 14.2534 61.5414 13.5357 62.5674 13.106M62.5674 13.106L44.6589 4.78959C39.3303 2.3151 33.1823 2.31356 27.8526 4.78539L9.43512 13.327M63.8428 36.9158C62.9913 37.0838 61.2883 36.9158 61.2883 34.9004V31.2744C61.2883 30.6706 61.2671 30.0167 60.8499 29.58C60.4182 29.1283 59.6642 28.8382 58.4784 29.358C56.1794 30.3657 52.3477 33.8927 52.3477 38.1754V43.7178C52.4329 46.3211 53.7783 52.1322 58.4784 54.5507C59.4151 54.9706 61.2883 55.256 61.2883 53.0392V50.016C61.2883 48.5045 62.5655 48.2525 63.8428 48.2525M12.0856 15.4986C11.4428 14.4786 10.4994 13.7522 9.43512 13.327M9.24295 37.1225C10.1017 37.2901 11.8192 37.1225 11.8192 35.1108V31.5025C11.8192 30.8926 11.8415 30.2308 12.2673 29.7942C12.7036 29.3467 13.4625 29.0621 14.6531 29.5785C16.9718 30.5844 20.8362 34.1049 20.8362 38.3799V43.912C20.7503 46.5106 18.3717 52.3109 13.6313 54.725C12.6867 55.1441 11.8192 55.4291 11.8192 53.2163V50.1987C11.8192 48.6899 10.5311 48.4384 9.24295 48.4384' stroke='%23000' stroke-width='1.02978'/%3E %3C/g%3E%3Cdefs%3E %3CclipPath id='clip0_0_1'%3E %3Crect width='72' height='75.1648' fill='white' transform='translate(0 2.41797)'/%3E %3C/clipPath%3E %3C/defs%3E%3C/svg%3E")} /* Узлы */
+.sds .sds-kit-and-image__tile:nth-child(2) .sds-kit-and-image__tile-art{--sds-kit-art:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 80' fill='none'%3E%3Cg%3E %3Cg%3E %3Cpath d='M6.28505 53.8323L13.568 49.6099L61.5658 21.1885C63.7176 19.5261 66.0888 19.8696 67.413 20.6376C69.2337 21.6347 71.6655 23.9226 71.5041 27.1153C71.3386 29.6081 70.8223 30.1836 68.1867 32.3244L24.1614 58.8743C23.0946 59.5025 16.4098 63.2443 12.9302 65.3847C12.9221 65.3896 12.914 65.3946 12.9059 65.3996C7.27593 68.6635 0.323011 57.2887 6.28505 53.8323C12.8973 49.9988 19.1761 61.5212 12.9302 65.3847M6.28505 57.9203C7.66803 56.1575 8.58537 55.4512 10.9164 55.5934M10.4198 64.07C12.166 63.4315 12.838 62.709 13.7302 60.912' stroke='%23000' stroke-width='0.886418'/%3E %3C/g%3E %3Cg clip-path='url(%23clip0_0_1)'%3E %3Cpath d='M2.28867 41.2217L9.58312 37.0095L59.5496 7.74328C64.7397 4.47165 68.2323 6.38218 69.7581 8.76401C71.1193 10.8892 72.4804 15.1922 68.137 17.6999L20.1932 46.2516C20.0609 45.9525 12.4364 50.6051 8.94611 52.745C8.9374 52.7504 8.92869 52.7557 8.91998 52.761C3.28111 56.0171 -3.68281 44.6698 2.28867 41.2217C8.91079 37.3977 15.199 48.8898 8.94611 52.745M2.28867 45.2998C3.67384 43.5413 4.59263 42.8366 6.92735 42.9785M6.42999 51.4345C8.17898 50.7977 8.85199 50.077 9.74564 48.2843' stroke='%23000' stroke-width='0.884737'/%3E %3C/g%3E %3C/g%3E%3Cdefs%3E %3CclipPath id='clip0_0_1'%3E %3Crect width='72' height='70' fill='white'/%3E %3C/clipPath%3E %3C/defs%3E%3C/svg%3E")} /* Элементы труб */
+.sds .sds-kit-and-image__tile:nth-child(3) .sds-kit-and-image__tile-art{--sds-kit-art:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 80' fill='none'%3E%3Cg clip-path='url(%23clip0_0_1)'%3E %3Cpath d='M42.1442 17.5308C43.4352 17.2765 44.5449 16.9261 45.3424 16.4796V11.1227C44.2229 9.91439 43.5161 9.38569 41.9759 8.87636M30.5299 8.87636V2.30993C31.8765 -0.110974 40.6293 -0.111274 41.9759 2.30993V8.87636M41.9759 8.87636V11.7158M27.1634 11.1227C28.3636 11.3541 29.4754 11.5482 30.5299 11.7038C34.6042 12.305 37.8219 12.3318 41.9759 11.7158C43.0282 11.5597 44.1407 11.3624 45.3424 11.1227M30.6982 17.5618C31.5939 17.7257 32.5607 17.8471 33.5597 17.9258C35.4962 18.0783 37.5539 18.0707 39.451 17.9031C40.4008 17.8191 41.3103 17.695 42.1442 17.5308M42.1442 17.5308V69.3545M39.451 17.9031V13.7128M33.5597 17.9258V13.7128M30.5299 8.87636C28.9922 9.38417 28.2699 9.9055 27.1634 11.1227V16.4796C28.0693 16.9446 29.297 17.3053 30.6982 17.5618M42.1442 69.3545V72.1213C37.1318 74.2969 34.5707 74.167 30.3615 72.1213L30.3788 69.3545C30.4997 49.9392 30.5725 37.6776 30.6982 17.5618M30.5299 8.87636V11.7038M41.9759 2.30993C40.983 3.05685 40.2864 3.18147 38.946 3.17194M30.5299 2.30993C31.3972 2.95551 32.0848 3.12126 33.5597 3.17194M35.9162 12.1576V7.49194M35.9162 7.49194H37.0844C37.9257 7.49194 38.8569 6.61475 38.222 6.0627C38.0167 5.88422 37.711 5.79414 37.2628 5.76394H34.9063C34.3121 5.74159 33.9508 5.84949 33.7311 6.05414C33.1172 6.62622 34.0717 7.49194 34.9109 7.49194H35.9162ZM42.1442 69.3545C46.8497 69.9158 48.4507 70.486 50.0555 72.1213V76.7851C43.6591 80.4136 28.1733 80.4136 21.9453 76.7851V72.1213C24.2066 69.8649 26.4985 69.7664 30.3788 69.3545' stroke='%23000' stroke-width='0.987654'/%3E %3C/g%3E%3Cdefs%3E %3CclipPath id='clip0_0_1'%3E %3Crect width='29.434' height='80' fill='white' transform='translate(21.2832)'/%3E %3C/clipPath%3E %3C/defs%3E%3C/svg%3E")} /* Опоры */
+.sds .sds-kit-and-image__tile:nth-child(4) .sds-kit-and-image__tile-art{--sds-kit-art:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 80' fill='none'%3E%3Cg clip-path='url(%23clip0_0_1)'%3E %3Cpath d='M31.8986 8.90614V2.09137C32.0813 0.0151916 40.1205 0.0150428 40.486 2.09137V8.93262M29.8849 11.6136C28.6059 10.3914 29.3367 8.04121 30.6196 8.48912C31.0644 8.64444 31.4893 8.78339 31.8986 8.90614C35.0396 9.84805 37.2563 9.83367 40.486 8.93262C40.9503 8.80304 41.4356 8.65513 41.9476 8.48912M40.486 8.93262L41.9476 8.48912M40.486 2.09137C37.1972 3.12797 35.37 3.12797 31.8986 2.09137M42.6746 11.4925C43.9536 10.0455 43.0401 8.13492 41.9476 8.48912M28.0578 17.482H27.832C27.3595 17.482 26.9842 17.0846 27.0111 16.6129L27.2164 13.0194C27.2743 12.0055 28.2279 11.2889 29.224 11.4865C29.4473 11.5307 29.6675 11.5731 29.8849 11.6136C31.1165 11.8431 32.2571 12.0117 33.3564 12.1175M44.319 17.482C44.7122 17.482 45.0211 17.1456 44.9875 16.7539L44.6648 12.9863C44.5789 11.9844 43.6225 11.2968 42.6378 11.5002C41.1397 11.8095 39.7794 12.0214 38.4723 12.1389C36.7395 12.2949 35.1001 12.2852 33.3564 12.1175M38.4723 12.1389V17.482M33.3564 12.1175V17.482M28.0578 17.482H33.3564M28.0578 17.482L28.5241 19.3581C28.6795 19.9832 29.2408 20.422 29.8849 20.422M33.3564 17.482H38.4723M38.4723 17.482V20.422M38.4723 17.482H44.319M44.319 17.482L44.0388 18.9851C43.8835 19.818 43.1565 20.422 42.3092 20.422M38.4723 20.422H37.0106M38.4723 20.422H42.3092M38.4723 20.422V25.6102M38.4723 47.5737V47.6485C38.4723 47.8245 38.4158 47.9959 38.3111 48.1374L37.3173 49.4813C37.2359 49.5913 37.1833 49.72 37.1642 49.8555L36.8487 52.0955C36.7173 53.0279 35.376 53.0433 35.2232 52.1141L34.8549 49.873C34.8308 49.7264 34.7674 49.5891 34.6715 49.4755L33.3564 47.9195V46.536M33.3564 46.536L38.4723 45.3255M33.3564 46.536V44.2878M33.3564 47.9195L38.4723 47.5737M38.4723 47.5737V45.3255M29.8849 20.422H33.3564M29.8849 20.422V65.9593C29.8849 66.1482 29.9499 66.3313 30.069 66.4778L31.3848 68.0969C31.5964 68.3573 31.712 68.6827 31.712 69.0183M34.8181 20.422H33.3564M33.3564 20.422V25.9561M33.3564 25.9561V28.5502M33.3564 25.9561L38.4723 25.6102M34.2699 78.9186C35.442 79.6598 36.501 79.6456 37.7414 78.8868C38.5505 78.3919 39.4369 77.5802 40.4821 76.4548V70.2513C40.4821 69.118 40.8723 68.0194 41.5869 67.14L41.941 66.7044C42.1792 66.4113 42.3092 66.0451 42.3092 65.6673V20.422M38.4723 25.6102V26.6479M31.712 69.0183V76.4548C32.6708 77.6083 33.4951 78.4285 34.2699 78.9186M31.712 69.0183L34.2699 71.6124V78.9186M37.7414 78.8868V73.1688M36.097 61.4089V66.5971M38.4723 45.3255V42.9042M33.3564 44.2878L38.4723 42.9042M33.3564 44.2878V41.5207M38.4723 42.9042V40.4831M33.3564 41.5207L38.4723 40.4831M33.3564 41.5207V39.0996M38.4723 40.4831V37.889M38.4723 37.889L33.3564 39.0996M38.4723 37.889V35.122M33.3564 39.0996V36.6784M33.3564 36.6784L38.4723 35.122M33.3564 36.6784V33.9114M38.4723 35.122V32.3549M33.3564 33.9114L38.4723 32.3549M33.3564 33.9114V31.1443M38.4723 32.3549V29.4149M33.3564 31.1443L38.4723 29.4149M33.3564 31.1443V28.5502M38.4723 29.4149V26.6479M33.3564 28.5502L38.4723 26.6479' stroke='%23000' stroke-width='1.06886' stroke-linecap='round'/%3E %3C/g%3E%3Cdefs%3E %3CclipPath id='clip0_0_1'%3E %3Crect width='19.5918' height='80' fill='white' transform='translate(26.2041)'/%3E %3C/clipPath%3E %3C/defs%3E%3C/svg%3E")} /* Химические анкеры */
+.sds .sds-kit-and-image__tile-art{border-radius:0;background:var(--sds-color-accent);-webkit-mask:var(--sds-kit-art) center / contain no-repeat;mask:var(--sds-kit-art) center / contain no-repeat}
+
+/* ============================================================
+   Логотип и знак студии из клиентской Figma (Footer/Logo 2158:557,
+   Footer/Studio mark 4095:1625). Вектор, поэтому инлайном в коде,
+   а не файлом на хостинге: превью остаётся самодостаточным.
+   Логотип многоцветный — это картинка (background-image), маской его
+   не нарисовать. В шапке тот же рисунок стоит в src у img: пропорция
+   слотов совпадает (175×40 и 276×63), второго начертания не потребовалось.
+   Знак студии одноцветный (в макете — color/text на 40 процентов), поэтому
+   маска: прозрачность уже зашита в альфу рисунка.
+   ============================================================ */
+.sds .sds-footer__logo{border-radius:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 276 63' fill='none'%3E%3Cg clip-path='url(%23clip0_0_1)'%3E %3Cg%3E %3Cmask id='mask0_0_1' style='mask-type:luminance' maskUnits='userSpaceOnUse' x='0' y='0' width='276' height='64'%3E %3Cg id='clip0_11_32'%3E %3Cpath d='M276 0H0V63.09H276V0Z' fill='white'/%3E %3C/g%3E %3C/mask%3E %3Cg mask='url(%23mask0_0_1)'%3E %3Cg%3E %3Cpath d='M39.71 48.57L12.67 34.49L0.04 39.27L39.71 61.08L79.37 39.27L66.73 34.49L39.71 48.57Z' fill='%23562C13'/%3E %3Cpath d='M0.09 41.05V39.35L39.71 61.14L79.35 39.35L79.32 41.05L39.71 62.84L0.09 41.05Z' fill='white'/%3E %3Cpath d='M0.14 39.44L39.66 61.17L39.71 61.2L39.76 61.17L79.3 39.44L79.27 41.02L39.71 62.8L0.14 41.02V39.44ZM79.4 39.27L39.71 61.08L0.04 39.27V41.08L39.69 62.9L79.35 41.08L79.39 39.27H79.4Z' fill='%23742F21'/%3E %3Cpath d='M39.7 61.15V62.8' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M39.71 48.28V49.86' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M39.71 35.56V37.16' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M0.04 16.27L39.71 1.26L79.4 16.27' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M66.22 22.66L79.4 16.27L39.7 1.26L0 16.27L13.18 22.66L39.7 12.63L66.22 22.66Z' fill='%23F3A414'/%3E %3Cpath d='M0.04 39.27L39.71 24.3L79.4 39.27' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M0.96 29.76V28.09L39.71 48.28L78.48 28.09L78.45 29.76L39.71 49.92L0.96 29.76Z' fill='white'/%3E %3Cpath d='M1 28.17L39.66 48.31L39.7 48.33L39.75 48.31L78.42 28.18L78.39 29.72L39.7 49.87L1 29.72V28.17ZM78.53 28.01L39.7 48.22L0.91 28.01V29.77L39.7 49.96L78.49 29.77L78.53 28.01Z' fill='%23742F21'/%3E %3Cpath d='M13.18 23.36L0.89 28L12.67 34.14L25.46 29.31L13.18 23.36Z' fill='%23C5601C'/%3E %3Cpath d='M66.73 34.14L78.51 28L66.22 23.36L53.94 29.31L66.73 34.14Z' fill='%23C5601C'/%3E %3Cpath d='M66.73 34.14L53.95 29.31L39.7 36.21L25.46 29.31L12.67 34.14L39.7 48.22L66.73 34.14Z' fill='%23C25812'/%3E %3Cpath d='M0.89 28L39.7 13.32L78.51 28' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M25.46 28.6L39.7 35.51L53.94 28.6L39.7 23.22L25.46 28.6Z' fill='%23F3A414'/%3E %3Cpath d='M39.71 23.22L53.95 28.6L66.22 22.66L39.71 12.63L13.18 22.66L25.46 28.6L39.71 23.22Z' fill='%23F3A414'/%3E %3Cpath d='M0.09 18.05V16.35L39.71 35.56L79.35 16.35L79.32 18.05L39.71 37.23L0.09 18.05Z' fill='white'/%3E %3Cpath d='M0.14 16.42L39.66 35.6L39.7 35.62L39.75 35.6L79.32 16.43L79.29 18.02L39.7 37.17L0.14 18.02V16.42ZM79.4 16.27L39.71 35.51L0.04 16.27V18.07L39.69 37.27L79.37 18.07L79.4 16.26V16.27Z' fill='%23742F21'/%3E %3Cpath d='M39.7 48.24V49.9' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M39.7 35.54V37.19' stroke='%23742F21' stroke-width='0.37' stroke-miterlimit='10'/%3E %3Cpath d='M101.87 22.05V44.29H97.93V18.54H113.9V22.03L101.87 22.05Z' fill='%23562C13'/%3E %3Cpath d='M118.35 44.29V18.54H134.97V22.03H122.28V29.55H133.07V33.05H122.29V40.79H134.98V44.29H118.35Z' fill='%23562C13'/%3E %3Cpath d='M155.56 41.76C153.73 43.51 151.28 44.5 148.73 44.5C146.18 44.5 143.72 43.51 141.89 41.76C139.34 39.19 139.38 35.57 139.38 31.59V30.19C139.38 25.99 139.7 23.19 141.89 21.04C143.72 19.28 146.17 18.29 148.73 18.29C151.28 18.29 153.73 19.28 155.56 21.04C157.57 23.06 158.08 25.94 158.08 29.57V31.38C158.08 35.82 158.11 39.15 155.56 41.76ZM152.55 23.42C152.05 22.91 151.44 22.5 150.78 22.23C150.12 21.95 149.4 21.82 148.68 21.83C147.96 21.82 147.25 21.96 146.59 22.23C145.92 22.5 145.32 22.91 144.82 23.42C143.29 25.01 143.32 27.69 143.32 31.23C143.32 34.52 143.14 37.74 144.82 39.4C145.32 39.91 145.92 40.32 146.59 40.59C147.25 40.86 147.96 41 148.68 40.99C149.4 41.01 150.12 40.88 150.78 40.61C151.45 40.33 152.05 39.92 152.55 39.4C154.08 37.81 154.08 35.54 154.08 31.16C154.11 27.25 154.03 24.94 152.55 23.42Z' fill='%23562C13'/%3E %3Cpath d='M182.83 44.29V27.07L175.44 39.17L167.85 27.07V44.29H163.91V18.54H167.81L175.39 31.83L182.87 18.54H186.81V44.29H182.83Z' fill='%23562C13'/%3E %3Cpath d='M208.49 44.29L206.67 39.11H196.43L194.61 44.29H190.45L199.96 18.54H203.13L212.61 44.29H208.49ZM201.64 24.36L197.56 35.77H205.62L201.64 24.36Z' fill='%23562C13'/%3E %3Cpath d='M231.93 44.29L224.63 31.57L220.26 36.77V44.27H216.33V18.54H220.26V31.48L230.84 18.54H235.68L227.26 28.62L236.55 44.29H231.93Z' fill='%23562C13'/%3E %3Cpath d='M252.59 43.78C251.37 44.26 250.07 44.5 248.76 44.48C247.48 44.51 246.22 44.28 245.03 43.81C243.85 43.34 242.77 42.63 241.88 41.73C239.29 39.17 239.36 35.62 239.36 31.39C239.32 31.04 239.32 30.69 239.36 30.34C239.36 25.6 239.72 23.22 241.88 21.05C242.77 20.16 243.84 19.46 245.02 18.98C246.19 18.51 247.46 18.28 248.72 18.3C250.05 18.26 251.36 18.5 252.59 19C253.84 19.55 254.98 20.33 255.94 21.31L253.32 23.95C251.78 22.47 250.66 21.78 248.72 21.78C248.01 21.76 247.3 21.89 246.63 22.16C245.97 22.43 245.37 22.83 244.87 23.33C243.37 24.92 243.33 27.67 243.33 31.03V32.18C243.33 36.6 243.62 38.12 244.87 39.42C245.36 39.94 245.96 40.34 246.63 40.61C247.29 40.88 248.01 41 248.72 40.97C250.66 40.97 251.78 40.27 253.32 38.8L255.94 41.44C254.99 42.42 253.85 43.22 252.59 43.78Z' fill='%23562C13'/%3E %3Cpath d='M270.07 20.82L268.67 18.47H267.71V20.82H267.09V15.22H268.91C269.14 15.21 269.36 15.25 269.57 15.33C269.78 15.41 269.98 15.53 270.14 15.68C270.31 15.84 270.44 16.02 270.53 16.23C270.62 16.43 270.67 16.65 270.68 16.88C270.66 17.24 270.53 17.58 270.3 17.86C270.07 18.14 269.75 18.33 269.4 18.41L270.81 20.81L270.07 20.82ZM268.85 17.93C269.01 17.95 269.16 17.94 269.31 17.89C269.46 17.84 269.59 17.77 269.71 17.67C269.82 17.56 269.91 17.44 269.98 17.3C270.04 17.16 270.07 17.01 270.07 16.86C270.07 16.7 270.04 16.55 269.98 16.41C269.91 16.27 269.82 16.15 269.71 16.05C269.59 15.95 269.46 15.87 269.31 15.82C269.16 15.78 269.01 15.76 268.85 15.78H267.74V17.93H268.85Z' fill='%23562C13'/%3E %3Cpath d='M273.45 18.02C273.45 18.97 273.17 19.89 272.64 20.68C272.11 21.47 271.35 22.09 270.47 22.45C269.58 22.81 268.61 22.91 267.67 22.72C266.73 22.54 265.87 22.08 265.19 21.41C264.52 20.74 264.06 19.88 263.87 18.95C263.68 18.02 263.78 17.06 264.14 16.18C264.51 15.3 265.13 14.55 265.93 14.03C266.72 13.5 267.66 13.22 268.62 13.22C269.9 13.22 271.13 13.72 272.04 14.62C272.94 15.52 273.45 16.74 273.45 18.02Z' stroke='%23562C13' stroke-width='0.75' stroke-miterlimit='10'/%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E%3Cdefs%3E %3CclipPath id='clip0_0_1'%3E %3Cpath d='M0 4C0 1.79 1.79 0 4 0H272C274.21 0 276 1.79 276 4V59C276 61.21 274.21 63 272 63H4C1.79 63 0 61.21 0 59V4Z' fill='white'/%3E %3C/clipPath%3E %3C/defs%3E%3C/svg%3E") left center / contain no-repeat}
+.sds .sds-footer__mark{background:var(--sds-color-text);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 22' fill='none'%3E%3Cpath d='M21.37 14.52C21.37 14.17 21.38 13.83 21.39 13.48C21.39 13.23 21.4 12.98 21.41 12.73C21.42 12.47 21.43 12.21 21.44 11.95C21.44 11.71 21.45 11.47 21.46 11.23C21.47 10.97 21.48 10.71 21.48 10.44C21.49 10.2 21.5 9.96 21.51 9.71C21.52 9.45 21.52 9.2 21.53 8.94C21.54 8.7 21.55 8.46 21.56 8.22C21.56 7.95 21.57 7.68 21.58 7.41C21.59 7.07 21.6 6.72 21.6 6.38C21.6 6.22 21.48 6.11 21.33 6.08C21.16 6.06 21.01 6.1 20.85 6.11C20.66 6.14 20.48 6.17 20.29 6.2C20.05 6.24 19.82 6.28 19.58 6.32C19.4 6.34 19.22 6.37 19.04 6.39C18.93 6.41 18.82 6.44 18.72 6.44C18.56 6.43 18.41 6.42 18.26 6.39C18.08 6.34 17.92 6.25 17.78 6.11C17.6 5.93 17.64 5.61 17.88 5.47C18.06 5.37 18.26 5.33 18.46 5.3C18.7 5.25 18.95 5.22 19.19 5.18C19.43 5.14 19.67 5.12 19.9 5.08C20.07 5.05 20.25 5.02 20.42 4.99C20.54 4.97 20.66 4.96 20.78 4.94C20.97 4.91 21.16 4.88 21.36 4.85C21.53 4.82 21.71 4.8 21.89 4.77C22.12 4.73 22.36 4.7 22.59 4.66C22.72 4.64 22.86 4.62 22.99 4.6C23.16 4.58 23.33 4.56 23.5 4.53C23.63 4.51 23.77 4.48 23.91 4.46C24.15 4.42 24.39 4.38 24.63 4.35C24.81 4.32 25 4.3 25.18 4.27C25.31 4.25 25.43 4.23 25.55 4.22C25.69 4.19 25.83 4.17 25.97 4.15C26.17 4.12 26.36 4.08 26.56 4.06C26.7 4.05 26.85 4.04 26.99 4.06C27.18 4.08 27.36 4.12 27.53 4.22C27.63 4.28 27.72 4.35 27.78 4.46C27.9 4.7 27.79 4.89 27.6 5.01C27.43 5.12 27.24 5.15 27.05 5.18C26.92 5.2 26.79 5.21 26.65 5.23C26.5 5.25 26.35 5.27 26.19 5.3C25.96 5.33 25.73 5.37 25.5 5.41C25.32 5.44 25.13 5.46 24.94 5.49C24.78 5.51 24.61 5.53 24.45 5.56C24.26 5.59 24.08 5.61 23.89 5.66C23.64 5.71 23.5 5.83 23.49 6.12C23.48 6.35 23.47 6.59 23.46 6.83C23.45 7.07 23.45 7.31 23.44 7.55C23.43 7.82 23.42 8.09 23.42 8.36C23.41 8.59 23.4 8.82 23.39 9.05C23.38 9.32 23.38 9.59 23.37 9.86C23.36 10.09 23.35 10.32 23.34 10.55C23.34 10.83 23.33 11.11 23.32 11.39C23.31 11.59 23.3 11.8 23.3 12C23.29 12.3 23.28 12.59 23.27 12.88C23.27 13.13 23.26 13.37 23.25 13.62C23.24 13.87 23.23 14.13 23.22 14.39C23.22 14.64 23.21 14.89 23.2 15.15C23.19 15.25 23.19 15.35 23.2 15.46C23.21 15.64 23.31 15.74 23.49 15.74C23.66 15.75 23.82 15.67 23.98 15.62C24.18 15.56 24.38 15.48 24.58 15.41C25.23 15.19 25.88 14.96 26.54 14.74C26.95 14.6 27.36 14.45 27.77 14.31C28.18 14.17 28.6 14.02 29.01 13.88C29.45 13.73 29.89 13.58 30.32 13.43C30.74 13.28 31.15 13.14 31.57 13C31.98 12.86 32.39 12.71 32.8 12.57C33.24 12.42 33.68 12.27 34.12 12.12C34.53 11.97 34.94 11.83 35.35 11.69C35.56 11.61 35.77 11.53 35.98 11.45C36.04 11.43 36.09 11.39 36.13 11.36C36.22 11.29 36.22 11.21 36.14 11.14C36.07 11.09 35.99 11.06 35.92 11.02C35.72 10.92 35.51 10.84 35.32 10.73C35.24 10.69 35.17 10.61 35.11 10.54C35.03 10.43 35.03 10.31 35.09 10.19C35.17 10.02 35.26 9.86 35.34 9.69C35.5 9.39 35.69 9.1 35.79 8.77C35.8 8.74 35.81 8.71 35.82 8.68C35.82 8.59 35.76 8.55 35.68 8.57C35.63 8.58 35.59 8.59 35.55 8.61C35.39 8.73 35.23 8.85 35.07 8.97C34.91 9.09 34.76 9.21 34.61 9.33C34.46 9.45 34.32 9.58 34.17 9.7C33.96 9.87 33.76 10.03 33.56 10.19C33.4 10.33 33.24 10.46 33.08 10.6C32.93 10.72 32.78 10.83 32.63 10.95C32.48 11.08 32.33 11.2 32.19 11.32C32.03 11.45 31.87 11.56 31.67 11.6C31.53 11.63 31.4 11.61 31.27 11.58C31.03 11.53 30.79 11.45 30.56 11.33C30.45 11.26 30.33 11.19 30.25 11.07C30.15 10.94 30.14 10.8 30.17 10.66C30.25 10.26 30.36 9.87 30.45 9.48C30.53 9.11 30.61 8.74 30.69 8.37C30.71 8.26 30.71 8.14 30.71 8.02C30.71 7.99 30.7 7.95 30.69 7.92C30.67 7.87 30.63 7.85 30.59 7.89C30.52 7.96 30.44 8.02 30.39 8.1C30.26 8.3 30.14 8.51 30.02 8.71C29.84 9.03 29.66 9.35 29.48 9.67C29.4 9.82 29.31 9.96 29.22 10.11C29.09 10.35 28.86 10.41 28.62 10.37C28.32 10.33 28.04 10.24 27.78 10.09C27.67 10.03 27.57 9.95 27.48 9.87C27.28 9.67 27.09 9.46 26.89 9.26C26.86 9.23 26.8 9.19 26.75 9.19C26.61 9.16 26.51 9.26 26.49 9.44C26.48 9.57 26.48 9.7 26.47 9.83C26.45 10.11 26.44 10.4 26.42 10.68C26.4 10.95 26.39 11.21 26.37 11.48C26.36 11.77 26.34 12.05 26.32 12.33C26.32 12.45 26.31 12.57 26.3 12.7C26.28 12.97 26.28 13.25 26.25 13.52C26.23 13.64 26.25 13.78 26.16 13.89C26.13 13.93 26.09 13.98 26.05 14C25.94 14.06 25.84 14.07 25.71 14.05C25.42 14.02 25.14 13.93 24.88 13.8C24.69 13.7 24.51 13.57 24.46 13.34C24.45 13.3 24.44 13.27 24.44 13.23C24.44 13.09 24.44 12.95 24.44 12.81C24.45 12.61 24.47 12.42 24.49 12.22C24.49 12.22 24.49 12.21 24.49 12.2C24.5 11.98 24.5 11.77 24.51 11.55C24.53 11.26 24.54 10.97 24.56 10.69C24.57 10.56 24.58 10.43 24.58 10.3C24.6 10.02 24.62 9.73 24.63 9.45C24.64 9.32 24.65 9.2 24.66 9.07C24.67 8.79 24.69 8.51 24.7 8.24C24.72 7.98 24.72 7.72 24.75 7.46C24.78 7.27 24.75 7.07 24.82 6.89C24.89 6.7 24.98 6.64 25.18 6.63C25.45 6.62 25.7 6.7 25.95 6.8C26.25 6.92 26.49 7.12 26.7 7.35C26.91 7.59 27.12 7.83 27.32 8.07C27.41 8.16 27.49 8.25 27.57 8.34C27.7 8.48 27.92 8.49 28.04 8.32C28.1 8.23 28.17 8.13 28.22 8.04C28.47 7.6 28.71 7.17 28.95 6.73C29.09 6.48 29.22 6.22 29.36 5.97C29.59 5.57 29.82 5.16 30.04 4.76C30.14 4.58 30.23 4.4 30.33 4.22C30.53 3.87 30.73 3.52 30.92 3.16C31.05 2.93 31.18 2.7 31.31 2.47C31.5 2.11 31.7 1.75 31.9 1.4C32 1.21 32.09 1.03 32.2 0.85C32.31 0.65 32.42 0.45 32.54 0.26C32.65 0.08 32.81 0 33.01 0C33.27 -0 33.51 0.08 33.75 0.17C33.92 0.24 34.07 0.32 34.21 0.45C34.35 0.59 34.41 0.74 34.37 0.94C34.26 1.41 34.16 1.89 34.05 2.36C33.96 2.76 33.86 3.15 33.77 3.54C33.66 4.04 33.55 4.53 33.43 5.03C33.34 5.42 33.24 5.82 33.15 6.22C33.05 6.66 32.94 7.11 32.84 7.56C32.8 7.74 32.76 7.92 32.72 8.1C32.71 8.18 32.71 8.26 32.72 8.34C32.73 8.44 32.82 8.49 32.92 8.47C33.04 8.46 33.12 8.39 33.2 8.32C33.5 8.09 33.79 7.85 34.08 7.61C34.32 7.42 34.56 7.22 34.8 7.02C35.04 6.82 35.29 6.62 35.53 6.42C35.73 6.26 35.93 6.09 36.13 5.93C36.37 5.73 36.61 5.55 36.84 5.35C36.99 5.23 37.14 5.1 37.29 4.98C37.54 4.78 37.79 4.58 38.03 4.38C38.15 4.28 38.27 4.18 38.39 4.09C38.58 3.96 38.78 3.91 39.02 3.96C39.36 4.02 39.68 4.12 39.96 4.32C40.03 4.37 40.09 4.43 40.14 4.5C40.26 4.66 40.19 4.82 40.11 4.97C40.02 5.16 39.91 5.35 39.81 5.54C39.75 5.64 39.69 5.74 39.63 5.84C39.43 6.21 39.22 6.58 39.02 6.96C38.92 7.14 38.82 7.32 38.72 7.5C38.53 7.85 38.33 8.2 38.14 8.55C38.04 8.72 37.95 8.89 37.86 9.05C37.77 9.23 37.68 9.4 37.59 9.57C37.56 9.63 37.54 9.7 37.54 9.77C37.53 9.87 37.58 9.96 37.68 9.98C37.77 10 37.87 10.05 37.97 10C38 9.99 38.02 10 38.04 9.99C38.28 9.98 38.52 9.96 38.75 9.95C38.93 9.93 39.1 9.91 39.28 9.9C39.56 9.87 39.83 9.85 40.11 9.83C40.3 9.81 40.49 9.79 40.67 9.78C40.83 9.77 40.99 9.76 41.15 9.76C41.58 9.76 41.97 9.91 42.33 10.15C42.44 10.23 42.49 10.38 42.44 10.48C42.41 10.53 42.37 10.58 42.32 10.6C42.11 10.69 41.9 10.78 41.69 10.85C41.27 11 40.85 11.14 40.42 11.28C39.99 11.43 39.57 11.58 39.14 11.73C38.72 11.88 38.29 12.02 37.87 12.17C37.46 12.31 37.06 12.45 36.65 12.59C36.21 12.75 35.76 12.9 35.32 13.05C34.91 13.19 34.5 13.33 34.1 13.48C33.65 13.63 33.21 13.78 32.76 13.93C32.36 14.07 31.95 14.22 31.54 14.36C30.91 14.57 30.29 14.79 29.66 15C29.23 15.15 28.8 15.31 28.37 15.45C27.75 15.67 27.12 15.88 26.49 16.1C26.06 16.25 25.64 16.4 25.21 16.55C24.68 16.73 24.14 16.92 23.61 17.1C23.51 17.14 23.43 17.19 23.34 17.24C23.2 17.31 23.14 17.44 23.13 17.58C23.12 17.76 23.12 17.93 23.1 18.1C23.09 18.25 23.08 18.39 23.06 18.53C23.03 18.71 22.93 18.84 22.77 18.9C22.6 18.97 22.43 19.04 22.25 19.09C22.04 19.15 21.81 19.2 21.58 19.2C21.37 19.2 21.25 19.08 21.25 18.86C21.25 18.74 21.25 18.62 21.24 18.51C21.24 18.42 21.22 18.33 21.2 18.25C21.17 18.13 21.06 18.05 20.89 18.07C20.63 18.11 20.39 18.23 20.14 18.3C19.94 18.36 19.76 18.44 19.56 18.5C19.12 18.66 18.67 18.81 18.22 18.96C17.81 19.1 17.4 19.25 16.99 19.39C16.57 19.54 16.15 19.68 15.73 19.82C15.3 19.97 14.88 20.12 14.45 20.27C13.82 20.49 13.19 20.7 12.56 20.92C12.17 21.06 11.77 21.19 11.38 21.33C10.94 21.48 10.5 21.64 10.05 21.79C9.92 21.83 9.77 21.86 9.63 21.86C9.5 21.87 9.36 21.83 9.23 21.8C8.98 21.73 8.74 21.64 8.53 21.49C8.47 21.44 8.42 21.39 8.38 21.32C8.31 21.2 8.34 21.11 8.46 21.03C8.62 20.91 8.8 20.87 8.98 20.8C9.55 20.6 10.11 20.42 10.68 20.22C11.11 20.08 11.54 19.92 11.97 19.77C12.39 19.63 12.81 19.49 13.23 19.34C13.63 19.2 14.02 19.07 14.42 18.93C14.87 18.77 15.32 18.62 15.77 18.46C16.19 18.32 16.6 18.17 17.02 18.03C17.64 17.82 18.26 17.6 18.88 17.39C19.31 17.24 19.75 17.09 20.19 16.93C20.44 16.85 20.69 16.76 20.93 16.67C21.13 16.59 21.27 16.46 21.29 16.24C21.3 16.15 21.31 16.06 21.32 15.98C21.33 15.64 21.33 15.31 21.34 14.97C21.35 14.82 21.36 14.67 21.38 14.52C21.37 14.52 21.37 14.52 21.37 14.52Z' fill='%23000' fill-opacity='0.4'/%3E %3Cpath d='M18.76 14.14C18.77 13.91 18.77 13.67 18.78 13.44C18.8 13.17 18.81 12.9 18.83 12.63C18.84 12.44 18.87 12.24 18.88 12.05C18.88 11.94 18.87 11.82 18.84 11.71C18.81 11.59 18.68 11.54 18.58 11.62C18.45 11.73 18.33 11.84 18.22 11.96C18.15 12.03 18.09 12.11 18.03 12.19C17.85 12.41 17.66 12.62 17.48 12.84C17.36 12.97 17.24 13.11 17.12 13.24C16.95 13.44 16.79 13.63 16.63 13.83C16.52 13.96 16.41 14.08 16.3 14.21C16.17 14.36 16.04 14.52 15.91 14.67C15.8 14.8 15.69 14.92 15.58 15.05C15.44 15.21 15.31 15.37 15.17 15.53C15.06 15.65 14.95 15.77 14.85 15.9C14.71 16.06 14.57 16.23 14.42 16.39C14.16 16.66 13.9 16.77 13.51 16.61C13.18 16.47 12.99 16.2 12.91 15.85C12.87 15.64 12.89 15.44 12.94 15.23C13.05 14.81 13.16 14.38 13.27 13.95C13.45 13.27 13.62 12.6 13.79 11.92C13.92 11.4 14.05 10.88 14.18 10.36C14.28 9.96 14.38 9.55 14.5 9.15C14.55 8.97 14.63 8.79 14.79 8.66C14.89 8.58 15.01 8.53 15.14 8.51C15.59 8.48 15.94 8.82 16.07 9.17C16.15 9.41 16.16 9.65 16.09 9.89C16 10.26 15.91 10.64 15.82 11.02C15.78 11.18 15.74 11.35 15.75 11.52C15.76 11.65 15.83 11.69 15.95 11.63C16.09 11.55 16.2 11.42 16.31 11.31C16.39 11.23 16.45 11.13 16.53 11.05C16.74 10.8 16.97 10.55 17.18 10.29C17.37 10.07 17.56 9.85 17.75 9.63C17.95 9.4 18.15 9.17 18.35 8.94C18.54 8.71 18.73 8.49 18.93 8.27C19.04 8.13 19.15 8 19.28 7.87C19.53 7.61 19.91 7.59 20.21 7.78C20.47 7.95 20.63 8.18 20.7 8.47C20.73 8.62 20.77 8.78 20.72 8.94C20.71 8.96 20.72 8.97 20.72 8.98C20.71 9.19 20.7 9.41 20.69 9.62C20.68 9.8 20.66 9.99 20.64 10.17C20.64 10.18 20.64 10.19 20.64 10.19C20.64 10.41 20.63 10.62 20.62 10.83C20.61 11.01 20.59 11.19 20.57 11.36C20.57 11.37 20.57 11.38 20.57 11.38C20.56 11.57 20.56 11.76 20.55 11.94C20.53 12.16 20.52 12.37 20.5 12.59C20.5 12.59 20.5 12.6 20.5 12.61C20.49 12.84 20.49 13.06 20.48 13.29C20.46 13.58 20.45 13.88 20.43 14.17C20.42 14.29 20.42 14.41 20.4 14.52C20.38 14.74 20.35 14.96 20.22 15.14C20.11 15.28 19.98 15.36 19.81 15.38C19.33 15.45 18.98 15.1 18.83 14.73C18.76 14.54 18.75 14.34 18.76 14.14Z' fill='%23000' fill-opacity='0.4'/%3E %3Cpath d='M9.31 9.28C9.31 9.28 9.31 9.28 9.32 9.28C9.32 9.3 9.32 9.32 9.32 9.34C9.32 9.42 9.31 9.5 9.4 9.55C9.49 9.59 9.55 9.54 9.61 9.49C9.76 9.36 9.91 9.22 10.06 9.08C10.48 8.67 10.89 8.26 11.31 7.86C11.99 7.18 12.67 6.51 13.35 5.84C13.38 5.81 13.41 5.8 13.43 5.78C13.67 5.54 13.91 5.3 14.14 5.06C14.17 5.03 14.19 4.99 14.21 4.96C14.28 4.83 14.24 4.74 14.09 4.76C13.82 4.78 13.55 4.82 13.28 4.86C12.99 4.91 12.71 4.97 12.42 5.02C12.03 5.09 11.64 5.15 11.25 5.22C10.88 5.28 10.52 5.35 10.16 5.42C10.05 5.44 9.94 5.48 9.85 5.54C9.7 5.63 9.7 5.8 9.69 5.95C9.66 6.12 9.65 6.29 9.63 6.46C9.61 6.65 9.58 6.83 9.56 7.02C9.54 7.2 9.53 7.38 9.51 7.56C9.49 7.75 9.46 7.95 9.44 8.14C9.42 8.31 9.41 8.47 9.39 8.63C9.36 8.85 9.33 9.06 9.31 9.28ZM10.11 2.18C10.08 2.38 10.05 2.6 10.03 2.83C10.01 3.01 9.99 3.19 9.98 3.37C9.97 3.44 9.95 3.5 9.95 3.57C9.95 3.85 10.12 3.9 10.33 3.87C10.65 3.82 10.96 3.76 11.27 3.7C11.61 3.64 11.94 3.58 12.28 3.52C12.59 3.46 12.9 3.42 13.2 3.36C13.48 3.31 13.76 3.26 14.04 3.21C14.3 3.17 14.56 3.12 14.82 3.07C15.22 3 15.61 2.92 16 2.86C16.31 2.81 16.62 2.75 16.94 2.73C17.24 2.72 17.5 2.86 17.74 3.03C17.86 3.12 17.97 3.23 18.03 3.36C18.17 3.63 18.12 3.81 17.93 4.01C17.66 4.3 17.37 4.58 17.09 4.85C16.81 5.13 16.53 5.4 16.25 5.67C15.81 6.1 15.37 6.54 14.92 6.97C14.55 7.34 14.18 7.7 13.81 8.06C13.42 8.44 13.04 8.82 12.65 9.2C12.3 9.54 11.94 9.89 11.59 10.24C11.18 10.64 10.77 11.04 10.36 11.44C9.94 11.86 9.51 12.28 9.08 12.69C8.95 12.82 8.9 12.97 8.88 13.15C8.85 13.4 8.81 13.66 8.78 13.91C8.76 14.09 8.75 14.26 8.73 14.44C8.71 14.62 8.69 14.79 8.67 14.97C8.65 15.14 8.63 15.32 8.61 15.49C8.59 15.69 8.56 15.88 8.54 16.08C8.52 16.25 8.51 16.42 8.49 16.59C8.47 16.78 8.44 16.98 8.42 17.18C8.4 17.35 8.38 17.52 8.37 17.7C8.34 17.88 8.32 18.07 8.3 18.26C8.28 18.43 8.26 18.6 8.24 18.77C8.21 19.03 8.18 19.29 8.15 19.54C8.13 19.66 8.11 19.77 8.07 19.88C8.01 20.07 7.85 20.12 7.68 20.13C7.43 20.15 7.21 20.05 7.01 19.92C6.76 19.75 6.57 19.54 6.48 19.24C6.43 19.08 6.42 18.91 6.46 18.74C6.49 18.58 6.49 18.41 6.51 18.24C6.53 18.04 6.56 17.84 6.58 17.65C6.6 17.47 6.61 17.3 6.63 17.13C6.65 16.94 6.68 16.76 6.7 16.57C6.72 16.4 6.74 16.24 6.76 16.07C6.78 15.87 6.8 15.67 6.83 15.47C6.84 15.31 6.86 15.14 6.88 14.97C6.9 14.78 6.93 14.59 6.95 14.4C6.97 14.23 6.98 14.06 7 13.9C7.02 13.7 7.05 13.5 7.07 13.3C7.09 13.13 7.1 12.97 7.12 12.8C7.14 12.61 7.17 12.42 7.19 12.23C7.21 12.06 7.22 11.89 7.24 11.72C7.27 11.53 7.29 11.33 7.31 11.13C7.33 10.96 7.35 10.79 7.37 10.63C7.39 10.44 7.41 10.25 7.44 10.05C7.46 9.88 7.47 9.71 7.49 9.54C7.51 9.35 7.54 9.15 7.56 8.96C7.58 8.79 7.59 8.62 7.61 8.45C7.63 8.26 7.66 8.07 7.68 7.88C7.7 7.71 7.71 7.54 7.73 7.37C7.75 7.17 7.78 6.98 7.8 6.78C7.82 6.56 7.84 6.34 7.85 6.12C7.86 5.94 7.69 5.86 7.54 5.89C7.28 5.94 7.03 5.98 6.77 6.02C6.52 6.07 6.26 6.11 6.01 6.15C5.74 6.2 5.48 6.24 5.22 6.29C4.98 6.34 4.74 6.39 4.49 6.36C4.08 6.31 3.72 6.15 3.49 5.78C3.28 5.45 3.39 5.17 3.77 5.05C3.95 4.99 4.14 4.96 4.32 4.93C4.53 4.89 4.73 4.86 4.94 4.83C5.2 4.78 5.46 4.73 5.73 4.68C6.09 4.62 6.45 4.55 6.81 4.49C7.12 4.43 7.44 4.38 7.76 4.32C8.01 4.26 8.1 4.13 8.12 3.87C8.15 3.61 8.19 3.36 8.22 3.1C8.24 2.93 8.25 2.75 8.27 2.58C8.29 2.39 8.32 2.19 8.34 2C8.36 1.83 8.37 1.66 8.39 1.5C8.41 1.4 8.43 1.29 8.46 1.2C8.53 1.03 8.67 0.96 8.84 0.95C9.18 0.92 9.45 1.07 9.7 1.29C9.89 1.46 10.04 1.66 10.08 1.92C10.1 1.99 10.1 2.07 10.11 2.18Z' fill='%23000' fill-opacity='0.4'/%3E%3C/svg%3E") center / contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 22' fill='none'%3E%3Cpath d='M21.37 14.52C21.37 14.17 21.38 13.83 21.39 13.48C21.39 13.23 21.4 12.98 21.41 12.73C21.42 12.47 21.43 12.21 21.44 11.95C21.44 11.71 21.45 11.47 21.46 11.23C21.47 10.97 21.48 10.71 21.48 10.44C21.49 10.2 21.5 9.96 21.51 9.71C21.52 9.45 21.52 9.2 21.53 8.94C21.54 8.7 21.55 8.46 21.56 8.22C21.56 7.95 21.57 7.68 21.58 7.41C21.59 7.07 21.6 6.72 21.6 6.38C21.6 6.22 21.48 6.11 21.33 6.08C21.16 6.06 21.01 6.1 20.85 6.11C20.66 6.14 20.48 6.17 20.29 6.2C20.05 6.24 19.82 6.28 19.58 6.32C19.4 6.34 19.22 6.37 19.04 6.39C18.93 6.41 18.82 6.44 18.72 6.44C18.56 6.43 18.41 6.42 18.26 6.39C18.08 6.34 17.92 6.25 17.78 6.11C17.6 5.93 17.64 5.61 17.88 5.47C18.06 5.37 18.26 5.33 18.46 5.3C18.7 5.25 18.95 5.22 19.19 5.18C19.43 5.14 19.67 5.12 19.9 5.08C20.07 5.05 20.25 5.02 20.42 4.99C20.54 4.97 20.66 4.96 20.78 4.94C20.97 4.91 21.16 4.88 21.36 4.85C21.53 4.82 21.71 4.8 21.89 4.77C22.12 4.73 22.36 4.7 22.59 4.66C22.72 4.64 22.86 4.62 22.99 4.6C23.16 4.58 23.33 4.56 23.5 4.53C23.63 4.51 23.77 4.48 23.91 4.46C24.15 4.42 24.39 4.38 24.63 4.35C24.81 4.32 25 4.3 25.18 4.27C25.31 4.25 25.43 4.23 25.55 4.22C25.69 4.19 25.83 4.17 25.97 4.15C26.17 4.12 26.36 4.08 26.56 4.06C26.7 4.05 26.85 4.04 26.99 4.06C27.18 4.08 27.36 4.12 27.53 4.22C27.63 4.28 27.72 4.35 27.78 4.46C27.9 4.7 27.79 4.89 27.6 5.01C27.43 5.12 27.24 5.15 27.05 5.18C26.92 5.2 26.79 5.21 26.65 5.23C26.5 5.25 26.35 5.27 26.19 5.3C25.96 5.33 25.73 5.37 25.5 5.41C25.32 5.44 25.13 5.46 24.94 5.49C24.78 5.51 24.61 5.53 24.45 5.56C24.26 5.59 24.08 5.61 23.89 5.66C23.64 5.71 23.5 5.83 23.49 6.12C23.48 6.35 23.47 6.59 23.46 6.83C23.45 7.07 23.45 7.31 23.44 7.55C23.43 7.82 23.42 8.09 23.42 8.36C23.41 8.59 23.4 8.82 23.39 9.05C23.38 9.32 23.38 9.59 23.37 9.86C23.36 10.09 23.35 10.32 23.34 10.55C23.34 10.83 23.33 11.11 23.32 11.39C23.31 11.59 23.3 11.8 23.3 12C23.29 12.3 23.28 12.59 23.27 12.88C23.27 13.13 23.26 13.37 23.25 13.62C23.24 13.87 23.23 14.13 23.22 14.39C23.22 14.64 23.21 14.89 23.2 15.15C23.19 15.25 23.19 15.35 23.2 15.46C23.21 15.64 23.31 15.74 23.49 15.74C23.66 15.75 23.82 15.67 23.98 15.62C24.18 15.56 24.38 15.48 24.58 15.41C25.23 15.19 25.88 14.96 26.54 14.74C26.95 14.6 27.36 14.45 27.77 14.31C28.18 14.17 28.6 14.02 29.01 13.88C29.45 13.73 29.89 13.58 30.32 13.43C30.74 13.28 31.15 13.14 31.57 13C31.98 12.86 32.39 12.71 32.8 12.57C33.24 12.42 33.68 12.27 34.12 12.12C34.53 11.97 34.94 11.83 35.35 11.69C35.56 11.61 35.77 11.53 35.98 11.45C36.04 11.43 36.09 11.39 36.13 11.36C36.22 11.29 36.22 11.21 36.14 11.14C36.07 11.09 35.99 11.06 35.92 11.02C35.72 10.92 35.51 10.84 35.32 10.73C35.24 10.69 35.17 10.61 35.11 10.54C35.03 10.43 35.03 10.31 35.09 10.19C35.17 10.02 35.26 9.86 35.34 9.69C35.5 9.39 35.69 9.1 35.79 8.77C35.8 8.74 35.81 8.71 35.82 8.68C35.82 8.59 35.76 8.55 35.68 8.57C35.63 8.58 35.59 8.59 35.55 8.61C35.39 8.73 35.23 8.85 35.07 8.97C34.91 9.09 34.76 9.21 34.61 9.33C34.46 9.45 34.32 9.58 34.17 9.7C33.96 9.87 33.76 10.03 33.56 10.19C33.4 10.33 33.24 10.46 33.08 10.6C32.93 10.72 32.78 10.83 32.63 10.95C32.48 11.08 32.33 11.2 32.19 11.32C32.03 11.45 31.87 11.56 31.67 11.6C31.53 11.63 31.4 11.61 31.27 11.58C31.03 11.53 30.79 11.45 30.56 11.33C30.45 11.26 30.33 11.19 30.25 11.07C30.15 10.94 30.14 10.8 30.17 10.66C30.25 10.26 30.36 9.87 30.45 9.48C30.53 9.11 30.61 8.74 30.69 8.37C30.71 8.26 30.71 8.14 30.71 8.02C30.71 7.99 30.7 7.95 30.69 7.92C30.67 7.87 30.63 7.85 30.59 7.89C30.52 7.96 30.44 8.02 30.39 8.1C30.26 8.3 30.14 8.51 30.02 8.71C29.84 9.03 29.66 9.35 29.48 9.67C29.4 9.82 29.31 9.96 29.22 10.11C29.09 10.35 28.86 10.41 28.62 10.37C28.32 10.33 28.04 10.24 27.78 10.09C27.67 10.03 27.57 9.95 27.48 9.87C27.28 9.67 27.09 9.46 26.89 9.26C26.86 9.23 26.8 9.19 26.75 9.19C26.61 9.16 26.51 9.26 26.49 9.44C26.48 9.57 26.48 9.7 26.47 9.83C26.45 10.11 26.44 10.4 26.42 10.68C26.4 10.95 26.39 11.21 26.37 11.48C26.36 11.77 26.34 12.05 26.32 12.33C26.32 12.45 26.31 12.57 26.3 12.7C26.28 12.97 26.28 13.25 26.25 13.52C26.23 13.64 26.25 13.78 26.16 13.89C26.13 13.93 26.09 13.98 26.05 14C25.94 14.06 25.84 14.07 25.71 14.05C25.42 14.02 25.14 13.93 24.88 13.8C24.69 13.7 24.51 13.57 24.46 13.34C24.45 13.3 24.44 13.27 24.44 13.23C24.44 13.09 24.44 12.95 24.44 12.81C24.45 12.61 24.47 12.42 24.49 12.22C24.49 12.22 24.49 12.21 24.49 12.2C24.5 11.98 24.5 11.77 24.51 11.55C24.53 11.26 24.54 10.97 24.56 10.69C24.57 10.56 24.58 10.43 24.58 10.3C24.6 10.02 24.62 9.73 24.63 9.45C24.64 9.32 24.65 9.2 24.66 9.07C24.67 8.79 24.69 8.51 24.7 8.24C24.72 7.98 24.72 7.72 24.75 7.46C24.78 7.27 24.75 7.07 24.82 6.89C24.89 6.7 24.98 6.64 25.18 6.63C25.45 6.62 25.7 6.7 25.95 6.8C26.25 6.92 26.49 7.12 26.7 7.35C26.91 7.59 27.12 7.83 27.32 8.07C27.41 8.16 27.49 8.25 27.57 8.34C27.7 8.48 27.92 8.49 28.04 8.32C28.1 8.23 28.17 8.13 28.22 8.04C28.47 7.6 28.71 7.17 28.95 6.73C29.09 6.48 29.22 6.22 29.36 5.97C29.59 5.57 29.82 5.16 30.04 4.76C30.14 4.58 30.23 4.4 30.33 4.22C30.53 3.87 30.73 3.52 30.92 3.16C31.05 2.93 31.18 2.7 31.31 2.47C31.5 2.11 31.7 1.75 31.9 1.4C32 1.21 32.09 1.03 32.2 0.85C32.31 0.65 32.42 0.45 32.54 0.26C32.65 0.08 32.81 0 33.01 0C33.27 -0 33.51 0.08 33.75 0.17C33.92 0.24 34.07 0.32 34.21 0.45C34.35 0.59 34.41 0.74 34.37 0.94C34.26 1.41 34.16 1.89 34.05 2.36C33.96 2.76 33.86 3.15 33.77 3.54C33.66 4.04 33.55 4.53 33.43 5.03C33.34 5.42 33.24 5.82 33.15 6.22C33.05 6.66 32.94 7.11 32.84 7.56C32.8 7.74 32.76 7.92 32.72 8.1C32.71 8.18 32.71 8.26 32.72 8.34C32.73 8.44 32.82 8.49 32.92 8.47C33.04 8.46 33.12 8.39 33.2 8.32C33.5 8.09 33.79 7.85 34.08 7.61C34.32 7.42 34.56 7.22 34.8 7.02C35.04 6.82 35.29 6.62 35.53 6.42C35.73 6.26 35.93 6.09 36.13 5.93C36.37 5.73 36.61 5.55 36.84 5.35C36.99 5.23 37.14 5.1 37.29 4.98C37.54 4.78 37.79 4.58 38.03 4.38C38.15 4.28 38.27 4.18 38.39 4.09C38.58 3.96 38.78 3.91 39.02 3.96C39.36 4.02 39.68 4.12 39.96 4.32C40.03 4.37 40.09 4.43 40.14 4.5C40.26 4.66 40.19 4.82 40.11 4.97C40.02 5.16 39.91 5.35 39.81 5.54C39.75 5.64 39.69 5.74 39.63 5.84C39.43 6.21 39.22 6.58 39.02 6.96C38.92 7.14 38.82 7.32 38.72 7.5C38.53 7.85 38.33 8.2 38.14 8.55C38.04 8.72 37.95 8.89 37.86 9.05C37.77 9.23 37.68 9.4 37.59 9.57C37.56 9.63 37.54 9.7 37.54 9.77C37.53 9.87 37.58 9.96 37.68 9.98C37.77 10 37.87 10.05 37.97 10C38 9.99 38.02 10 38.04 9.99C38.28 9.98 38.52 9.96 38.75 9.95C38.93 9.93 39.1 9.91 39.28 9.9C39.56 9.87 39.83 9.85 40.11 9.83C40.3 9.81 40.49 9.79 40.67 9.78C40.83 9.77 40.99 9.76 41.15 9.76C41.58 9.76 41.97 9.91 42.33 10.15C42.44 10.23 42.49 10.38 42.44 10.48C42.41 10.53 42.37 10.58 42.32 10.6C42.11 10.69 41.9 10.78 41.69 10.85C41.27 11 40.85 11.14 40.42 11.28C39.99 11.43 39.57 11.58 39.14 11.73C38.72 11.88 38.29 12.02 37.87 12.17C37.46 12.31 37.06 12.45 36.65 12.59C36.21 12.75 35.76 12.9 35.32 13.05C34.91 13.19 34.5 13.33 34.1 13.48C33.65 13.63 33.21 13.78 32.76 13.93C32.36 14.07 31.95 14.22 31.54 14.36C30.91 14.57 30.29 14.79 29.66 15C29.23 15.15 28.8 15.31 28.37 15.45C27.75 15.67 27.12 15.88 26.49 16.1C26.06 16.25 25.64 16.4 25.21 16.55C24.68 16.73 24.14 16.92 23.61 17.1C23.51 17.14 23.43 17.19 23.34 17.24C23.2 17.31 23.14 17.44 23.13 17.58C23.12 17.76 23.12 17.93 23.1 18.1C23.09 18.25 23.08 18.39 23.06 18.53C23.03 18.71 22.93 18.84 22.77 18.9C22.6 18.97 22.43 19.04 22.25 19.09C22.04 19.15 21.81 19.2 21.58 19.2C21.37 19.2 21.25 19.08 21.25 18.86C21.25 18.74 21.25 18.62 21.24 18.51C21.24 18.42 21.22 18.33 21.2 18.25C21.17 18.13 21.06 18.05 20.89 18.07C20.63 18.11 20.39 18.23 20.14 18.3C19.94 18.36 19.76 18.44 19.56 18.5C19.12 18.66 18.67 18.81 18.22 18.96C17.81 19.1 17.4 19.25 16.99 19.39C16.57 19.54 16.15 19.68 15.73 19.82C15.3 19.97 14.88 20.12 14.45 20.27C13.82 20.49 13.19 20.7 12.56 20.92C12.17 21.06 11.77 21.19 11.38 21.33C10.94 21.48 10.5 21.64 10.05 21.79C9.92 21.83 9.77 21.86 9.63 21.86C9.5 21.87 9.36 21.83 9.23 21.8C8.98 21.73 8.74 21.64 8.53 21.49C8.47 21.44 8.42 21.39 8.38 21.32C8.31 21.2 8.34 21.11 8.46 21.03C8.62 20.91 8.8 20.87 8.98 20.8C9.55 20.6 10.11 20.42 10.68 20.22C11.11 20.08 11.54 19.92 11.97 19.77C12.39 19.63 12.81 19.49 13.23 19.34C13.63 19.2 14.02 19.07 14.42 18.93C14.87 18.77 15.32 18.62 15.77 18.46C16.19 18.32 16.6 18.17 17.02 18.03C17.64 17.82 18.26 17.6 18.88 17.39C19.31 17.24 19.75 17.09 20.19 16.93C20.44 16.85 20.69 16.76 20.93 16.67C21.13 16.59 21.27 16.46 21.29 16.24C21.3 16.15 21.31 16.06 21.32 15.98C21.33 15.64 21.33 15.31 21.34 14.97C21.35 14.82 21.36 14.67 21.38 14.52C21.37 14.52 21.37 14.52 21.37 14.52Z' fill='%23000' fill-opacity='0.4'/%3E %3Cpath d='M18.76 14.14C18.77 13.91 18.77 13.67 18.78 13.44C18.8 13.17 18.81 12.9 18.83 12.63C18.84 12.44 18.87 12.24 18.88 12.05C18.88 11.94 18.87 11.82 18.84 11.71C18.81 11.59 18.68 11.54 18.58 11.62C18.45 11.73 18.33 11.84 18.22 11.96C18.15 12.03 18.09 12.11 18.03 12.19C17.85 12.41 17.66 12.62 17.48 12.84C17.36 12.97 17.24 13.11 17.12 13.24C16.95 13.44 16.79 13.63 16.63 13.83C16.52 13.96 16.41 14.08 16.3 14.21C16.17 14.36 16.04 14.52 15.91 14.67C15.8 14.8 15.69 14.92 15.58 15.05C15.44 15.21 15.31 15.37 15.17 15.53C15.06 15.65 14.95 15.77 14.85 15.9C14.71 16.06 14.57 16.23 14.42 16.39C14.16 16.66 13.9 16.77 13.51 16.61C13.18 16.47 12.99 16.2 12.91 15.85C12.87 15.64 12.89 15.44 12.94 15.23C13.05 14.81 13.16 14.38 13.27 13.95C13.45 13.27 13.62 12.6 13.79 11.92C13.92 11.4 14.05 10.88 14.18 10.36C14.28 9.96 14.38 9.55 14.5 9.15C14.55 8.97 14.63 8.79 14.79 8.66C14.89 8.58 15.01 8.53 15.14 8.51C15.59 8.48 15.94 8.82 16.07 9.17C16.15 9.41 16.16 9.65 16.09 9.89C16 10.26 15.91 10.64 15.82 11.02C15.78 11.18 15.74 11.35 15.75 11.52C15.76 11.65 15.83 11.69 15.95 11.63C16.09 11.55 16.2 11.42 16.31 11.31C16.39 11.23 16.45 11.13 16.53 11.05C16.74 10.8 16.97 10.55 17.18 10.29C17.37 10.07 17.56 9.85 17.75 9.63C17.95 9.4 18.15 9.17 18.35 8.94C18.54 8.71 18.73 8.49 18.93 8.27C19.04 8.13 19.15 8 19.28 7.87C19.53 7.61 19.91 7.59 20.21 7.78C20.47 7.95 20.63 8.18 20.7 8.47C20.73 8.62 20.77 8.78 20.72 8.94C20.71 8.96 20.72 8.97 20.72 8.98C20.71 9.19 20.7 9.41 20.69 9.62C20.68 9.8 20.66 9.99 20.64 10.17C20.64 10.18 20.64 10.19 20.64 10.19C20.64 10.41 20.63 10.62 20.62 10.83C20.61 11.01 20.59 11.19 20.57 11.36C20.57 11.37 20.57 11.38 20.57 11.38C20.56 11.57 20.56 11.76 20.55 11.94C20.53 12.16 20.52 12.37 20.5 12.59C20.5 12.59 20.5 12.6 20.5 12.61C20.49 12.84 20.49 13.06 20.48 13.29C20.46 13.58 20.45 13.88 20.43 14.17C20.42 14.29 20.42 14.41 20.4 14.52C20.38 14.74 20.35 14.96 20.22 15.14C20.11 15.28 19.98 15.36 19.81 15.38C19.33 15.45 18.98 15.1 18.83 14.73C18.76 14.54 18.75 14.34 18.76 14.14Z' fill='%23000' fill-opacity='0.4'/%3E %3Cpath d='M9.31 9.28C9.31 9.28 9.31 9.28 9.32 9.28C9.32 9.3 9.32 9.32 9.32 9.34C9.32 9.42 9.31 9.5 9.4 9.55C9.49 9.59 9.55 9.54 9.61 9.49C9.76 9.36 9.91 9.22 10.06 9.08C10.48 8.67 10.89 8.26 11.31 7.86C11.99 7.18 12.67 6.51 13.35 5.84C13.38 5.81 13.41 5.8 13.43 5.78C13.67 5.54 13.91 5.3 14.14 5.06C14.17 5.03 14.19 4.99 14.21 4.96C14.28 4.83 14.24 4.74 14.09 4.76C13.82 4.78 13.55 4.82 13.28 4.86C12.99 4.91 12.71 4.97 12.42 5.02C12.03 5.09 11.64 5.15 11.25 5.22C10.88 5.28 10.52 5.35 10.16 5.42C10.05 5.44 9.94 5.48 9.85 5.54C9.7 5.63 9.7 5.8 9.69 5.95C9.66 6.12 9.65 6.29 9.63 6.46C9.61 6.65 9.58 6.83 9.56 7.02C9.54 7.2 9.53 7.38 9.51 7.56C9.49 7.75 9.46 7.95 9.44 8.14C9.42 8.31 9.41 8.47 9.39 8.63C9.36 8.85 9.33 9.06 9.31 9.28ZM10.11 2.18C10.08 2.38 10.05 2.6 10.03 2.83C10.01 3.01 9.99 3.19 9.98 3.37C9.97 3.44 9.95 3.5 9.95 3.57C9.95 3.85 10.12 3.9 10.33 3.87C10.65 3.82 10.96 3.76 11.27 3.7C11.61 3.64 11.94 3.58 12.28 3.52C12.59 3.46 12.9 3.42 13.2 3.36C13.48 3.31 13.76 3.26 14.04 3.21C14.3 3.17 14.56 3.12 14.82 3.07C15.22 3 15.61 2.92 16 2.86C16.31 2.81 16.62 2.75 16.94 2.73C17.24 2.72 17.5 2.86 17.74 3.03C17.86 3.12 17.97 3.23 18.03 3.36C18.17 3.63 18.12 3.81 17.93 4.01C17.66 4.3 17.37 4.58 17.09 4.85C16.81 5.13 16.53 5.4 16.25 5.67C15.81 6.1 15.37 6.54 14.92 6.97C14.55 7.34 14.18 7.7 13.81 8.06C13.42 8.44 13.04 8.82 12.65 9.2C12.3 9.54 11.94 9.89 11.59 10.24C11.18 10.64 10.77 11.04 10.36 11.44C9.94 11.86 9.51 12.28 9.08 12.69C8.95 12.82 8.9 12.97 8.88 13.15C8.85 13.4 8.81 13.66 8.78 13.91C8.76 14.09 8.75 14.26 8.73 14.44C8.71 14.62 8.69 14.79 8.67 14.97C8.65 15.14 8.63 15.32 8.61 15.49C8.59 15.69 8.56 15.88 8.54 16.08C8.52 16.25 8.51 16.42 8.49 16.59C8.47 16.78 8.44 16.98 8.42 17.18C8.4 17.35 8.38 17.52 8.37 17.7C8.34 17.88 8.32 18.07 8.3 18.26C8.28 18.43 8.26 18.6 8.24 18.77C8.21 19.03 8.18 19.29 8.15 19.54C8.13 19.66 8.11 19.77 8.07 19.88C8.01 20.07 7.85 20.12 7.68 20.13C7.43 20.15 7.21 20.05 7.01 19.92C6.76 19.75 6.57 19.54 6.48 19.24C6.43 19.08 6.42 18.91 6.46 18.74C6.49 18.58 6.49 18.41 6.51 18.24C6.53 18.04 6.56 17.84 6.58 17.65C6.6 17.47 6.61 17.3 6.63 17.13C6.65 16.94 6.68 16.76 6.7 16.57C6.72 16.4 6.74 16.24 6.76 16.07C6.78 15.87 6.8 15.67 6.83 15.47C6.84 15.31 6.86 15.14 6.88 14.97C6.9 14.78 6.93 14.59 6.95 14.4C6.97 14.23 6.98 14.06 7 13.9C7.02 13.7 7.05 13.5 7.07 13.3C7.09 13.13 7.1 12.97 7.12 12.8C7.14 12.61 7.17 12.42 7.19 12.23C7.21 12.06 7.22 11.89 7.24 11.72C7.27 11.53 7.29 11.33 7.31 11.13C7.33 10.96 7.35 10.79 7.37 10.63C7.39 10.44 7.41 10.25 7.44 10.05C7.46 9.88 7.47 9.71 7.49 9.54C7.51 9.35 7.54 9.15 7.56 8.96C7.58 8.79 7.59 8.62 7.61 8.45C7.63 8.26 7.66 8.07 7.68 7.88C7.7 7.71 7.71 7.54 7.73 7.37C7.75 7.17 7.78 6.98 7.8 6.78C7.82 6.56 7.84 6.34 7.85 6.12C7.86 5.94 7.69 5.86 7.54 5.89C7.28 5.94 7.03 5.98 6.77 6.02C6.52 6.07 6.26 6.11 6.01 6.15C5.74 6.2 5.48 6.24 5.22 6.29C4.98 6.34 4.74 6.39 4.49 6.36C4.08 6.31 3.72 6.15 3.49 5.78C3.28 5.45 3.39 5.17 3.77 5.05C3.95 4.99 4.14 4.96 4.32 4.93C4.53 4.89 4.73 4.86 4.94 4.83C5.2 4.78 5.46 4.73 5.73 4.68C6.09 4.62 6.45 4.55 6.81 4.49C7.12 4.43 7.44 4.38 7.76 4.32C8.01 4.26 8.1 4.13 8.12 3.87C8.15 3.61 8.19 3.36 8.22 3.1C8.24 2.93 8.25 2.75 8.27 2.58C8.29 2.39 8.32 2.19 8.34 2C8.36 1.83 8.37 1.66 8.39 1.5C8.41 1.4 8.43 1.29 8.46 1.2C8.53 1.03 8.67 0.96 8.84 0.95C9.18 0.92 9.45 1.07 9.7 1.29C9.89 1.46 10.04 1.66 10.08 1.92C10.1 1.99 10.1 2.07 10.11 2.18Z' fill='%23000' fill-opacity='0.4'/%3E%3C/svg%3E") center / contain no-repeat}

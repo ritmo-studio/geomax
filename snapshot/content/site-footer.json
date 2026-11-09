@@ -1,0 +1,35 @@
+{
+  "brand_href": "https://geomax-spb.ru/",
+  "copyright": "© ООО «ГЕОМАКС» 2026. Все права защищены.",
+  "privacy_href": "#privacy",
+  "columns": [
+    {
+      "groups": [
+        {"is_plain": true, "label": "График работы", "lines": [
+          {"is_text": true, "text": "пн-пт: 09:00–18:00"},
+          {"is_text": true, "text": "сб-вс: выходной"}
+        ]},
+        {"is_address": true, "label": "Адрес офиса", "lines": [
+          {"is_text": true, "text": "194017,"},
+          {"is_text": true, "text": "Санкт-Петербург,"},
+          {"is_text": true, "text": "ул. Дрезденская, д.16а, лит.А,"},
+          {"is_text": true, "text": "2 этаж"}
+        ]}
+      ]
+    },
+    {
+      "groups": [
+        {"is_plain": true, "label": "Коммерческий отдел", "lines": [
+          {"is_link": true, "href": "tel:+79219542828", "text": "8(921) 954-28-28"},
+          {"is_link": true, "href": "mailto:com@geomax-spb.ru", "text": "com@geomax-spb.ru"}
+        ]},
+        {"is_plain": true, "label": "Офис, секретариат", "lines": [
+          {"is_link": true, "href": "tel:+78122939393", "text": "8(812) 293-93-93"},
+          {"is_link": true, "href": "tel:+79219329393", "text": "8(921) 932-93-93"},
+          {"is_link": true, "href": "mailto:office@geomax-spb.ru", "text": "office@geomax-spb.ru"},
+          {"is_link": true, "href": "mailto:info@geomax-spb.ru", "text": "info@geomax-spb.ru"}
+        ]}
+      ]
+    }
+  ]
+}

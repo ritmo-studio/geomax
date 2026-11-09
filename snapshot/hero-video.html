@@ -1,0 +1,26 @@
+<!-- hero-video v1.1 · Figma 2113:313 · атом button. Первый экран с видео на фоне.
+     Контент прижат к низу секции: сверху работает кадр, внизу читается текст.
+     Постер = LCP и показывается первым, но preload="none" тут не экономит трафик:
+     autoplay начинает загрузку сразу — атрибут оставлен как запрос «не грузить заранее»
+     для браузеров, которые автоплей не разрешили.
+     prefers-reduced-motion: hero-video.js снимает источники и оставляет постер — иначе
+     движение на первом экране нельзя было бы остановить (WCAG 2.2.2).
+     Отступ сверху (112/88) освобождает место шапке: site-header лежит поверх позицией absolute.
+     heading_tag — h1 только если блок первый на странице, иначе h2 (решает сборщик). -->
+<section class="sds sds-hero-video">
+  <video class="sds-hero-video__media" poster="assets/hero-video-poster.png" autoplay muted loop playsinline preload="none">
+    <source media="(max-width:767.98px)" src="">
+    <source src="">
+  </video>
+  <div class="sds-hero-video__scrim" aria-hidden="true"></div>
+  <div class="sds-hero-video__content sds-anim">
+    <div class="sds-hero-video__heading">
+      <p class="sds-hero-video__eyebrow sds-anim">Стратегия → технология → скорость</p>
+      <h1 class="sds-hero-video__title sds-anim">Распорная гидравлическая система <span class="sds-accent">«ГЕОМАКС»</span></h1>
+    </div>
+    <div class="sds-hero-video__aside">
+      <p class="sds-hero-video__lead sds-anim"><strong>Сокращает срок</strong> работ нулевого цикла <strong>до 4–6 недель</strong>, <strong>оптимизирует финансовые затраты</strong> застройщика на обслуживание банковского кредита на этапе котлована</p>
+      <div class="sds-hero-video__aside-cta sds-anim"><a class="sds-btn sds-btn--icon" href="#lead-form"><span class="sds-btn__icon" aria-hidden="true"></span><span class="sds-btn__label">Получить расчёт аренды</span></a></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,53 @@
+<!-- compare-table v1.1 · Figma 2127:426 · «мы против них» или характеристики в две колонки.
+     Колонок и строк сколько угодно: оба списка — обычный repeat. Разметка одна и та же
+     для десктопа и мобильного — это настоящая <table> с th scope, меняются только стили:
+     на мобильном строка становится карточкой, а подпись колонки у каждой ячейки —
+     через data-label (дублируется в данных на каждой cells[].col, не достаётся по индексу:
+     движок шаблонов не умеет смотреть в соседний список при повторе).
+     Роли (table/rowgroup/row/columnheader/rowheader/cell) написаны явно, хотя это настоящая
+     таблица: на мобильном раскладка переводит table/tr/td в display:block, а это снимает
+     табличные роли и скринридер перестаёт связывать ячейку с заголовком колонки.
+     Шапка на мобильном спрятана классом sds-sr-only-m (визуально, не display:none),
+     иначе подписи колонок потерялись бы и для скринридера. -->
+<section class="sds sds-compare-table">
+  <div class="sds-compare-table__head sds-anim">
+    <h2 class="sds-compare-table__title">Стратегический <span class="sds-accent">приоритет</span> распорной гидравлической системы «ГЕОМАКС»</h2>
+  </div>
+  <div class="sds-compare-table__wrap sds-anim">
+    <table class="sds-compare-table__table" role="table">
+      <thead class="sds-compare-table__thead sds-sr-only-m" role="rowgroup">
+        <tr role="row">
+          <th scope="col" role="columnheader">Преимущество</th>
+          <th scope="col" role="columnheader">ГЕОМАКС</th><th scope="col" role="columnheader">Классическая система</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr role="row">
+  <th scope="row" role="rowheader">Монтаж без сварки</th>
+  <td role="cell" data-label="ГЕОМАКС">Да</td><td role="cell" data-label="Классическая система">Нет</td>
+</tr><tr role="row">
+  <th scope="row" role="rowheader">Монтаж одной распорки</th>
+  <td role="cell" data-label="ГЕОМАКС">От 1 до 2,5 часов</td><td role="cell" data-label="Классическая система">10 часов</td>
+</tr><tr role="row">
+  <th scope="row" role="rowheader">Демонтаж одной распорки</th>
+  <td role="cell" data-label="ГЕОМАКС">До 2 часов. Модульная конструкция снимается без трудоёмкого разбора на отдельные элементы</td><td role="cell" data-label="Классическая система">10 часов</td>
+</tr><tr role="row">
+  <th scope="row" role="rowheader">Необходимость устройства закладных опорных узлов до заливки ростверковой плиты</th>
+  <td role="cell" data-label="ГЕОМАКС">Нет</td><td role="cell" data-label="Классическая система">Да</td>
+</tr><tr role="row">
+  <th scope="row" role="rowheader">Многократное использование</th>
+  <td role="cell" data-label="ГЕОМАКС">Да</td><td role="cell" data-label="Классическая система">Нет</td>
+</tr><tr role="row">
+  <th scope="row" role="rowheader">Адаптация под размеры котлована</th>
+  <td role="cell" data-label="ГЕОМАКС">Да</td><td role="cell" data-label="Классическая система">Требует точное изготовление под размеры объекта</td>
+</tr><tr role="row">
+  <th scope="row" role="rowheader">Создание преднапряжения в распорном элементе (на шпунт)</th>
+  <td role="cell" data-label="ГЕОМАКС">Да</td><td role="cell" data-label="Классическая система">Нет</td>
+</tr><tr role="row">
+  <th scope="row" role="rowheader">Безопасность работ</th>
+  <td role="cell" data-label="ГЕОМАКС">Закруглённые углы элементов конструкции обеспечивают высокую безопасность при работе с распорной системой</td><td role="cell" data-label="Классическая система">Низкая</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</section>

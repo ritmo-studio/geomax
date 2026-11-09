@@ -1,0 +1,30 @@
+<!-- photo-slider v1.1 · Figma 2132:378 · слайдер фотографий · атомы arrow, pager, slider
+     (общий механизм дорожки с views-slider — см. atoms/slider, не копия).
+     Блок не знает своей позиции: id нет (может повторяться), уровень заголовка — параметр.
+     Карточка — только кадр, без заголовка и текста. Пагинация необязательна, по умолчанию
+     включена: без неё на десяти кадрах непонятно, сколько ещё листать. Стрелки и пагинация
+     скрыты без JS — на мобильном их вообще нет, листают свайпом. -->
+<section id="objects" class="sds sds-photo-slider sds-slider">
+  <div class="sds-photo-slider__head sds-anim">
+    <h2 class="sds-photo-slider__title">Наши объекты</h2>
+    <p class="sds-photo-slider__lead"></p>
+  </div>
+  <div class="sds-photo-slider__viewport">
+    <ul class="sds-photo-slider__track sds-slider__track" role="group" tabindex="0" aria-label="Наши объекты"><li class="sds-photo-slider__card sds-slider__card sds-media sds-anim">
+  <!-- ЗАМЕНИТЬ на файлы с хостинга. Два мастера (мобильный и десктопный), кадр содержательный: alt обязателен. -->
+  <picture>
+    <img class="sds-media__img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='672' height='480'%3E%3Crect width='100%25' height='100%25' fill='%23B5B8A6'/%3E%3C/svg%3E" sizes="672px" alt="Объект 1 — ГЕОМАКС" width="672" height="480" loading="lazy" decoding="async">
+  </picture>
+</li><li class="sds-photo-slider__card sds-slider__card sds-media sds-anim">
+  <!-- ЗАМЕНИТЬ на файлы с хостинга. Два мастера (мобильный и десктопный), кадр содержательный: alt обязателен. -->
+  <picture>
+    <img class="sds-media__img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='672' height='480'%3E%3Crect width='100%25' height='100%25' fill='%23A7AB97'/%3E%3C/svg%3E" sizes="672px" alt="Объект 2 — ГЕОМАКС" width="672" height="480" loading="lazy" decoding="async">
+  </picture>
+</li></ul>
+    <div class="sds-arrows">
+  <button type="button" class="sds-arrow" data-sds-prev aria-label="Предыдущая карточка"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6 L9 12 L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button type="button" class="sds-arrow" data-sds-next aria-label="Следующая карточка"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6 L15 12 L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</div>
+  </div>
+  <div class="sds-pager"><button type="button" class="sds-pager__dot" aria-label="Перейти к карточке 1"></button><button type="button" class="sds-pager__dot" aria-label="Перейти к карточке 2"></button></div>
+</section>

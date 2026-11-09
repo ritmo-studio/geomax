@@ -1,0 +1,17 @@
+<!-- icon-cards v1.3 · Figma 2124:407 · атомы icon, icon-row. Заголовок и ряд плиток с пиктограммой,
+     для коротких выгод или перечня услуг, которым не нужен текст. Количество плиток
+     не зашито: ряд переносится сам, следующая плитка уходит на новую строку.
+     Card=Off и Card=On — два самостоятельных оформления одного блока, а не состояния:
+     движок шаблонов не умеет «иначе», а условие считает булев false истиной (не пустая
+     строка), поэтому в данных присутствует РОВНО ОДИН из ключей card / card_off, второй
+     просто не передаётся. Заголовок — всегда h2 (или параметр), даже когда выглядит
+     абзацем: секция без заголовка проваливается в выдаче. -->
+<section id="advantages" class="sds sds-icon-cards">
+  
+  <div class="sds-icon-cards__head sds-anim">
+    <h2 class="sds-icon-cards__title">Специалистами «ГЕОМАКС» разработана и <span class="sds-accent">запатентована</span> уникальная распорная система многократного применения, с гидравлическими узлами, <span class="sds-accent">не имеющая аналогов</span> в России</h2>
+  </div>
+  <ul class="sds-icon-cards__list"><li class="sds-icon-cards__tile sds-anim"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span><p class="sds-icon-cards__text">Монтаж распорного элемента без сварки за 2 часа</p></li><li class="sds-icon-cards__tile sds-anim"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span><p class="sds-icon-cards__text">Подходит для любого типа грунта и конфигурации котлована</p></li><li class="sds-icon-cards__tile sds-anim"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span><p class="sds-icon-cards__text">До 300 тонн на элемент раскрепления</p></li><li class="sds-icon-cards__tile sds-anim"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span><p class="sds-icon-cards__text">Многократное применение</p></li></ul>
+  
+  
+</section>

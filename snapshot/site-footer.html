@@ -1,0 +1,28 @@
+<!-- site-footer v1.1 · Figma 2158:604 · подвал сайта, единственный на странице.
+     Количество колонок и групп в них не зашито — обе раскладки через повтор
+     (column.html → group.html → line.html). Подписи групп — h3, а над ними скрытый h2:
+     иначе h3 висят без своего уровня, а видимого заголовка у подвала в макете нет.
+     Колонки — не nav: внутри контакты и адрес, а не навигация по сайту.
+     «Наверх» стоит в потоке перед правовой строкой (так на мобильном и нужно),
+     на десктопе становится абсолютным — т.е. CSS, а не два разных места в разметке.
+     Ссылка ведёт на "#" и прокручивает скриптом: id на странице нет и быть не может
+     (блоки без id), а href="#" сам по себе уже отправляет браузер к началу. -->
+<footer id="contacts" class="sds sds-footer">
+  <div class="sds-footer__main">
+    <div class="sds-footer__brand">
+      <div class="sds-footer__logo" aria-hidden="true"></div>
+      <p class="sds-footer__brand-link"><a href="https://geomax-spb.ru/">Перейти на сайт компании →</a></p>
+    </div>
+    <div class="sds-footer__columns">
+      <h2 class="sds-sr-only">Контакты</h2>
+      <div class="sds-footer__column"><div class="sds-footer__group"><h3 class="sds-footer__group-label">График работы</h3><div class="sds-footer__group-content"><p class="sds-footer__line">пн-пт: 09:00–18:00</p><p class="sds-footer__line">сб-вс: выходной</p></div></div><div class="sds-footer__group"><h3 class="sds-footer__group-label">Адрес офиса</h3><address class="sds-footer__group-content"><p class="sds-footer__line">194017,</p><p class="sds-footer__line">Санкт-Петербург,</p><p class="sds-footer__line">ул. Дрезденская, д.16а, лит.А,</p><p class="sds-footer__line">2 этаж</p></address></div></div><div class="sds-footer__column"><div class="sds-footer__group"><h3 class="sds-footer__group-label">Коммерческий отдел</h3><div class="sds-footer__group-content"><p class="sds-footer__line"><a href="tel:+79219542828">8(921) 954-28-28</a></p><p class="sds-footer__line"><a href="mailto:com@geomax-spb.ru">com@geomax-spb.ru</a></p></div></div><div class="sds-footer__group"><h3 class="sds-footer__group-label">Офис, секретариат</h3><div class="sds-footer__group-content"><p class="sds-footer__line"><a href="tel:+78122939393">8(812) 293-93-93</a></p><p class="sds-footer__line"><a href="tel:+79219329393">8(921) 932-93-93</a></p><p class="sds-footer__line"><a href="mailto:office@geomax-spb.ru">office@geomax-spb.ru</a></p><p class="sds-footer__line"><a href="mailto:info@geomax-spb.ru">info@geomax-spb.ru</a></p></div></div></div>
+    </div>
+    <a class="sds-footer__top" href="#" data-sds-top>Наверх ↑</a>
+  </div>
+  <div class="sds-footer__legal">
+    <p class="sds-footer__copyright">© ООО «ГЕОМАКС» 2026. Все права защищены.</p>
+    <p class="sds-footer__privacy"><a href="#privacy">Политика обработки персональных данных</a></p>
+    <div class="sds-footer__mark" aria-hidden="true"></div>
+    <p class="sds-footer__made-by">Сделано в <a href="http://ritmo.studio/" target="_blank" rel="noopener">РИТМЕ</a></p>
+  </div>
+</footer>

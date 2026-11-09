@@ -1,0 +1,21 @@
+{
+  "heading_tag": "h2",
+  "title": "Наши объекты",
+  "lead": "",
+  "track_label": "Наши объекты",
+  "pager": true,
+  "cards": [
+    {
+      "image_src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='672' height='480'%3E%3Crect width='100%25' height='100%25' fill='%23B5B8A6'/%3E%3C/svg%3E",
+      "image_alt": "Объект 1 — ГЕОМАКС",
+      "image_avif_srcset": "", "image_webp_srcset": "", "image_jpg_srcset": "",
+      "image_m_avif_srcset": "", "image_m_webp_srcset": "", "image_m_jpg_srcset": ""
+    },
+    {
+      "image_src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='672' height='480'%3E%3Crect width='100%25' height='100%25' fill='%23A7AB97'/%3E%3C/svg%3E",
+      "image_alt": "Объект 2 — ГЕОМАКС",
+      "image_avif_srcset": "", "image_webp_srcset": "", "image_jpg_srcset": "",
+      "image_m_avif_srcset": "", "image_m_webp_srcset": "", "image_m_jpg_srcset": ""
+    }
+  ]
+}

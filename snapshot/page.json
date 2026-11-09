@@ -1,0 +1,18 @@
+{
+  "title": "ГЕОМАКС — Главная",
+  "fontHref": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap",
+  "blocks": [
+    {"block": "site-header", "content": "site-header"},
+    {"block": "hero-video", "content": "hero-video"},
+    {"block": "icon-cards", "content": "icon-cards-off", "id": "advantages"},
+    {"block": "compare-table", "content": "compare-table"},
+    {"block": "photo-cards", "content": "photo-cards"},
+    {"block": "photo-slider", "content": "photo-slider", "id": "objects"},
+    {"block": "kit-and-image", "content": "kit-and-image", "id": "rent"},
+    {"block": "icon-cards", "content": "icon-cards-on", "id": "services"},
+    {"block": "reviews-slider", "content": "reviews-slider"},
+    {"block": "lead-form", "content": "lead-form", "id": "lead-form"},
+    {"block": "site-footer", "content": "site-footer", "id": "contacts"},
+    {"block": "cta-sticky", "content": "cta-sticky"}
+  ]
+}

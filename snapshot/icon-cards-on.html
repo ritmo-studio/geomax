@@ -1,0 +1,24 @@
+<!-- icon-cards v1.3 · Figma 2124:407 · атомы icon, icon-row. Заголовок и ряд плиток с пиктограммой,
+     для коротких выгод или перечня услуг, которым не нужен текст. Количество плиток
+     не зашито: ряд переносится сам, следующая плитка уходит на новую строку.
+     Card=Off и Card=On — два самостоятельных оформления одного блока, а не состояния:
+     движок шаблонов не умеет «иначе», а условие считает булев false истиной (не пустая
+     строка), поэтому в данных присутствует РОВНО ОДИН из ключей card / card_off, второй
+     просто не передаётся. Заголовок — всегда h2 (или параметр), даже когда выглядит
+     абзацем: секция без заголовка проваливается в выдаче. -->
+<section id="services" class="sds sds-icon-cards">
+  
+  
+  <div class="sds-icon-cards__card sds-anim">
+    <div class="sds-icon-cards__head">
+      <h2 class="sds-icon-cards__title">Дополнительные услуги</h2>
+      <p class="sds-icon-cards__lead">Предоставляем оборудование в аренду и полный комплекс работ по обустройству котлованов <span class="sds-accent">«под ключ»</span>. Сопровождаем проект на всех этапах — <span class="sds-accent">от проектирования до завершения строительства</span></p>
+    </div>
+    <ul class="sds-icon-cards__list sds-icon-cards__list--card"><li class="sds-icon-cards__tile sds-icon-cards__tile--card sds-anim"><span class="sds-icon-cards__icon-box"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span></span><p class="sds-icon-cards__text">Погружение / извлечение шпунта</p></li><li class="sds-icon-cards__tile sds-icon-cards__tile--card sds-anim"><span class="sds-icon-cards__icon-box"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span></span><p class="sds-icon-cards__text">Установка обвязочной балки</p></li><li class="sds-icon-cards__tile sds-icon-cards__tile--card sds-anim"><span class="sds-icon-cards__icon-box"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span></span><p class="sds-icon-cards__text">Проектные работы</p></li><li class="sds-icon-cards__tile sds-icon-cards__tile--card sds-anim"><span class="sds-icon-cards__icon-box"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span></span><p class="sds-icon-cards__text">Научно-техническое сопровождение</p></li><li class="sds-icon-cards__tile sds-icon-cards__tile--card sds-anim"><span class="sds-icon-cards__icon-box"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span></span><p class="sds-icon-cards__text">Геотехнический мониторинг</p></li><li class="sds-icon-cards__tile sds-icon-cards__tile--card sds-anim"><span class="sds-icon-cards__icon-box"><span class="sds-icon sds-icon-cards__icon" aria-hidden="true"></span></span><p class="sds-icon-cards__text">Авторский надзор</p></li></ul>
+    
+    <div class="sds-icon-cards__divider" aria-hidden="true"></div>
+    <ul class="sds-icon-rows"><li class="sds-icon-row sds-anim"><span class="sds-icon sds-icon-row__icon" aria-hidden="true"></span><p class="sds-icon-row__text">Разработка и производство в России</p></li><li class="sds-icon-row sds-anim"><span class="sds-icon sds-icon-row__icon" aria-hidden="true"></span><p class="sds-icon-row__text">Современные технологии и материалы</p></li><li class="sds-icon-row sds-anim"><span class="sds-icon sds-icon-row__icon" aria-hidden="true"></span><p class="sds-icon-row__text">Экспертиза и многолетний опыт специалистов</p></li><li class="sds-icon-row sds-anim"><span class="sds-icon sds-icon-row__icon" aria-hidden="true"></span><p class="sds-icon-row__text">Индивидуальный подход к каждому проекту</p></li></ul>
+    
+  </div>
+  
+</section>
