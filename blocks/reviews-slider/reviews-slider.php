@@ -30,8 +30,8 @@ $star = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L2
 	<ul class="sds-reviews-slider__track sds-slider__track" role="group" tabindex="0" aria-label="<?= $te($d['track_label'] ?? '') ?>"><?php foreach ($d['cards'] as $c): ?>
 <?php if (!empty($c['is_scan'])): ?>
 		<li class="sds-review-card sds-slider__card rs-anim sds-review-card--scan">
-			<a class="sds-review-card__scan" href="<?= $te($c['scan_src']) ?>" data-lightbox data-name="<?= $te($c['name']) ?>" data-date="<?= $te($c['date'] ?? '') ?>" data-alt="<?= $te($c['scan_alt'] ?? '') ?>" aria-label="Открыть скан отзыва — <?= $te($c['name']) ?>">
-				<img class="sds-review-card__scan-img" src="<?= $te($c['scan_src']) ?>" alt="<?= $te($c['scan_alt'] ?? '') ?>" width="608" height="592" loading="lazy" decoding="async">
+			<a class="sds-review-card__scan" href="<?= $te($c['scan_full_src'] ?? $c['scan_src']) ?>" data-lightbox data-name="<?= $te($c['name']) ?>" data-date="<?= $te($c['date'] ?? '') ?>" data-alt="<?= $te($c['scan_alt'] ?? '') ?>" aria-label="Открыть скан отзыва — <?= $te($c['name']) ?>">
+				<img class="sds-review-card__scan-img" src="<?= $te($c['scan_src']) ?>" alt="<?= $te($c['scan_alt'] ?? '') ?>" width="700" height="800" loading="lazy" decoding="async">
 				<span class="sds-review-card__expand" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
 			</a>
 			<div class="sds-review-card__column">

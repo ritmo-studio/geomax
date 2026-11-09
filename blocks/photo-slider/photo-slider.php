@@ -14,6 +14,7 @@ $d  = $photoSlider ?? [];
 $te = static fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 if (empty($d['cards'])) { return; }
 $hTag = $photoSliderHeadingTag ?? $d['heading_tag'] ?? 'h2';
+$sizes = '(min-width:768px) 672px, calc(100vw - 32px)';   // слот: 672 на десктопе, вся ширина минус отступы на мобильной
 $id   = $photoSliderId ?? '';
 ?>
 <section<?= $id ? ' id="' . $te($id) . '"' : '' ?> class="sds sds-photo-slider sds-slider">
@@ -25,10 +26,10 @@ $id   = $photoSliderId ?? '';
 		<ul class="sds-photo-slider__track sds-slider__track" role="group" tabindex="0" aria-label="<?= $te($d['track_label'] ?? '') ?>"><?php foreach ($d['cards'] as $c): ?><li class="sds-photo-slider__card sds-slider__card sds-media rs-anim">
 			<picture>
 				<?php foreach (['avif', 'webp', 'jpg'] as $fmt): ?>
-				<?php if (!empty($c['image_m_' . $fmt . '_srcset'])): ?><source media="(max-width:767.98px)" type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($c['image_m_' . $fmt . '_srcset']) ?>"><?php endif; ?>
-				<?php if (!empty($c['image_' . $fmt . '_srcset'])): ?><source type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($c['image_' . $fmt . '_srcset']) ?>"><?php endif; ?>
+				<?php if (!empty($c['image_m_' . $fmt . '_srcset'])): ?><source media="(max-width:767.98px)" type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($c['image_m_' . $fmt . '_srcset']) ?>" sizes="<?= $te($sizes) ?>"><?php endif; ?>
+				<?php if (!empty($c['image_' . $fmt . '_srcset'])): ?><source type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($c['image_' . $fmt . '_srcset']) ?>" sizes="<?= $te($sizes) ?>"><?php endif; ?>
 				<?php endforeach; ?>
-				<img class="sds-media__img" src="<?= $te($c['image_src']) ?>" sizes="672px" alt="<?= $te($c['image_alt'] ?? '') ?>" width="672" height="480" loading="lazy" decoding="async">
+				<img class="sds-media__img" src="<?= $te($c['image_src']) ?>" sizes="<?= $te($sizes) ?>" alt="<?= $te($c['image_alt'] ?? '') ?>" width="672" height="480" loading="lazy" decoding="async">
 			</picture>
 		</li><?php endforeach; ?></ul>
 		<div class="sds-arrows">

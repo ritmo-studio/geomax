@@ -12,6 +12,12 @@
  * Отступ сверху освобождает место шапке: site-header лежит поверх позицией
  * absolute. Уровень заголовка — параметр: h1 только если блок первый.
  *
+ * Отклонение от библиотеки: постер отдаёт <picture> перед <video>, а не атрибут
+ * poster. У poster нет srcset, а на мобильной кадр вертикальный — одним файлом
+ * оба брейкпоинта не закрыть. Видео лежит поверх постера и перекрывает его
+ * первым же кадром; прозрачный фон video — в blocks/zz-overrides.
+ * Долг: вернуть приём в библиотеку, там та же дырка.
+ *
  * Данные — $heroVideo (content/hero-video.php).
  */
 $d  = $heroVideo ?? [];
@@ -20,7 +26,14 @@ if (!$d) { return; }
 $hTag = $heroVideoHeadingTag ?? $d['heading_tag'] ?? 'h2';
 ?>
 <section class="sds sds-hero-video">
-	<video class="sds-hero-video__media" poster="<?= $te($d['poster_src'] ?? '') ?>" autoplay muted loop playsinline preload="none">
+	<picture>
+<?php foreach (['avif', 'webp', 'jpg'] as $fmt): $type = $fmt === 'jpg' ? 'jpeg' : $fmt; ?>
+		<?php if (!empty($d['poster_m_' . $fmt . '_srcset'])): ?><source media="(max-width:767.98px)" type="image/<?= $type ?>" srcset="<?= $te($d['poster_m_' . $fmt . '_srcset']) ?>" sizes="100vw"><?php endif; ?>
+		<?php if (!empty($d['poster_' . $fmt . '_srcset'])): ?><source type="image/<?= $type ?>" srcset="<?= $te($d['poster_' . $fmt . '_srcset']) ?>" sizes="100vw"><?php endif; ?>
+<?php endforeach; ?>
+		<img class="sds-hero-video__media" src="<?= $te($d['poster_src'] ?? '') ?>" alt="<?= $te($d['poster_alt'] ?? '') ?>" fetchpriority="high" decoding="async">
+	</picture>
+	<video class="sds-hero-video__media" autoplay muted loop playsinline preload="none">
 		<?php if (!empty($d['video_m_src'])): ?><source media="(max-width:767.98px)" src="<?= $te($d['video_m_src']) ?>"><?php endif; ?>
 		<?php if (!empty($d['video_src'])): ?><source src="<?= $te($d['video_src']) ?>"><?php endif; ?>
 	</video>

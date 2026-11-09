@@ -19,6 +19,7 @@ $d  = $kitAndImage ?? [];
 $te = static fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 if (!$d) { return; }
 $hTag = $kitAndImageHeadingTag ?? $d['heading_tag'] ?? 'h2';
+$sizes = '(min-width:768px) 672px, calc(100vw - 32px)';   // слот: 672 на десктопе, вся ширина минус отступы на мобильной
 $id   = $kitAndImageId ?? '';
 ?>
 <section<?= $id ? ' id="' . $te($id) . '"' : '' ?> class="sds sds-kit-and-image">
@@ -36,10 +37,10 @@ $id   = $kitAndImageId ?? '';
 	<div class="sds-kit-and-image__media sds-media sds-media--contain rs-anim">
 		<picture>
 			<?php foreach (['avif', 'webp', 'jpg'] as $fmt): ?>
-			<?php if (!empty($d['image_m_' . $fmt . '_srcset'])): ?><source media="(max-width:767.98px)" type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($d['image_m_' . $fmt . '_srcset']) ?>"><?php endif; ?>
-			<?php if (!empty($d['image_' . $fmt . '_srcset'])): ?><source type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($d['image_' . $fmt . '_srcset']) ?>"><?php endif; ?>
+			<?php if (!empty($d['image_m_' . $fmt . '_srcset'])): ?><source media="(max-width:767.98px)" type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($d['image_m_' . $fmt . '_srcset']) ?>" sizes="<?= $te($sizes) ?>"><?php endif; ?>
+			<?php if (!empty($d['image_' . $fmt . '_srcset'])): ?><source type="image/<?= $fmt === 'jpg' ? 'jpeg' : $fmt ?>" srcset="<?= $te($d['image_' . $fmt . '_srcset']) ?>" sizes="<?= $te($sizes) ?>"><?php endif; ?>
 			<?php endforeach; ?>
-			<img class="sds-media__img" src="<?= $te($d['image_src'] ?? '') ?>" sizes="672px" alt="<?= $te($d['image_alt'] ?? '') ?>" width="672" height="600" loading="lazy" decoding="async">
+			<img class="sds-media__img" src="<?= $te($d['image_src'] ?? '') ?>" sizes="<?= $te($sizes) ?>" alt="<?= $te($d['image_alt'] ?? '') ?>" width="672" height="600" loading="lazy" decoding="async">
 		</picture>
 	</div>
 </section>

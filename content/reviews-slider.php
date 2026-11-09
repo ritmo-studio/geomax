@@ -2,7 +2,8 @@
 /**
  * ГЕОМАКС · контент блока «reviews-slider».
  *
- * Скан благодарности — ЗАГЛУШКА, этап 8. В одной дорожке вперемешку
+ * scan_src — превью в карточке, scan_full_src — лист целиком для лайтбокса.
+ * В одной дорожке вперемешку
  * текстовые отзывы (is_text) и сканы (is_scan) — порядок задаёт этот массив.
  */
 return [
@@ -24,7 +25,8 @@ return [
             'is_scan' => true,
             'name' => 'АО «АВТОДОМ»',
             'date' => '17 августа 2022',
-            'scan_src' => 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'608\' height=\'592\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%23B5B8A6\'/%3E%3C/svg%3E',
+            'scan_src' => '/assets/img/review-avtodom-d-700.jpg',
+            'scan_full_src' => '/assets/img/review-avtodom-full-d-1060.jpg',
             'scan_alt' => 'Скан благодарственного письма от АО «АВТОДОМ»',
             'excerpt' => 'Выражаем благодарность специалистам за качественное выполнение проекта',
         ],

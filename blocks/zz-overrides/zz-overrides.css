@@ -346,3 +346,28 @@
    ============================================================ */
 .sds .sds-footer__logo{border-radius:0;background:url("/assets/img/geomax-logo.svg") left center / contain no-repeat}
 .sds .sds-footer__mark{background:var(--sds-color-text);-webkit-mask:url("/assets/img/ritmo-mark.svg") center / contain no-repeat;mask:url("/assets/img/ritmo-mark.svg") center / contain no-repeat}
+
+/* ============================================================
+   Медиа проекта (этап 8)
+   ============================================================
+   hero-video: постер отдаёт <picture> перед <video> (у атрибута poster нет
+   srcset, а на мобильной кадр вертикальный). Видео лежит поверх постера,
+   поэтому его непрозрачная заливка-заглушка здесь снимается — иначе она
+   закроет постер до первого кадра.
+
+   lead-form: арт — декоративный чертёж на прозрачном фоне, в разметке это
+   div с aria-hidden, поэтому картинка приходит фоном, а не <img>. Альфа
+   сведена на цвет карточки при нарезке. На мобильной блок display:none,
+   мобильного набора у него нет.
+   ============================================================ */
+.sds .sds-hero-video video.sds-hero-video__media{background:transparent}
+.sds .sds-lead-form__art{
+  background:url("/assets/img/lead-form-art-d-728.jpg") center / cover no-repeat;
+  background-image:image-set(
+    url("/assets/img/lead-form-art-d-728.avif") type("image/avif") 1x,
+    url("/assets/img/lead-form-art-d-1300.avif") type("image/avif") 2x,
+    url("/assets/img/lead-form-art-d-728.webp") type("image/webp") 1x,
+    url("/assets/img/lead-form-art-d-1300.webp") type("image/webp") 2x,
+    url("/assets/img/lead-form-art-d-728.jpg") type("image/jpeg") 1x,
+    url("/assets/img/lead-form-art-d-1300.jpg") type("image/jpeg") 2x);
+}
