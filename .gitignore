@@ -18,3 +18,8 @@ public/assets/img/**/*.png
 public/assets/img/**/*.webp
 public/assets/img/**/*.avif
 public/assets/img/**/*.gif
+
+# Мастера изображений: исходники для нарезки, в репозиторий не едут.
+# Лежат вне public/ — веб-сервер их не отдаёт.
+img-src/*
+!img-src/README.md
