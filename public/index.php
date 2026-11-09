@@ -26,6 +26,16 @@ $headExtra = '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n
 $root   = dirname($_SERVER['DOCUMENT_ROOT']);
 $engine = $root . '/engine';
 
+/* Форма заявки. Сессию поднимаем здесь, до head.php: session_start()
+   шлёт куку, а после первого вывода заголовки уже не отправить.
+   Результат предыдущей отправки лежит в сессии и забирается один раз —
+   это путь без JS (PRG), с JS ответ приходит JSON-ом на /form.php. */
+require_once $engine . '/form/form.php';
+$leadFormToken  = rs_form_token();
+$leadFormResult = $_SESSION['rs_form_result'] ?? null;
+$leadFormOld    = $_SESSION['rs_form_old'] ?? [];
+unset($_SESSION['rs_form_result'], $_SESSION['rs_form_old']);
+
 /* Organization — один на сайт, поэтому только здесь. */
 $jsonLd = include $root . '/content/schema.php';
 

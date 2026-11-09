@@ -371,3 +371,29 @@
     url("/assets/img/lead-form-art-d-728.jpg") type("image/jpeg") 1x,
     url("/assets/img/lead-form-art-d-1300.jpg") type("image/jpeg") 2x);
 }
+
+/* ============================================================
+   Форма заявки: ответ обработчика
+   ============================================================
+   Временная раскладка до макета. Панель успеха встаёт на место формы
+   (заголовок и лид карточки остаются), ошибка — строкой над полями.
+   Цвет успеха берём акцентный: отдельного «успешного» токена в системе
+   нет, заводить его — правка библиотеки, а не сайта.
+
+   Ловушка для ботов уезжает за край экрана, а не прячется display:none:
+   скрытое display'ем поле боты пропускают, а в этом и смысл.
+   ============================================================ */
+.sds .sds-lead-form__status{
+  margin:0;padding:var(--sds-space-gap-m) var(--sds-space-gap-l);
+  border-radius:var(--sds-radius-tile);
+  font:var(--sds-text-body);
+}
+.sds .sds-lead-form__status--ok{
+  border:1px solid var(--sds-color-accent);
+  color:var(--sds-color-chip-text);
+}
+.sds .sds-lead-form__status--fail{
+  border:1px solid var(--sds-color-error-on-dark);
+  color:var(--sds-color-error-on-dark);
+}
+.sds .sds-lead-form__trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}

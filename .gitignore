@@ -23,3 +23,7 @@ public/assets/img/**/*.gif
 # Лежат вне public/ — веб-сервер их не отдаёт.
 img-src/*
 !img-src/README.md
+
+# Настройки с паролями и журнал заявок: вне докрута и вне гита.
+config/form.php
+var/
