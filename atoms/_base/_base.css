@@ -1,0 +1,28 @@
+/* База библиотеки (подчёркивание в имени — порядок, а не стиль: сборка
+   склеивает atoms/* по алфавиту, а база обязана идти до атомов) — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* Правила появления (.sds-anim, prefers-reduced-motion) из снимка убраны:
+   на движке их даёт engine/base.css, а разметка несёт rs-anim. */
+/* База: действует только внутри .sds, остальную страницу не трогает */
+.sds,.sds *,.sds *::before,.sds *::after{box-sizing:border-box}
+.sds{font-family:var(--sds-font-sans);color:var(--sds-color-text);-webkit-text-size-adjust:100%}
+.sds :where(h1,h2,h3,h4,p,ul,ol,li,figure){margin:0;padding:0;letter-spacing:normal;text-transform:none}
+.sds :where(ul,ol){list-style:none}
+.sds :where(img,svg,picture){display:block;max-width:100%}
+.sds .sds-sr-only,.sds .sds-sr-only-m{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* ...-m прячет элемент только на мобильном (шапка таблицы в compare-table). Объявления
+   те же, что у sds-sr-only, поэтому приём живёт здесь один раз, а не копией в блоке. */
+@media (min-width:768px){.sds .sds-sr-only-m{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal}}
+/* Кадр во всю карточку. Три блока (photo-cards, photo-slider, kit-and-image) держали этот
+   приём у себя: picture — строчный элемент без своей высоты, поэтому растягивается абсолютом
+   по контейнеру, а img берёт 100%. --contain — когда кадр нельзя обрезать. Размер контейнера
+   задаёт блок своим классом. */
+.sds .sds-media{position:relative;overflow:hidden}
+.sds .sds-media > picture{display:block;position:absolute;inset:0}
+.sds .sds-media__img{width:100%;height:100%;object-fit:cover}
+.sds .sds-media--contain .sds-media__img{object-fit:contain}
+.sds .sds-nowrap{white-space:nowrap}
+.sds :where(a,button):focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:3px}

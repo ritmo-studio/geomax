@@ -1,0 +1,11 @@
+/* Атом icon — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom icon v1.2 · Figma: Icon (2115:344) · пиктограмма-заглушка слотов блоков.
+   Сетка 24×24, линия 2, скруглённые концы — рисунок один на всю систему, меняется здесь.
+   Placeholder стоит в слоте, пока проект не подставит свою пиктограмму (в клиентской копии).
+   Цвет — currentColor, размер box задаёт блок своим классом (идёт после атома в сборке). */
+.sds .sds-icon{--sds-icon-glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='3' width='18' height='18' rx='4' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M5 19 L19 5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");display:block;flex:none;width:24px;height:24px;color:var(--sds-color-text)}
+.sds .sds-icon::before{content:"";display:block;width:100%;height:100%;background:currentColor;-webkit-mask:var(--sds-icon-glyph) center / contain no-repeat;mask:var(--sds-icon-glyph) center / contain no-repeat}

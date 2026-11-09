@@ -1,0 +1,40 @@
+/* Блок photo-slider — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* photo-slider v1.1 · Figma 2132:378 · атомы arrow, pager, slider · только токены · брейкпоинт 768.
+   Дорожка и карточки делят класс sds-slider__* с views-slider: общий механизм листания —
+   в atoms/slider (slider.css + slider.js), здесь только то, что у этого блока своё.
+   Третий кадр обрезан краем секции намеренно: track выходит в правое поле отрицательным
+   отступом, а клипует его overflow:hidden на корне — так видно, что это лента, а не ряд.
+   Стрелки лежат поверх дорожки (position:relative-якорь — viewport), а не рядом с заголовком:
+   центр по высоте не завязан на заголовок и не уедет, если шапка станет выше/ниже. */
+.sds.sds-photo-slider{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);overflow:hidden;padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-photo-slider__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);max-width:var(--sds-layout-measure)}
+.sds .sds-photo-slider__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text)}
+.sds .sds-photo-slider__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-text)}
+
+.sds .sds-photo-slider__viewport{position:relative}
+.sds .sds-photo-slider__track{display:flex;align-items:stretch;gap:var(--sds-space-gap-m);margin:0;padding:0;margin-right:calc(-1 * var(--sds-page-inline))}
+/* Раскладка кадра внутри карточки — утилита sds-media в base.css. */
+.sds .sds-photo-slider__card{flex:0 0 291px;height:208px;margin:0;border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+
+/* Стрелки — поверх viewport (содержимое дорожки шире него, якорь не ползёт).
+   Сама пара .sds-arrows в атоме — flex-ряд рядом с заголовком; здесь она разводится
+   по краям кадра space-between'ом, а не стоит рядом с текстом. align-items:center
+   обязателен: без него flex по умолчанию растягивает кнопки от верха контейнера. */
+.sds.sds-photo-slider .sds-arrows{position:absolute;inset:0;align-items:center;justify-content:space-between;padding:0 var(--sds-space-gap-xl);gap:0;pointer-events:none}
+.sds.sds-photo-slider .sds-arrow{pointer-events:auto}
+
+@media (min-width:768px){
+  .sds.sds-photo-slider{gap:var(--sds-space-gap-xl)}
+  .sds .sds-photo-slider__card{flex-basis:672px;height:480px}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.rs-js .sds .sds-photo-slider__head{transition-delay:50ms}
+.rs-js .sds .sds-photo-slider__card:nth-child(1){transition-delay:100ms}
+.rs-js .sds .sds-photo-slider__card:nth-child(2){transition-delay:150ms}
+.rs-js .sds .sds-photo-slider__card:nth-child(n+3){transition-delay:200ms}

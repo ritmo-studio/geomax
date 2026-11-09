@@ -1,0 +1,35 @@
+/* Блок hero-video — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* hero-video v1.1 · Figma 2113:313 · атом button · только токены.
+   Высота секции — фиксированные значения из Figma (768/640): первый экран задуман
+   как почти-во-весь-кадр блок, а не как гибкая по контенту карточка.
+   Скрим — одна подложка на всю секцию: backdrop-blur + сам цвет overlay-scrim,
+   маска-градиент гасит оба эффекта к верху (формула из описания компонента),
+   поэтому верх кадра чистый, а подпись внизу всегда читается. */
+.sds.sds-hero-video{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:768px;padding:112px var(--sds-page-inline) var(--sds-space-page-padding)}
+.sds .sds-hero-video__media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--sds-color-placeholder)}
+.sds .sds-hero-video__scrim{position:absolute;inset:0;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:var(--sds-color-overlay-scrim);
+  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 68%);mask-image:linear-gradient(to bottom, transparent, #000 68%)}
+
+.sds .sds-hero-video__content{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sds-space-gap-m)}
+.sds .sds-hero-video__heading{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);width:640px;color:var(--sds-color-on-overlay)}
+.sds .sds-hero-video__eyebrow{margin:0;font:var(--sds-text-eyebrow);letter-spacing:var(--sds-text-eyebrow-tracking);text-transform:uppercase}
+.sds .sds-hero-video__title{margin:0;font:var(--sds-text-h1);color:inherit}
+/* 526, а не круглые 480: на 480 лид из двух строк переносился на третью и отрывался от кнопки. */
+.sds .sds-hero-video__aside{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);width:526px}
+.sds .sds-hero-video__lead{margin:0;font:var(--sds-text-body);color:var(--sds-color-on-overlay-muted)}
+
+@media (max-width:767.98px){
+  .sds.sds-hero-video{min-height:640px;padding:88px var(--sds-page-inline) var(--sds-space-card-padding)}
+  .sds .sds-hero-video__content{flex-direction:column;align-items:stretch;gap:var(--sds-space-gap-l)}
+  .sds .sds-hero-video__heading,.sds .sds-hero-video__aside{width:auto}
+  .sds .sds-hero-video__aside .sds-btn{width:100%}
+}
+
+.rs-js .sds .sds-hero-video__eyebrow{transition-delay:100ms}
+.rs-js .sds .sds-hero-video__title{transition-delay:150ms}
+.rs-js .sds .sds-hero-video__lead{transition-delay:200ms}
+.rs-js .sds .sds-hero-video__aside-cta{transition-delay:250ms}

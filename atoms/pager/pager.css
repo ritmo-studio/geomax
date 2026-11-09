@@ -1,0 +1,18 @@
+/* Атом pager — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom pager v1.2 · Figma: Pager (2031:81) · пагинация слайдера короткими полосками.
+   Полоска 4 px, но кнопка 24 px по высоте: полоска рисуется через ::before,
+   иначе цель для пальца получилась бы меньше минимума по доступности.
+   По умолчанию скрыт: без JS листается свайпом, кнопки ничего не делают. */
+.sds .sds-pager{--sds-pager-dot-h:24px;--sds-pager-bar-h:4px;display:none;align-items:center;gap:var(--sds-space-gap-s)}
+/* Кнопка выше полоски ради цели для пальца, сверху остаётся прозрачная зона.
+   Атом отдаёт её величину переменной, а блок вычитает из своего отступа — иначе
+   визуальный зазор получится больше заданного в макете. */
+.sds .sds-pager{--sds-pager-offset:calc((var(--sds-pager-bar-h) - var(--sds-pager-dot-h)) / 2)}
+.sds .sds-pager__dot{position:relative;width:20px;height:var(--sds-pager-dot-h);padding:0;border:0;background:none;cursor:pointer;transition:width .2s}
+.sds .sds-pager__dot::before{content:"";position:absolute;right:0;left:0;top:50%;height:var(--sds-pager-bar-h);margin-top:calc(var(--sds-pager-bar-h) / -2);border-radius:var(--sds-radius-pill);background:var(--sds-color-placeholder);transition:background-color .2s}
+.sds .sds-pager__dot[aria-current="true"]{width:40px}
+.sds .sds-pager__dot[aria-current="true"]::before{background:var(--sds-color-text)}

@@ -1,0 +1,16 @@
+/* Атом checkbox — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom checkbox v1.0 · Figma: Checkbox (2155:563) · флажок согласия, без id.
+   Рисунок — сам input (appearance:none), не span рядом: тогда подпись можно
+   обернуть в <label> вместе с ним и не городить id/for — кликабельна вся строка.
+   Фон у поля всегда прозрачный (карточка тёмная), поэтому состояния различает рамка. */
+.sds .sds-checkbox{appearance:none;flex:none;width:20px;height:20px;margin:0;border:1px solid var(--sds-color-on-overlay-muted);border-radius:var(--sds-radius-control);background:none;cursor:pointer}
+.sds .sds-checkbox:checked{--sds-checkbox-glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5 L8 14.5 L16 5.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  border-color:var(--sds-color-accent);background:var(--sds-color-accent) var(--sds-checkbox-glyph) center / 14px no-repeat}
+.sds .sds-checkbox:focus-visible{outline:2px solid var(--sds-color-on-overlay-muted);outline-offset:2px}
+/* Форма попыталась отправиться, флажок не отмечен: класс навешивает скрипт плагина
+   при неудачной валидации — CSS сам момент отправки не знает. */
+.sds .sds-checkbox.sds-checkbox--error{border-color:var(--sds-color-error-on-dark)}

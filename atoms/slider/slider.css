@@ -1,0 +1,30 @@
+/* Атом slider — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom slider v1.0 · общий механизм дорожки: прокрутка, перетаскивание, маска правого
+   края, показ стрелок/пагинации после скрипта. Код — slider.js (тоже общий). Разметку
+   трека и карточек даёт блок, атом только управляет поведением классов sds-slider__*.
+   Перенесено из views-slider при появлении photo-slider — тот же механизм, не копия. */
+.sds .sds-slider__track{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+.sds .sds-slider__track::-webkit-scrollbar{display:none}
+.sds .sds-slider__track:focus-visible{outline:2px solid var(--sds-color-accent);outline-offset:3px}
+.sds .sds-slider__card{scroll-snap-align:start}
+
+.sds .sds-slider__track.is-free{scroll-snap-type:none}
+.sds .sds-slider__track{--sds-slider-fade:0px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - var(--sds-slider-fade)),transparent);mask-image:linear-gradient(to right,#000 calc(100% - var(--sds-slider-fade)),transparent)}
+
+.sds.sds-slider .sds-pager{margin-top:calc(var(--sds-space-gap-m) + var(--sds-pager-offset));padding-left:var(--sds-radius-card)}
+.sds.sds-slider--js .sds-pager{display:flex}
+/* Нечего листать на этой ширине (мало карточек, дорожка не упирается в край) —
+   стрелки и точки прячутся, а не стоят неработающими. См. slider.js updateOverflow. */
+.sds.sds-slider--no-overflow .sds-pager{display:none}
+
+@media (min-width:768px){
+  .sds.sds-slider--js .sds-arrows{display:flex}
+  .sds.sds-slider--no-overflow .sds-arrows{display:none}
+  .sds.sds-slider--js .sds-slider__track{cursor:grab}
+  .sds.sds-slider--js .sds-slider__track.is-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+  .sds .sds-slider__track img{-webkit-user-drag:none}
+}

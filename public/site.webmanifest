@@ -1,0 +1,10 @@
+{
+  "name": "ГЕОМАКС — распорная гидравлическая система",
+  "short_name": "ГЕОМАКС",
+  "lang": "ru",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F9F9F9",
+  "theme_color": "#F9F9F9",
+  "icons": []
+}

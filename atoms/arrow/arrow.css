@@ -1,0 +1,13 @@
+/* Атом arrow — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom arrow v1.0 · Figma: Arrow (2031:80) · стрелки перелистывания слайдера.
+   По умолчанию скрыты: без JS они ничего не делают, а дорожка листается свайпом.
+   Показывает их блок, когда скрипт подтвердил готовность. */
+.sds .sds-arrows{display:none;flex:none;gap:var(--sds-space-gap-s)}
+.sds .sds-arrow{display:inline-flex;align-items:center;justify-content:center;flex:none;width:48px;height:48px;padding:0;border:0;border-radius:var(--sds-radius-pill);background:var(--sds-color-card);color:var(--sds-color-text);cursor:pointer;transition:background-color .2s}
+.sds .sds-arrow:hover{background:var(--sds-color-placeholder)}
+.sds .sds-arrow[disabled]{background:var(--sds-color-placeholder);color:var(--sds-color-text-muted);cursor:default}
+.sds .sds-arrow svg{display:block;width:24px;height:24px}

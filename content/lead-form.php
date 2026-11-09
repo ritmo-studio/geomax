@@ -1,0 +1,57 @@
+<?php
+/**
+ * ГЕОМАКС · контент блока «lead-form».
+ *
+ * Поля формы. Обработчика на движке ещё нет (engine.json, раздел open):
+ * form_action пока "#", и это первое, что нужно будет закрыть перед запуском.
+ */
+return [
+    'heading_tag' => 'h2',
+    'title' => 'Подберем распорную систему для вашего объекта',
+    'lead' => 'Оставьте заявку, и мы подготовим коммерческое предложение с учетом параметров вашего объекта',
+    'form_action' => '#',
+    'consent_html' => 'Я подтверждаю ознакомление с <a class="sds-lead-form__consent-link" href="#privacy">Политикой обработки персональных данных</a> и даю согласие на обработку моих персональных данных.',
+    'name' => 'your-consent',
+    'fields' => [
+        [
+            'is_text' => true,
+            'name' => 'your-name',
+            'label' => 'Имя',
+            'input_type' => 'text',
+            'autocomplete' => 'name',
+            'required' => true,
+        ],
+        [
+            'is_text' => true,
+            'name' => 'your-company',
+            'label' => 'Название компании',
+            'input_type' => 'text',
+            'autocomplete' => 'organization',
+        ],
+        [
+            'is_text' => true,
+            'name' => 'your-email',
+            'label' => 'E-mail',
+            'input_type' => 'email',
+            'autocomplete' => 'email',
+            'required' => true,
+        ],
+        [
+            'is_text' => true,
+            'name' => 'your-phone',
+            'label' => 'Телефон',
+            'input_type' => 'tel',
+            'autocomplete' => 'tel',
+        ],
+    ],
+    'message_field' => [
+        [
+            'is_textarea' => true,
+            'name' => 'your-message',
+            'label' => 'Сообщение',
+        ],
+    ],
+    'cta_label' => 'Получить расчет аренды',
+    'cta_href' => '#',
+    'cta_icon' => true,
+];

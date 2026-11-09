@@ -1,0 +1,30 @@
+/* Блок cta-sticky — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* cta-sticky v1.1 · атом button · только токены · показывается до 768 px */
+/* По умолчанию полосы нет: без скрипта она бы просто закрыла низ экрана навсегда. */
+.sds.sds-ctabar{display:none}
+.sds .sds-ctabar__inner{display:flex}
+
+@media (max-width:767.98px){
+  .rs-js .sds.sds-ctabar{
+    position:fixed;right:0;bottom:0;left:0;z-index:20;display:block;
+    /* Сверху теснее, чем по бокам: полоса не должна занимать лишнюю высоту экрана. */
+    padding:var(--sds-space-gap-s) var(--sds-space-gap-m);
+    /* Вырез и полоса жестов на iPhone: иначе кнопка упрётся в край. */
+    padding-bottom:calc(var(--sds-space-gap-m) + env(safe-area-inset-bottom, 0px));
+    background:var(--sds-color-page);
+    /* Скруглённый верх и мягкая тень: полоса читается как всплывшая поверх страницы,
+       а не как приклеенный к низу кусок вёрстки. Нижних скруглений нет — она у края. */
+    border-radius:var(--sds-radius-card) var(--sds-radius-card) 0 0;
+    box-shadow:var(--sds-shadow-bar);
+    /* Скрытая полоса выпадает из обхода клавиатурой, а не просто уезжает за край. */
+    visibility:hidden;transform:translateY(100%);
+    will-change:transform;
+    transition:transform var(--sds-motion-duration-fast) var(--sds-motion-easing), visibility var(--sds-motion-duration-fast)
+  }
+  .rs-js .sds.sds-ctabar.is-shown{visibility:visible;transform:none}
+  .rs-js .sds.sds-ctabar .sds-btn{width:100%}
+}

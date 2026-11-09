@@ -1,0 +1,43 @@
+/* Блок compare-table — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* compare-table v1.1 · Figma 2127:426 · только токены · брейкпоинт 768, mobile-first.
+   Таблица одна на оба экрана. База — мобильная: table/tbody/tr/td переведены в display:block
+   и строка читается карточкой, подпись колонки подставляется из data-label через CSS content.
+   С 768 раскладка возвращается к настоящей таблице (display:table-*).
+   Табличные роли проставлены в разметке явно: display:block снимает роли, которые даёт
+   сам тег, и без ролей связь «ячейка — заголовок колонки» для скринридера теряется.
+   Шапка на мобильном спрятана классом sds-sr-only-m (в base.css), а не display:none. */
+.sds.sds-compare-table{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-compare-table__head{display:flex}
+.sds .sds-compare-table__title{margin:0;font:var(--sds-text-h2);color:var(--sds-color-text)}
+
+.sds .sds-compare-table__table{display:block;width:100%}
+.sds .sds-compare-table__table tbody{display:flex;flex-direction:column;gap:var(--sds-space-gap-m)}
+.sds .sds-compare-table__table tr{display:block;border:1px solid var(--sds-color-placeholder);border-radius:var(--sds-radius-card);padding:var(--sds-space-gap-m);background:var(--sds-color-page)}
+.sds .sds-compare-table__table th[scope="row"],
+.sds .sds-compare-table__table td{display:block;padding:0;border:0;text-align:left}
+.sds .sds-compare-table__table th[scope="row"]{margin-bottom:var(--sds-space-gap-m);font:var(--sds-text-body-strong);color:var(--sds-color-text)}
+.sds .sds-compare-table__table td{margin-top:var(--sds-space-gap-m);padding-top:var(--sds-space-gap-m);border-top:1px solid var(--sds-color-placeholder);font:var(--sds-text-body);color:var(--sds-color-text)}
+.sds .sds-compare-table__table td:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.sds .sds-compare-table__table td::before{content:attr(data-label);display:block;margin-bottom:var(--sds-space-gap-s);font:var(--sds-text-eyebrow);letter-spacing:var(--sds-text-eyebrow-tracking);text-transform:uppercase;color:var(--sds-color-text-muted)}
+
+@media (min-width:768px){
+  .sds .sds-compare-table__wrap{border:1px solid var(--sds-color-placeholder);border-radius:var(--sds-radius-card);background:var(--sds-color-page);overflow:hidden}
+  .sds .sds-compare-table__table{display:table;border-collapse:collapse;table-layout:fixed}
+  .sds .sds-compare-table__table thead{display:table-header-group;background:var(--sds-color-chip-bg)}
+  .sds .sds-compare-table__table tbody{display:table-row-group;gap:0}
+  .sds .sds-compare-table__table tr{display:table-row;padding:0;border:0;border-radius:0;background:none}
+  .sds .sds-compare-table__table tbody tr{border-top:1px solid var(--sds-color-placeholder)}
+  .sds .sds-compare-table__table th[scope="col"]{padding:var(--sds-space-gap-m);font:var(--sds-text-card-title);color:var(--sds-color-chip-text);text-align:left}
+  .sds .sds-compare-table__table th[scope="row"]{display:table-cell;margin:0;padding:var(--sds-space-gap-m)}
+  .sds .sds-compare-table__table td{display:table-cell;margin:0;padding:var(--sds-space-gap-m);border-top:0;border-left:1px solid var(--sds-color-placeholder)}
+  .sds .sds-compare-table__table td::before{content:none}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.rs-js .sds .sds-compare-table__head{transition-delay:50ms}
+.rs-js .sds .sds-compare-table__wrap{transition-delay:100ms}

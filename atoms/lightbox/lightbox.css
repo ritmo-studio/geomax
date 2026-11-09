@@ -1,0 +1,30 @@
+/* Атом lightbox — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom lightbox v1.0 · Figma: Lightbox (2151:538) · изображение поверх страницы (сканы,
+   сертификаты). Один <dialog> на блок, который его использует — триггеры (ссылки с
+   data-lightbox) находит скрипт и переиспользуют один и тот же диалог.
+   <dialog> даёт бесплатно то, что требует Description: Esc закрывает, фокус заперт
+   внутри, после закрытия фокус возвращается на открывший элемент — всё нативное,
+   lightbox.js добавляет только клик по крестику/затемнению и блокировку скролла.
+   Сам диалог — он же подложка: фон overlay-scrim на весь экран, без отдельного ::backdrop. */
+.sds.sds-lightbox{display:none;position:fixed;inset:0;margin:0;width:100vw;max-width:100vw;height:100vh;max-height:100vh;padding:var(--sds-space-page-padding);border:0;background:var(--sds-color-overlay-scrim);color:var(--sds-color-on-overlay)}
+.sds.sds-lightbox[open]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sds-space-gap-l)}
+.sds.sds-lightbox::backdrop{background:transparent}
+
+.sds.sds-lightbox .sds-lightbox__image{max-width:min(560px,100%);max-height:70vh;width:auto;height:auto;object-fit:contain;border-radius:var(--sds-radius-button)}
+
+.sds.sds-lightbox .sds-lightbox__caption{display:flex;flex-direction:column;gap:4px;max-width:560px;text-align:center}
+.sds.sds-lightbox .sds-lightbox__name{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-on-overlay)}
+.sds.sds-lightbox .sds-lightbox__date{margin:0;font:var(--sds-text-rating-caption);color:var(--sds-color-on-overlay-muted)}
+
+.sds.sds-lightbox .sds-lightbox__close{position:absolute;top:var(--sds-space-page-padding);right:var(--sds-space-page-padding);display:flex;align-items:center;justify-content:center;width:48px;height:48px;border:0;border-radius:var(--sds-radius-pill);background:var(--sds-color-page);color:var(--sds-color-text);cursor:pointer}
+.sds.sds-lightbox .sds-lightbox__close-icon{--sds-lightbox-close:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 L18 18 M18 6 L6 18' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");display:block;width:24px;height:24px;background:currentColor;-webkit-mask:var(--sds-lightbox-close) center / contain no-repeat;mask:var(--sds-lightbox-close) center / contain no-repeat}
+
+/* Блокировка скролла страницы, пока диалог открыт: showModal() сам по себе
+   это в части браузеров не гарантирует (особенно тач-скролл на мобильном).
+   Класс навешивает lightbox.js на <html> — единственное место в библиотеке,
+   где CSS осознанно выходит за пределы .sds: скролл страницы — не часть блока. */
+html.sds-lightbox-open{overflow:hidden}

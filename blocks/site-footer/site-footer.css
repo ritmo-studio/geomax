@@ -1,0 +1,69 @@
+/* Блок site-footer — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* block site-footer v1.5 · Figma: site-footer (2158:604), Description читать перед правкой.
+   Фон surface-muted (не card: подвал — приглушённая поверхность страницы, не карточка).
+   Скруглены только верхние углы: снизу подвал режет край экрана.
+   Раскладка в Figma ручная (пиксельная сетка 0/688/1032), здесь — гибкая (flex),
+   чтобы подвал не ломался на ширинах между 768 и 1440: сетка остаётся по смыслу,
+   точные px не копируются, см. library-sets-values-not-the-mockup.
+   Вертикальные отступы — токенами (card-padding/gap-l), а не 44/24 из макета:
+   подвал стоит в общем ритме страницы и должен ехать вместе с ним. */
+.sds.sds-footer{background:var(--sds-color-surface-muted);border-radius:var(--sds-radius-section) var(--sds-radius-section) 0 0;padding:var(--sds-space-card-padding) var(--sds-page-inline)}
+
+.sds .sds-footer__main{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);width:100%}
+
+.sds .sds-footer__brand{display:flex;flex-direction:column;gap:var(--sds-space-gap-l)}
+.sds .sds-footer__logo{width:200px;height:46px;border-radius:var(--sds-radius-control);background:var(--sds-color-placeholder)}
+.sds .sds-footer__brand-link{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+.sds .sds-footer__brand-link a{color:inherit;text-decoration:none}
+.sds .sds-footer__brand-link a:hover{text-decoration:underline}
+
+.sds .sds-footer__columns{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);width:100%}
+.sds .sds-footer__column{display:flex;flex-direction:column;gap:var(--sds-space-gap-xl);flex:1 1 0}
+.sds .sds-footer__group{display:flex;flex-direction:column;gap:var(--sds-space-gap-s)}
+.sds .sds-footer__group-label{margin:0;font:var(--sds-text-rating-label);color:var(--sds-color-text-muted)}
+.sds .sds-footer__group-content{font:var(--sds-text-body-strong);color:var(--sds-color-text);font-style:normal}
+.sds .sds-footer__line{margin:0}
+.sds .sds-footer__line a{color:inherit;text-decoration:none}
+.sds .sds-footer__line a:hover{text-decoration:underline}
+
+.sds .sds-footer__top{font:var(--sds-text-body);color:var(--sds-color-text);text-decoration:none}
+.sds .sds-footer__top:hover{text-decoration:underline}
+
+.sds .sds-footer__legal{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);width:100%;margin-top:var(--sds-space-gap-xl)}
+.sds .sds-footer__legal p{margin:0;font:var(--sds-text-rating-caption);color:var(--sds-color-text-muted)}
+.sds .sds-footer__legal a{color:inherit;text-decoration:none}
+.sds .sds-footer__legal a:hover{text-decoration:underline}
+.sds .sds-footer__mark{width:46px;height:22px;background:var(--sds-color-placeholder)}
+
+@media (min-width:768px){
+  .sds.sds-footer{padding:var(--sds-space-card-padding) var(--sds-page-inline) var(--sds-space-gap-l)}
+  .sds .sds-footer__main{position:relative;flex-direction:row;align-items:flex-start;gap:0}
+  .sds .sds-footer__brand{flex:0 0 338px}
+  .sds .sds-footer__columns{flex-direction:row;gap:var(--sds-space-gap-m);flex:1 1 auto;margin-left:72px}
+  .sds .sds-footer__top{position:absolute;top:0;right:0;font:var(--sds-text-rating-label)}
+  .sds .sds-footer__legal{flex-direction:row;align-items:center;justify-content:space-between}
+}
+
+/* «Наверх» на ПК (site-footer.js): тот же текстовый линк, без фона и área —
+   просто временно position:fixed у правого края, пока страница пролистывается
+   вниз со второго блока и до футера. top/right считает скрипт на каждый скролл
+   (docY футера минус scrollY, зажато снизу высотой экрана) — поэтому у футера
+   кнопка не пропадает по opacity, а непрерывно «въезжает» и останавливается
+   ровно там, где потом встаёт в обычном потоке (top:0;right:0 выше).
+   Скрытие — opacity плюс visibility: при одной прозрачности невидимая ссылка
+   остаётся в порядке табуляции, и фокус с клавиатуры уходит в пустоту.
+   Opacity здесь только для скрытия при скролле вверх в середине страницы —
+   у самого футера это правило скрипт отключает (is-shown держится true).
+   Блок идёт после @media(min-width:768px) выше: та же специфичность у
+   .sds .sds-footer__top, тай-брейк решает порядок в файле. */
+@media (min-width:1280px){
+  .sds .sds-footer__top--pinned{position:fixed;z-index:20;opacity:0;visibility:hidden;pointer-events:none}
+  .sds .sds-footer__top--pinned.is-shown{opacity:1;visibility:visible;pointer-events:auto}
+  @media (prefers-reduced-motion:no-preference){
+    .sds .sds-footer__top--pinned{transition:opacity var(--sds-motion-duration-fast) var(--sds-motion-easing),visibility var(--sds-motion-duration-fast)}
+  }
+}

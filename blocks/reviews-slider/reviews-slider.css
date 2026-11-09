@@ -1,0 +1,27 @@
+/* Блок reviews-slider — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* reviews-slider v1.2 · Figma 2150:547 · атомы arrow, pager, slider, review-card ·
+   только токены · брейкпоинт 768. Дорожка и карточки делят класс sds-slider__*
+   с views-slider/photo-slider: общий механизм листания — в atoms/slider.
+   Стрелки в шапке, а не поверх карточек: на длинной выдержке скана стрелка-оверлей
+   накрыла бы текст (см. Description). align-items:stretch на треке выравнивает
+   карточки по самой высокой — иначе лента прыгает при листании. */
+.sds.sds-reviews-slider{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);overflow:hidden;padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-reviews-slider__head{display:flex;align-items:center;justify-content:space-between;gap:var(--sds-space-gap-xl)}
+.sds .sds-reviews-slider__title{margin:0;flex:1 1 auto;font:var(--sds-text-h2);color:var(--sds-color-text)}
+
+.sds .sds-reviews-slider__track{display:flex;align-items:stretch;gap:var(--sds-space-gap-m);margin:0;padding:0}
+
+@media (min-width:768px){
+  .sds.sds-reviews-slider{gap:var(--sds-space-gap-xl)}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.rs-js .sds .sds-reviews-slider__title{transition-delay:50ms}
+.rs-js .sds .sds-review-card:nth-child(1){transition-delay:100ms}
+.rs-js .sds .sds-review-card:nth-child(2){transition-delay:150ms}
+.rs-js .sds .sds-review-card:nth-child(n+3){transition-delay:200ms}

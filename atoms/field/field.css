@@ -1,0 +1,27 @@
+/* Атом field — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom field v1.0 · Figma: Field (2155:558) · поле формы с плавающей подписью, без id.
+   Подпись — не placeholder, а обычный <span> внутри <label>, который оборачивает input:
+   так работает и без JS, и без пары id/for (у блоков и атомов id нет, см. правила кода).
+   Подпись лежит в покое на месте значения (как бы плейсхолдер), а при фокусе или вводе
+   уезжает наверх мелким текстом — об этом судит :placeholder-shown у input/textarea
+   с placeholder=" " (пробел, не пустая строка — иначе состояние не отличить от пустого). */
+.sds .sds-field{display:flex;flex-direction:column;gap:4px;width:100%}
+.sds .sds-field__control{position:relative;display:flex;width:100%;border-radius:var(--sds-radius-pill);background:var(--sds-color-page);cursor:text}
+.sds .sds-field__input{width:100%;height:56px;margin:0;padding:28px 24px 8px;border:2px solid transparent;border-radius:inherit;background:none;font:400 16px/1.5 var(--sds-font-sans);color:var(--sds-color-text);outline:none}
+.sds .sds-field__input:placeholder-shown{padding-top:0;padding-bottom:0}
+.sds .sds-field__input:focus{border-color:var(--sds-color-text)}
+.sds .sds-field__label{position:absolute;left:24px;top:8px;font:400 14px/1.2 var(--sds-font-sans);color:var(--sds-color-text-muted);pointer-events:none;transition:top .15s,font-size .15s}
+.sds .sds-field__input:placeholder-shown:not(:focus) ~ .sds-field__label{top:50%;transform:translateY(-50%);font:400 16px/1.5 var(--sds-font-sans)}
+.sds .sds-field__error{margin:0;padding:0 24px;font:400 14px/1.2 var(--sds-font-sans);color:var(--sds-color-error-on-dark)}
+.sds .sds-field__input:invalid:not(:placeholder-shown){border-color:var(--sds-color-error)}
+
+/* Многострочное поле: та же механика плавающей подписи, только высота фиксированная. */
+.sds .sds-field--area .sds-field__control{border-radius:var(--sds-radius-card)}
+.sds .sds-field--area .sds-field__input{height:96px;resize:none}
+.sds .sds-field--area .sds-field__input:placeholder-shown{padding:12px 24px}
+.sds .sds-field--area .sds-field__input:not(:placeholder-shown),
+.sds .sds-field--area .sds-field__input:focus{padding:28px 24px 8px}

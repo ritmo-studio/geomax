@@ -1,0 +1,41 @@
+/* Атом review-card — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom review-card v1.1 · Figma 2149:452 · карточка отзыва или скана благодарности.
+   Два типа лежат в одной ленте, поэтому это отдельный компонент, а не свойство блока:
+   is_text/is_scan — взаимоисключающие ключи данных (движок без «иначе»).
+   Type=Text всегда столбцом (и на мобильном, и на десктопе); Type=Scan столбцом на
+   мобильном (скан сверху) и строкой на десктопе (скан слева) — так в Figma.
+   Ширина карточки (291/672) и радиус (--sds-radius-card, уже адаптивный) — часть
+   самого компонента: он всегда одного размера, где бы ни стоял. Звёзды — те же классы
+   sds-stars/sds-star, что в atoms/rating, но без ссылки и счётчика.
+   Скан — ссылка на файл (data-lightbox), не кнопка: без JS это обычный переход
+   на изображение, с ним клик перехватывает atoms/lightbox и открывает оверлей. */
+.sds .sds-review-card{display:flex;flex:0 0 291px;flex-direction:column;gap:var(--sds-space-gap-xl);align-items:flex-start;padding:var(--sds-space-gap-m);border-radius:var(--sds-radius-card);background:var(--sds-color-page);list-style:none}
+.sds .sds-review-card::marker{content:none}
+
+.sds .sds-review-card__who{display:flex;flex-direction:column;gap:4px;min-width:0}
+.sds .sds-review-card__name{margin:0;font:var(--sds-text-card-title);color:var(--sds-color-text)}
+.sds .sds-review-card__date{margin:0;font:var(--sds-text-rating-caption);color:var(--sds-color-text-muted)}
+
+.sds .sds-review-card__head{display:flex;flex-direction:column;gap:var(--sds-space-gap-s);width:100%}
+.sds .sds-review-card__stars{flex:none}
+.sds .sds-review-card__body{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);width:100%}
+.sds .sds-review-card__paragraph{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+
+.sds .sds-review-card__scan{position:relative;display:flex;flex:none;align-items:flex-end;justify-content:flex-end;width:100%;height:240px;padding:var(--sds-space-gap-s);border-radius:var(--sds-radius-button);background:var(--sds-color-placeholder);text-decoration:none;cursor:pointer}
+.sds .sds-review-card__scan-img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.sds .sds-review-card__expand{position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--sds-radius-pill);background:var(--sds-color-page);color:var(--sds-color-text)}
+.sds .sds-review-card__expand svg{display:block;width:20px;height:20px}
+.sds .sds-review-card__column{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);width:100%;min-width:0}
+.sds .sds-review-card__excerpt{margin:0;font:var(--sds-text-body);color:var(--sds-color-text-muted)}
+
+@media (min-width:768px){
+  .sds .sds-review-card{flex-basis:672px}
+  .sds .sds-review-card__head{flex-direction:row;align-items:flex-start;justify-content:space-between;gap:var(--sds-space-gap-m)}
+  .sds .sds-review-card--scan{flex-direction:row}
+  .sds .sds-review-card__scan{width:240px;height:296px}
+  .sds .sds-review-card__column{flex:1 1 0;min-width:0}
+}

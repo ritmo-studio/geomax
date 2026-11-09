@@ -1,0 +1,18 @@
+/* Атом rating — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom rating v1.0 · Figma: Rating (4:57) + Stars (4:42) · заполнение звёзд из --sds-rating (0–5), без id и JS */
+.sds .sds-rating{display:inline-flex;align-items:center;gap:var(--sds-space-gap-m);color:inherit;text-decoration:none}
+.sds .sds-rating:hover{color:inherit}
+.sds .sds-rating__value{display:flex;flex-direction:column;gap:4px}
+.sds .sds-rating__caption{font:var(--sds-text-rating-caption);color:var(--sds-color-text-muted)}
+.sds .sds-rating__num{font:var(--sds-text-rating-value);color:var(--sds-color-text)}
+.sds .sds-rating__side{display:flex;flex-direction:column;gap:6px}
+.sds .sds-rating__count{font:var(--sds-text-rating-label);color:var(--sds-color-text-muted)}
+.sds .sds-stars{display:flex;gap:4px}
+.sds .sds-star{position:relative;width:24px;height:24px;color:var(--sds-color-star-empty)}
+.sds .sds-star svg{width:24px;height:24px;max-width:none}
+.sds .sds-star__fill{position:absolute;top:0;left:0;bottom:0;overflow:hidden;color:var(--sds-color-star);width:calc(clamp(0, var(--sds-rating) - var(--sds-i), 1) * 100%)}
+.sds .sds-star:nth-child(1){--sds-i:0}.sds .sds-star:nth-child(2){--sds-i:1}.sds .sds-star:nth-child(3){--sds-i:2}.sds .sds-star:nth-child(4){--sds-i:3}.sds .sds-star:nth-child(5){--sds-i:4}

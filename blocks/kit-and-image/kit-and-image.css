@@ -1,0 +1,44 @@
+/* Блок kit-and-image — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* kit-and-image v1.1 · Figma 2138:446 · атомы icon-row, button · только токены · брейкпоинт 768.
+   Слева карточка (заголовок, плитки состава, условия, кнопка), справа фото во всю высоту
+   карточки — не кадрируется, вписывается целиком (object-fit:contain), поэтому плейсхолдер-фон
+   остаётся виден по краям, если пропорции не совпали. Разделители отделяют три разные по
+   природе части карточки друг от друга. Плитка скруглена по radius/button (12, по Figma),
+   а не radius/tile (16) — тот крупнее и здесь не подходит. */
+.sds.sds-kit-and-image{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);padding:var(--sds-space-page-padding) var(--sds-page-inline);background:var(--sds-color-page)}
+
+.sds .sds-kit-and-image__card{display:flex;flex-direction:column;gap:var(--sds-space-gap-l);width:100%;padding:var(--sds-space-card-padding);border-radius:var(--sds-radius-card);background:var(--sds-color-card)}
+.sds .sds-kit-and-image__title{margin:0;width:100%;font:var(--sds-text-h2);color:var(--sds-color-text)}
+
+.sds .sds-kit-and-image__tiles{display:flex;flex-wrap:wrap;gap:var(--sds-space-gap-s);margin:0;padding:0}
+.sds .sds-kit-and-image__tile{display:flex;flex:1 1 140px;flex-direction:column;align-items:center;justify-content:space-between;gap:var(--sds-space-gap-s);height:168px;margin:0;padding:var(--sds-space-gap-m);border-radius:var(--sds-radius-button);background:var(--sds-color-page)}
+.sds .sds-kit-and-image__tile-art{flex:none;width:72px;height:80px;border-radius:var(--sds-radius-button);background:var(--sds-color-placeholder)}
+.sds .sds-kit-and-image__tile-label{margin:0;width:100%;font:var(--sds-text-body-strong);color:var(--sds-color-text);text-align:center}
+
+.sds .sds-kit-and-image__divider{height:1px;background:var(--sds-color-placeholder)}
+
+
+.sds .sds-kit-and-image__actions{display:flex;width:100%}
+.sds .sds-kit-and-image__actions .sds-btn{width:100%}
+
+/* Фото без кадрирования: раскладка кадра — утилита sds-media в base.css,
+   модификатор --contain (здесь важно показать кадр целиком, а не заполнить рамку). */
+.sds .sds-kit-and-image__media{width:100%;height:240px;border-radius:var(--sds-radius-card);background:var(--sds-color-placeholder)}
+
+@media (min-width:768px){
+  .sds.sds-kit-and-image{flex-direction:row;align-items:flex-start}
+  .sds .sds-kit-and-image__card{flex:1 1 0;min-width:0}
+  .sds .sds-kit-and-image__tiles{flex-wrap:nowrap}
+  .sds .sds-kit-and-image__tile{flex-basis:120px}
+  .sds .sds-kit-and-image__actions{width:auto}
+  .sds .sds-kit-and-image__actions .sds-btn{width:auto}
+  .sds .sds-kit-and-image__media{flex:none;align-self:stretch;width:672px;height:auto}
+}
+
+/* Каскад появления: правила показа в base.css, здесь только задержки. */
+.rs-js .sds .sds-kit-and-image__card{transition-delay:100ms}
+.rs-js .sds .sds-kit-and-image__media{transition-delay:150ms}

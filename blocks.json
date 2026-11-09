@@ -1,0 +1,66 @@
+{
+  "site": "geomax",
+  "snapshot": {
+    "system": "0.34",
+    "figma": "NY7nGOBlQt9Zbos7riZKWf",
+    "page": "SEO DS · ГЕОМАКС v.0.34",
+    "note": "Блоки и атомы приехали снимком из seo-design-system и сохранили префикс sds-. Версии ниже — те, что стояли в снимке; библиотека с тех пор ушла вперёд, и сама собой сюда не приедет."
+  },
+  "engine": {
+    "version": "0.15",
+    "note": "Копия ritmo-engine в engine/. Отклонения копии: убран blocks/preloader (занавес — приём сайта студии), из base.css убраны @font-face студии, в page-404 свой логотип и кнопка, в head.php сайтовые prodHost/og/theme-color."
+  },
+  "base": 1440,
+  "prefix": "sds-",
+  "breakpoints": {
+    "mobile": "≤767.98",
+    "desktop": "≥768"
+  },
+  "atoms": {
+    "arrow": "1.0",
+    "button": "1.3",
+    "checkbox": "1.0",
+    "field": "1.0",
+    "icon-row": "1.0",
+    "icon": "1.2",
+    "lightbox": "1.0",
+    "pager": "1.2",
+    "rating": "1.0",
+    "review-card": "1.1",
+    "slider": "1.0"
+  },
+  "blocks": {
+    "compare-table": "1.1",
+    "cta-sticky": "1.1",
+    "hero-video": "1.1",
+    "icon-cards": "1.3",
+    "kit-and-image": "1.1",
+    "lead-form": "1.2",
+    "photo-cards": "1.1",
+    "photo-slider": "1.1",
+    "reviews-slider": "1.2",
+    "site-footer": "1.5",
+    "site-header": "1.1"
+  },
+  "own": {
+    "zz-overrides": {
+      "note": "Правки проекта поверх снимка (тот же файл, что snapshot/custom.css). Имя с zz- ради порядка склейки: должен идти последним."
+    }
+  },
+  "page": {
+    "public/index.php": [
+      "site-header",
+      "hero-video",
+      "icon-cards (Card=Off, #advantages)",
+      "compare-table",
+      "photo-cards",
+      "photo-slider (#objects)",
+      "kit-and-image (#rent)",
+      "icon-cards (Card=On, #services)",
+      "reviews-slider",
+      "lead-form (#lead-form)",
+      "site-footer (#contacts)",
+      "cta-sticky"
+    ]
+  }
+}

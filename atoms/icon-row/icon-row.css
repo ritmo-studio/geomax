@@ -1,0 +1,17 @@
+/* Атом icon-row — снимок библиотеки SEO Design System (geomax v.0.34 SEO DS).
+   Файл вырезан из снимка snapshot/sds.css без правок, кроме одной
+   механической: .sds-js → .rs-js — класс живого JS на движке ставит
+   engine/base.js. Правки проекта живут в blocks/zz-overrides.
+   Менять здесь — значит делать форк библиотеки: правь zz-overrides. */
+/* atom icon-row v1.0 · ряд «пиктограмма + текст»: условие, преимущество, строка состава.
+   Выделен из icon-cards и kit-and-image, где эта раскладка была скопирована слово в слово
+   (вместе с flex 1 1 260px на десктопе). Список-обёртка — sds-icon-rows: на мобильном
+   колонка, с 768 переносящийся ряд. Пиктограмма декоративная, в разметке aria-hidden. */
+.sds .sds-icon-rows{display:flex;flex-direction:column;gap:var(--sds-space-gap-m);margin:0;padding:0}
+.sds .sds-icon-row{display:flex;align-items:center;gap:var(--sds-space-gap-m);margin:0}
+.sds .sds-icon-row__icon{width:32px;height:32px}
+.sds .sds-icon-row__text{margin:0;flex:1 1 auto;font:var(--sds-text-body);color:var(--sds-color-text)}
+@media (min-width:768px){
+  .sds .sds-icon-rows{flex-direction:row;flex-wrap:wrap}
+  .sds .sds-icon-row{flex:1 1 260px;min-width:260px}
+}
