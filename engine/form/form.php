@@ -15,8 +15,10 @@
  * JSON-массив порвали бы две одновременные заявки. Лежит вне докрута
  * и вне гита. Это персональные данные: срок хранения — в политике сайта.
  *
- * Зависимостей нет. Канал доставки один (SMTP); телеграм добавится
- * вторым вызовом в rs_form_deliver(), остальное не меняется.
+ * Зависимостей нет. Журнал обязателен, каналы доставки — опция: нет
+ * smtp.host или to в конфиге, и письмо просто не отправляется ("mail": null),
+ * заявка всё равно принята. Телеграм добавится вторым вызовом в
+ * rs_form_deliver(), остальное не меняется.
  */
 require_once __DIR__ . '/smtp.php';
 
@@ -142,9 +144,19 @@ function rs_form_read(array $leadForm, array $post): array
     return ['values' => $values, 'errors' => $errors];
 }
 
-/** Письмо и (позже) телеграм. @return array{mail:bool,error:string} */
+/**
+ * Письмо и (позже) телеграм. Почта — опция: нет хоста или получателя в конфиге,
+ * значит отправлять некуда, и это не ошибка. mail: null — не настроено,
+ * false — настроено и не ушло, true — ушло.
+ * @return array{mail:bool|null,error:string}
+ */
 function rs_form_deliver(array $cfg, array $leadForm, array $values): array
 {
+    $smtp = (array)($cfg['smtp'] ?? []);
+    if (($smtp['host'] ?? '') === '' || !array_filter((array)($cfg['to'] ?? []))) {
+        return ['mail' => null, 'error' => ''];
+    }
+
     $lines = [];
     foreach (array_merge($leadForm['fields'] ?? [], $leadForm['message_field'] ?? []) as $f) {
         $name = (string)($f['name'] ?? '');
@@ -161,7 +173,7 @@ function rs_form_deliver(array $cfg, array $leadForm, array $values): array
     }
     $nameField = (string)(($leadForm['fields'][0]['name'] ?? ''));
 
-    $res = rs_smtp_send((array)($cfg['smtp'] ?? []), [
+    $res = rs_smtp_send($smtp, [
         'to'         => (array)($cfg['to'] ?? []),
         'subject'    => (string)($cfg['subject'] ?? 'Заявка с сайта'),
         'text'       => implode("\n", $lines),
@@ -208,14 +220,14 @@ function rs_form_handle(array $cfg, array $leadForm, array $post): array
     ];
     $delivery = rs_form_deliver($cfg, $leadForm, $values);
     $record['mail'] = $delivery['mail'];
-    if (!$delivery['mail']) { $record['mail_error'] = $delivery['error']; }
+    if ($delivery['mail'] === false) { $record['mail_error'] = $delivery['error']; }
 
     if (!rs_form_log((string)$cfg['log_dir'], $record)) {
         // Журнал — первичная запись. Нет её — обещать приём нельзя.
         error_log('rs_form: журнал недоступен, заявка не сохранена');
         return $fail('Не удалось принять заявку. Напишите нам на почту — адрес в подвале.');
     }
-    if (!$delivery['mail']) { error_log('rs_form: письмо не ушло — ' . $delivery['error']); }
+    if ($delivery['mail'] === false) { error_log('rs_form: письмо не ушло — ' . $delivery['error']); }
 
     rs_form_rate_hit((string)$cfg['rate_dir']);
     unset($_SESSION['rs_form_token'], $_SESSION['rs_form_born']);   // одноразовый токен
